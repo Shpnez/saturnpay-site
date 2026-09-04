@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Test</title></head>
+<body style="font-family:sans-serif; padding:20px;">
+  <h2>Backend Bağlantı Testi</h2>
+  <button onclick="test()" style="padding:12px 20px; font-size:16px;">Adres Al (TRX)</button>
+  <pre id="out" style="margin-top:20px; white-space:pre-wrap;"></pre>
+  <script>
+    async function test() {
+      document.getElementById('out').textContent = 'Yükleniyor...';
+      try {
+        const res = await fetch('https://saturnpay-bybit-tracker-production.up.railway.app/api/deposit-address', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-user-id': 'gercek-tarayici-testi' },
+          body: JSON.stringify({ network: 'TRX' })
+        });
+        const data = await res.json();
+        document.getElementById('out').textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById('out').textContent = 'HATA: ' + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
