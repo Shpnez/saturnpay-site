@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USDT Çek — Saturn-Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070A;
+    --bg-2: #0A0C11;
+    --card: #12151C;
+    --card-2: #181C25;
+    --field: #14171F;
+    --line: #262B35;
+    --line-soft: rgba(255,255,255,0.06);
+    --text: #EDEBE4;
+    --text-dim: #8B93A4;
+    --text-faint: #565E6E;
+    --gold: #D4AF37;
+    --gold-bright: #F0CB6A;
+    --gold-dim: #8C7222;
+    --amber: #C98A4B;
+    --good: #7FAE8C;
+    --bad: #C97757;
+    --teal: #4FBFA8;
+    --focus: rgba(212,175,55,0.30);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    position:relative;
+  }
+  h1,h2{ font-family:'Fraunces',serif; font-weight:500; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(237,235,228,0.25), transparent),
+      radial-gradient(1px 1px at 30% 55%, rgba(237,235,228,0.18), transparent),
+      radial-gradient(1.5px 1.5px at 45% 85%, rgba(237,235,228,0.2), transparent),
+      radial-gradient(1px 1px at 70% 30%, rgba(237,235,228,0.16), transparent),
+      radial-gradient(1px 1px at 90% 70%, rgba(237,235,228,0.2), transparent);
+    background-repeat:no-repeat;
+    pointer-events:none;
+  }
+
+  nav{
+    border-bottom:1px solid var(--line-soft);
+    padding:20px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    z-index:2;
+    backdrop-filter:blur(6px);
+  }
+  .logo{ display:flex; align-items:center; gap:11px; font-family:'Fraunces',serif; font-size:17px; font-weight:600; letter-spacing:-0.01em; color:var(--text); text-decoration:none; }
+
+  .mark{ position:relative; width:20px; height:20px; flex-shrink:0; }
+  .mark-body{ position:absolute; inset:4px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, var(--amber) 100%); }
+  .mark-ring{ position:absolute; top:50%; left:50%; width:26px; height:9px; border:1.2px solid var(--gold-dim); border-radius:50%; transform:translate(-50%,-50%) rotate(-18deg); }
+  .mark-ring.front{ border-color:var(--gold-bright); clip-path:polygon(0 50%, 100% 50%, 100% 100%, 0 100%); z-index:1; }
+  .mark-body{ z-index:0; }
+
+  .back-link{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    padding:9px 18px 9px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    text-decoration:none;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .back-link:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .back-link:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+
+  main{ max-width:520px; margin:0 auto; padding:52px 24px 60px; position:relative; z-index:2; }
+
+  .page-head h1{ font-size:27px; margin-bottom:6px; letter-spacing:-0.01em; }
+  .page-head p{ color:var(--text-dim); font-size:14px; margin-bottom:34px; }
+
+  .balance-strip{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    background:var(--field);
+    border:1px solid var(--line-soft);
+    border-radius:11px;
+    margin-bottom:22px;
+  }
+  .balance-strip .label{ font-size:11px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.08em; }
+  .balance-strip .value{ font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--text); }
+
+  .card{
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+    padding:28px;
+    box-shadow:0 20px 50px -24px rgba(0,0,0,0.55);
+    position:relative;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:-60%; right:-20%;
+    width:280px; height:280px;
+    background:radial-gradient(circle, rgba(212,175,55,0.12), transparent 70%);
+    pointer-events:none;
+  }
+
+  .card-eyebrow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .card-eyebrow .title{
+    font-size:11px;
+    color:var(--gold);
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .asset-pill{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 11px;
+    border-radius:999px;
+    background:rgba(79,191,168,0.12);
+    border:1px solid rgba(79,191,168,0.3);
+    color:var(--teal);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    font-weight:500;
+  }
+  .asset-pill .dot{ width:6px; height:6px; border-radius:50%; background:var(--teal); }
+
+  /* network selector */
+  .network-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .network-tab{
+    flex:1;
+    padding:10px 12px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    background:var(--field);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .network-tab:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .network-tab.active{
+    border-color:var(--gold);
+    background:rgba(212,175,55,0.1);
+    color:var(--gold-bright);
+  }
+  .network-tab .fee{ display:block; font-size:10px; color:var(--text-faint); margin-top:2px; font-weight:400; }
+  .network-tab.active .fee{ color:var(--gold-dim); }
+
+  .field-label{
+    font-size:10.5px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:0.07em;
+    margin-bottom:8px;
+    display:block;
+  }
+  .address-input{
+    width:100%;
+    padding:13px 14px;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--text);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .address-input::placeholder{ color:var(--text-faint); }
+  .address-input:focus{
+    border-color:var(--gold-dim);
+    box-shadow:0 0 0 3px var(--focus);
+  }
+
+  .meta-row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid var(--line-soft);
+    font-size:12px;
+    position:relative;
+  }
+  .meta-row span:first-child{ color:var(--text-faint); }
+  .meta-row span:last-child{ color:var(--text-dim); font-family:'IBM Plex Mono',monospace; }
+
+  .warn-note{
+    display:flex;
+    gap:9px;
+    margin-top:16px;
+    padding:12px 14px;
+    background:rgba(201,138,75,0.08);
+    border:1px solid rgba(201,138,75,0.25);
+    border-radius:9px;
+    font-size:12px;
+    line-height:1.55;
+    color:var(--text-dim);
+    position:relative;
+  }
+  .warn-note .ic{ color:var(--amber); flex-shrink:0; font-size:14px; }
+  .warn-note b{ color:var(--text); font-weight:600; }
+
+  /* amount section */
+  .sim-title{
+    font-size:11px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+    text-align:center;
+  }
+  .amount-field{
+    display:flex;
+    align-items:baseline;
+    justify-content:center;
+    gap:6px;
+    padding:6px 0 4px;
+    position:relative;
+  }
+  .amount-currency{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    font-size:20px;
+    color:var(--text-faint);
+    transition:color .15s ease;
+  }
+  .amount-field.filled .amount-currency{ color:var(--bad); }
+  input[type="number"]{
+    -moz-appearance:textfield;
+    max-width:220px;
+    background:transparent;
+    border:none;
+    outline:none;
+    text-align:center;
+    color:var(--text);
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:42px;
+    letter-spacing:-0.01em;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input[type="number"]::placeholder{ color:var(--text-faint); }
+
+  .amount-hint{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    margin-top:2px;
+    transition:color .15s ease;
+  }
+  .amount-hint.warn{ color:var(--bad); }
+
+  .quick-amounts{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin-top:18px;
+    position:relative;
+  }
+  .chip{
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--field);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .chip:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .chip.active{
+    border-color:var(--bad);
+    background:rgba(201,119,87,0.1);
+    color:var(--bad);
+  }
+  .chip:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+
+  .fee-row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+    padding:13px 14px;
+    background:var(--field);
+    border:1px solid var(--line-soft);
+    border-radius:9px;
+    font-size:12.5px;
+  }
+  .fee-row .label{ color:var(--text-faint); }
+  .fee-row .value{ color:var(--text-dim); font-family:'IBM Plex Mono',monospace; }
+  .fee-row .value.total{ color:var(--text); font-weight:600; }
+
+  .confirm-btn{
+    width:100%;
+    margin-top:22px;
+    padding:15px;
+    border-radius:999px;
+    font-size:14.5px;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    border:none;
+    background:linear-gradient(135deg, #D98A6E, var(--bad));
+    color:#1a0d08;
+    transition:box-shadow .15s ease, transform .12s ease;
+    position:relative;
+  }
+  .confirm-btn:hover{ box-shadow:0 8px 20px -6px rgba(201,119,87,0.4); }
+  .confirm-btn:active{ transform:translateY(1px); }
+  .confirm-btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+  .confirm-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+
+  .form-error{
+    color:var(--bad);
+    font-size:12.5px;
+    margin-top:12px;
+    text-align:center;
+    display:none;
+    position:relative;
+  }
+  .form-error.shake{ animation:shake .32s ease; }
+  @keyframes shake{
+    0%, 100%{ transform:translateX(0); }
+    25%{ transform:translateX(-4px); }
+    75%{ transform:translateX(4px); }
+  }
+
+  .form-body{ position:relative; }
+  .form-body.hidden{ display:none; }
+
+  .success-state{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:20px 0 6px;
+    position:relative;
+  }
+  .success-state.show{ display:flex; }
+  .success-check{
+    width:52px; height:52px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(127,174,140,0.14);
+    color:var(--good);
+    font-size:24px;
+    margin-bottom:16px;
+    animation:pop-in .35s cubic-bezier(.34,1.56,.64,1);
+  }
+  .success-title{ font-family:'Fraunces',serif; font-size:20px; color:var(--text); margin-bottom:6px; }
+  .success-amount{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--gold-bright); margin-bottom:22px; }
+  @keyframes pop-in{
+    0%{ transform:scale(0.5); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+  }
+  .success-return{
+    padding:12px 26px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text);
+    font-size:13.5px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    text-decoration:none;
+    transition:border-color .15s ease;
+  }
+  .success-return:hover{ border-color:var(--gold-dim); }
+
+  .note{
+    color:var(--text-faint);
+    font-size:12.5px;
+    line-height:1.6;
+    text-align:center;
+    margin-top:22px;
+  }
+
+  @media (max-width:480px){
+    nav{ padding:18px 20px; }
+    main{ padding:40px 18px 48px; }
+    .card{ padding:22px 18px; }
+    input[type="number"]{ font-size:36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="dashboard.html" class="logo">
+    <span class="mark"><span class="mark-ring"></span><span class="mark-body"></span><span class="mark-ring front"></span></span>
+    Saturn-Pay
+  </a>
+  <a href="dashboard.html" class="back-link">← Panele Dön</a>
+</nav>
+
+<main>
+  <div class="page-head">
+    <h1>USDT Çek</h1>
+    <p>Bakiyenizi kripto cüzdanınıza gönderin.</p>
+  </div>
+
+  <div class="balance-strip">
+    <span class="label">Kullanılabilir Bakiye</span>
+    <span class="value" id="currentBalance">$0.00</span>
+  </div>
+
+  <div class="card">
+    <div class="card-eyebrow">
+      <span class="title">Çekim Adresi</span>
+      <span class="asset-pill"><span class="dot"></span>USDT</span>
+    </div>
+
+    <div class="network-tabs" id="networkTabs">
+      <button type="button" class="network-tab active" data-network="TRC20" data-fee="1">
+        TRC20<span class="fee">Tron · 1 USDT ücret</span>
+      </button>
+      <button type="button" class="network-tab" data-network="ERC20" data-fee="8">
+        ERC20<span class="fee">Ethereum · 8 USDT ücret</span>
+      </button>
+      <button type="button" class="network-tab" data-network="BEP20" data-fee="0.5">
+        BEP20<span class="fee">BNB Chain · 0.5 USDT</span>
+      </button>
+    </div>
+
+    <label class="field-label" for="destAddress">Alıcı Cüzdan Adresi</label>
+    <input type="text" id="destAddress" class="address-input" placeholder="Örn. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u" autocomplete="off">
+
+    <div class="warn-note">
+      <span class="ic">⚠</span>
+      <span>Adresin seçtiğiniz <b id="warnNetwork">TRC20</b> ağıyla uyumlu olduğundan emin olun. Yanlış ağa gönderilen çekimler kalıcı olarak kaybolabilir.</span>
+    </div>
+
+    <div class="meta-row">
+      <span>İşlem süresi</span>
+      <span id="etaText">~5 dakika</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sim-title">Çekilecek Tutar</div>
+
+    <form id="withdrawForm" class="form-body" novalidate>
+      <div class="amount-field" id="amountField">
+        <span class="amount-currency">USDT</span>
+        <input type="number" id="withdrawAmount" placeholder="0.00" min="20" step="0.01" inputmode="decimal" autocomplete="off">
+      </div>
+      <div class="amount-hint" id="amountHint">Minimum çekim: 20 USDT</div>
+
+      <div class="quick-amounts" id="quickAmounts">
+        <button type="button" class="chip" data-amt="20">20</button>
+        <button type="button" class="chip" data-amt="50">50</button>
+        <button type="button" class="chip" data-amt="100">100</button>
+        <button type="button" class="chip" data-amt="250">250</button>
+        <button type="button" class="chip" data-amt="500">500</button>
+      </div>
+
+      <div class="fee-row">
+        <span class="label">Ağ ücreti</span>
+        <span class="value" id="feeValue">1 USDT</span>
+      </div>
+      <div class="fee-row">
+        <span class="label">Hesabınızdan düşülecek</span>
+        <span class="value total" id="totalValue">0.00 USDT</span>
+      </div>
+
+      <button type="submit" class="confirm-btn" id="confirmBtn">Çekim Talebini Onayla</button>
+      <p class="form-error" id="formError"></p>
+    </form>
+
+    <div class="success-state" id="successState">
+      <div class="success-check">✓</div>
+      <div class="success-title">Çekim Talebi Alındı</div>
+      <div class="success-amount" id="successAmount">0 USDT</div>
+      <a href="dashboard.html" class="success-return">Panele Dön</a>
+    </div>
+  </div>
+
+  <p class="note">
+    Bakiye ve işlemler yalnızca bu tarayıcıda saklanır; gerçek bir blok
+    zinciri ağına veya cüzdana bağlı değildir. Bu alan test amacıyla
+    çekim işlemini yerel olarak simüle eder.
+  </p>
+</main>
+
+<script>
+  const TX_KEY = 'saturnpay_transactions';
+
+  function makeId() {
+    return 'tx_' + Math.random().toString(36).slice(2, 10);
+  }
+
+  function formatUSD(n) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  }
+
+  function daysAgoISO(n) {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.toISOString();
+  }
+
+  function loadTransactions(user) {
+    const raw = localStorage.getItem(TX_KEY);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) { /* fall through to reseed */ }
+    }
+    let seed;
+    if (typeof user.balance === 'number' && user.balance > 0) {
+      seed = [
+        { id: makeId(), description: 'Başlangıç bakiyesi', amount: user.balance, date: daysAgoISO(0) },
+      ];
+    } else {
+      seed = [
+        { id: makeId(), description: 'Hesap açılış bonusu', amount: 250, date: daysAgoISO(14) },
+        { id: makeId(), description: 'USDT Yatırma (TRC20)', amount: 500, date: daysAgoISO(9) },
+        { id: makeId(), description: 'Aylık üyelik', amount: -19.99, date: daysAgoISO(5) },
+        { id: makeId(), description: 'USDT Çekme (TRC20)', amount: -120, date: daysAgoISO(2) },
+      ];
+    }
+    localStorage.setItem(TX_KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  function saveTransactions(txs) {
+    localStorage.setItem(TX_KEY, JSON.stringify(txs));
+  }
+
+  function computeBalance(txs) {
+    return txs.reduce((sum, t) => sum + t.amount, 0);
+  }
+
+  // --- auth ---
+  const token = localStorage.getItem('saturnpay_token');
+  const userRaw = localStorage.getItem('saturnpay_user');
+  if (!token) {
+    window.location.href = 'login.html';
+  }
+  let user = {};
+  try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
+
+  let transactions = loadTransactions(user);
+  const balance = computeBalance(transactions);
+  document.getElementById('currentBalance').textContent = formatUSD(balance);
+
+  // --- network selector ---
+  const networkTabs = document.getElementById('networkTabs');
+  const warnNetwork = document.getElementById('warnNetwork');
+  const feeValue = document.getElementById('feeValue');
+  const totalValue = document.getElementById('totalValue');
+
+  function currentFee() {
+    const tab = networkTabs.querySelector('.network-tab.active');
+    return parseFloat(tab.dataset.fee);
+  }
+
+  function setNetwork(tab) {
+    [...networkTabs.children].forEach(t => t.classList.toggle('active', t === tab));
+    warnNetwork.textContent = tab.dataset.network;
+    feeValue.textContent = tab.dataset.fee + ' USDT';
+    updateTotal();
+  }
+
+  networkTabs.addEventListener('click', function (e) {
+    const tab = e.target.closest('.network-tab');
+    if (!tab) return;
+    setNetwork(tab);
+  });
+
+  // --- amount form ---
+  const form = document.getElementById('withdrawForm');
+  const amountInput = document.getElementById('withdrawAmount');
+  const amountField = document.getElementById('amountField');
+  const amountHint = document.getElementById('amountHint');
+  const quickAmounts = document.getElementById('quickAmounts');
+  const destAddress = document.getElementById('destAddress');
+  const formError = document.getElementById('formError');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const successState = document.getElementById('successState');
+  const successAmount = document.getElementById('successAmount');
+
+  function updateTotal() {
+    const amt = parseFloat(amountInput.value) || 0;
+    totalValue.textContent = (amt + currentFee()).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDT';
+  }
+
+  function setChipActive(amt) {
+    [...quickAmounts.children].forEach(chip => {
+      chip.classList.toggle('active', parseFloat(chip.dataset.amt) === amt);
+    });
+  }
+
+  quickAmounts.addEventListener('click', function (e) {
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    const amt = parseFloat(btn.dataset.amt);
+    amountInput.value = amt;
+    amountField.classList.add('filled');
+    setChipActive(amt);
+    amountHint.classList.remove('warn');
+    formError.style.display = 'none';
+    updateTotal();
+    amountInput.focus();
+  });
+
+  amountInput.addEventListener('input', function () {
+    const val = parseFloat(amountInput.value);
+    amountField.classList.toggle('filled', !!amountInput.value);
+    setChipActive(val);
+    amountHint.classList.toggle('warn', !!amountInput.value && val < 20);
+    updateTotal();
+  });
+
+  function showError(msg) {
+    formError.textContent = msg;
+    formError.style.display = 'block';
+    formError.classList.remove('shake');
+    void formError.offsetWidth;
+    formError.classList.add('shake');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const amt = parseFloat(amountInput.value);
+    const fee = currentFee();
+    const address = destAddress.value.trim();
+    const activeNetwork = networkTabs.querySelector('.network-tab.active').dataset.network;
+
+    if (!address) {
+      showError('Lütfen bir cüzdan adresi girin.');
+      destAddress.focus();
+      return;
+    }
+    if (!amt || amt <= 0) {
+      showError('Geçerli bir tutar girin.');
+      return;
+    }
+    if (amt < 20) {
+      showError('Minimum çekim tutarı 20 USDT.');
+      return;
+    }
+    const totalDebit = amt + fee;
+    if (totalDebit > balance) {
+      showError('Yetersiz bakiye (tutar + ağ ücreti).');
+      return;
+    }
+
+    transactions.push({
+      id: makeId(),
+      description: 'USDT Çekme (' + activeNetwork + ')',
+      amount: -totalDebit,
+      date: new Date().toISOString(),
+    });
+    saveTransactions(transactions);
+
+    confirmBtn.disabled = true;
+    successAmount.textContent = amt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDT';
+    form.classList.add('hidden');
+    successState.classList.add('show');
+  });
+
+  updateTotal();
+</script>
+
+</body>
+</html>

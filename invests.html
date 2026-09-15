@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invests — Saturn-Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070A; --card: #12151C; --card-2: #181C25; --field: #14171F;
+    --line: #262B35; --line-soft: rgba(255,255,255,0.06);
+    --text: #EDEBE4; --text-dim: #8B93A4; --text-faint: #565E6E;
+    --gold: #D4AF37; --gold-bright: #F0CB6A; --gold-dim: #8C7222; --amber: #C98A4B;
+    --good: #7FAE8C; --bad: #C97757;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{ background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; padding-bottom:78px; }
+  h1,h2{ font-family:'Inter',sans-serif; font-weight:500; }
+  a{ color:inherit; text-decoration:none; }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 20px 6px; max-width:520px; margin:0 auto;
+  }
+  .avatar-btn{
+    width:38px; height:38px; border-radius:50%;
+    background:linear-gradient(160deg, var(--card-2), var(--card));
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; color:var(--text-dim);
+  }
+  .avatar-btn svg{ width:17px; height:17px; }
+  .avatar-btn:hover{ border-color:var(--gold-dim); }
+  .brand-mini{ font-size:15px; font-weight:600; color:var(--text-dim); letter-spacing:0.02em; }
+  .bell-btn{
+    width:38px; height:38px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-dim); background:transparent; border:none; cursor:pointer; position:relative;
+  }
+  .bell-btn svg{ width:19px; height:19px; }
+  .bell-dot{
+    position:absolute; top:7px; right:8px; width:7px; height:7px; border-radius:50%;
+    background:var(--gold-bright); box-shadow:0 0 6px rgba(240,203,106,0.7);
+  }
+
+  main{ max-width:520px; margin:0 auto; padding:14px 20px 40px; }
+
+  .page-head{ padding:8px 0 4px; }
+  .page-head h1{ font-size:21px; margin-bottom:4px; }
+  .page-head p{ color:var(--text-dim); font-size:13px; }
+
+  .summary-row{ display:flex; gap:24px; padding:18px 2px 20px; }
+  .summary-stat .n{ font-size:22px; font-weight:500; color:var(--text); }
+  .summary-stat .l{ font-size:11px; color:var(--text-faint); margin-top:3px; }
+
+  .invest-card{
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+    padding:6px 20px;
+  }
+  .invest-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:15px 0; border-top:1px solid var(--line-soft); gap:12px;
+  }
+  .invest-row:first-child{ border-top:none; }
+  .invest-main{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .invest-badge{
+    width:34px; height:34px; border-radius:50%;
+    background:rgba(212,175,55,0.12); color:var(--gold-bright);
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; flex-shrink:0;
+  }
+  .invest-desc{ font-size:14px; color:var(--text); }
+  .invest-date{ font-size:11.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; margin-top:2px; }
+  .invest-right{ text-align:right; flex-shrink:0; }
+  .invest-amount{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--good); }
+  .invest-status{
+    display:inline-block; margin-top:4px;
+    padding:2px 9px; border-radius:999px;
+    background:rgba(127,174,140,0.12); border:1px solid rgba(127,174,140,0.3);
+    color:var(--good); font-size:10px; font-family:'IBM Plex Mono',monospace;
+  }
+  .empty-note{ color:var(--text-dim); font-size:13px; text-align:center; padding:30px 0; }
+
+  .bottom-nav{
+    position:fixed; left:0; right:0; bottom:0; z-index:5;
+    background:rgba(10,12,17,0.92); backdrop-filter:blur(10px);
+    border-top:1px solid var(--line-soft); display:flex;
+  }
+  .nav-item{
+    flex:1; display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:11px 4px 9px; color:var(--text-faint); font-size:10.5px; cursor:pointer;
+    transition:color .15s ease;
+  }
+  .nav-item .icon svg{ width:21px; height:21px; display:block; }
+  .nav-item:hover{ color:var(--text-dim); }
+  .nav-item.active{ color:var(--gold-bright); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="avatar-btn" id="avatarBtn" title="Ayarlar" aria-label="Ayarlar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.3-3.5 4.2-5.5 7.5-5.5s6.2 2 7.5 5.5"/></svg>
+  </button>
+  <span class="brand-mini">Saturn-Pay</span>
+  <button class="bell-btn" id="bellBtn" title="Bildirimler" aria-label="Bildirimler">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 3.2 1 4.8 1.6 5.6.3.4 0 1-.5 1H4.9c-.5 0-.8-.6-.5-1C5 14.8 6 13.2 6 10Z"/><path d="M9.5 19a2.6 2.6 0 0 0 5 0"/></svg>
+    <span class="bell-dot"></span>
+  </button>
+</div>
+
+<main>
+  <div class="page-head">
+    <h1>Invests</h1>
+    <p>Aktif yatırımlarınızın tam listesi.</p>
+  </div>
+
+  <div class="summary-row">
+    <div class="summary-stat">
+      <div class="n" id="investCount">0</div>
+      <div class="l">Aktif Yatırım</div>
+    </div>
+    <div class="summary-stat">
+      <div class="n" id="investTotal">$0</div>
+      <div class="l">Toplam Yatırılan</div>
+    </div>
+  </div>
+
+  <div class="invest-card">
+    <div id="investList"></div>
+  </div>
+</main>
+
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="nav-item">
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V19a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg></span>Home
+  </a>
+  <a href="investments.html" class="nav-item">
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 6h7v7"/></svg></span>Investments
+  </a>
+  <a href="invests.html" class="nav-item active">
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span>Invests
+  </a>
+  <a href="referral.html" class="nav-item">
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16"/><path d="M12 9v11"/><path d="M12 9c-1.2 0-3-1-3-2.6C9 5.1 10 4 11.3 4 12.7 4 12 7 12 9Z"/><path d="M12 9c1.2 0 3-1 3-2.6C15 5.1 14 4 12.7 4 11.3 4 12 7 12 9Z"/></svg></span>Referral
+  </a>
+  <a href="assets.html" class="nav-item">
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.6"/></svg></span>Assets
+  </a>
+</nav>
+
+<script>
+  const TX_KEY = 'saturnpay_transactions';
+
+  function daysAgoISO(n) {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.toISOString();
+  }
+  function makeId() { return 'tx_' + Math.random().toString(36).slice(2, 10); }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+  function formatUSD(n) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  }
+  function formatDateTR(iso) {
+    return new Date(iso).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function loadTransactions(user) {
+    const raw = localStorage.getItem(TX_KEY);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) { /* yeniden oluştur */ }
+    }
+    let seed;
+    if (typeof user.balance === 'number' && user.balance > 0) {
+      seed = [{ id: makeId(), description: 'Başlangıç bakiyesi', amount: user.balance, date: daysAgoISO(0) }];
+    } else {
+      seed = [
+        { id: makeId(), description: 'USDT Yatırma (TRC20)', amount: 250, date: daysAgoISO(14) },
+        { id: makeId(), description: 'USDT Yatırma (ERC20)', amount: 500, date: daysAgoISO(9) },
+        { id: makeId(), description: 'USDT Çekme (TRC20)', amount: -120, date: daysAgoISO(2) },
+      ];
+    }
+    localStorage.setItem(TX_KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  const token = localStorage.getItem('saturnpay_token');
+  const userRaw = localStorage.getItem('saturnpay_user');
+  if (!token) { window.location.href = 'login.html'; }
+  let user = {};
+  try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
+
+  const transactions = loadTransactions(user);
+
+  document.getElementById('avatarBtn').addEventListener('click', () => window.location.href = 'settings.html');
+  document.getElementById('bellBtn').addEventListener('click', () => alert('Şu an yeni bildiriminiz yok.'));
+
+  function renderInvests() {
+    const invests = transactions
+      .filter(t => t.amount > 0)
+      .sort((a, b) => new Date(a.date) - new Date(b.date)); // eskiden yeniye
+
+    const total = invests.reduce((s, t) => s + t.amount, 0);
+    document.getElementById('investCount').textContent = invests.length;
+    document.getElementById('investTotal').textContent = formatUSD(total);
+
+    const listEl = document.getElementById('investList');
+    if (invests.length === 0) {
+      listEl.innerHTML = '<div class="empty-note">Henüz aktif bir yatırımınız yok.</div>';
+      return;
+    }
+    listEl.innerHTML = invests.map(t => `
+      <div class="invest-row">
+        <div class="invest-main">
+          <div class="invest-badge">↑</div>
+          <div>
+            <div class="invest-desc">${escapeHtml(t.description)}</div>
+            <div class="invest-date">${formatDateTR(t.date)}</div>
+          </div>
+        </div>
+        <div class="invest-right">
+          <div class="invest-amount">${formatUSD(t.amount)}</div>
+          <span class="invest-status">Aktif</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  renderInvests();
+</script>
+
+</body>
+</html>

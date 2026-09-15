@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USDT Yatır — Saturn-Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070A;
+    --bg-2: #0A0C11;
+    --card: #12151C;
+    --card-2: #181C25;
+    --field: #14171F;
+    --line: #262B35;
+    --line-soft: rgba(255,255,255,0.06);
+    --text: #EDEBE4;
+    --text-dim: #8B93A4;
+    --text-faint: #565E6E;
+    --gold: #D4AF37;
+    --gold-bright: #F0CB6A;
+    --gold-dim: #8C7222;
+    --amber: #C98A4B;
+    --good: #7FAE8C;
+    --bad: #C97757;
+    --teal: #4FBFA8;
+    --focus: rgba(212,175,55,0.30);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    position:relative;
+  }
+  h1,h2{ font-family:'Fraunces',serif; font-weight:500; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(237,235,228,0.25), transparent),
+      radial-gradient(1px 1px at 30% 55%, rgba(237,235,228,0.18), transparent),
+      radial-gradient(1.5px 1.5px at 45% 85%, rgba(237,235,228,0.2), transparent),
+      radial-gradient(1px 1px at 70% 30%, rgba(237,235,228,0.16), transparent),
+      radial-gradient(1px 1px at 90% 70%, rgba(237,235,228,0.2), transparent);
+    background-repeat:no-repeat;
+    pointer-events:none;
+  }
+
+  nav{
+    border-bottom:1px solid var(--line-soft);
+    padding:20px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    z-index:2;
+    backdrop-filter:blur(6px);
+  }
+  .logo{ display:flex; align-items:center; gap:11px; font-family:'Fraunces',serif; font-size:17px; font-weight:600; letter-spacing:-0.01em; color:var(--text); text-decoration:none; }
+
+  .mark{ position:relative; width:20px; height:20px; flex-shrink:0; }
+  .mark-body{ position:absolute; inset:4px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, var(--amber) 100%); }
+  .mark-ring{ position:absolute; top:50%; left:50%; width:26px; height:9px; border:1.2px solid var(--gold-dim); border-radius:50%; transform:translate(-50%,-50%) rotate(-18deg); }
+  .mark-ring.front{ border-color:var(--gold-bright); clip-path:polygon(0 50%, 100% 50%, 100% 100%, 0 100%); z-index:1; }
+  .mark-body{ z-index:0; }
+
+  .back-link{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    padding:9px 18px 9px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-family:'Inter',sans-serif;
+    text-decoration:none;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .back-link:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .back-link:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+
+  main{ max-width:520px; margin:0 auto; padding:52px 24px 60px; position:relative; z-index:2; }
+
+  .page-head h1{ font-size:27px; margin-bottom:6px; letter-spacing:-0.01em; }
+  .page-head p{ color:var(--text-dim); font-size:14px; margin-bottom:34px; }
+
+  .balance-strip{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 18px;
+    background:var(--field);
+    border:1px solid var(--line-soft);
+    border-radius:11px;
+    margin-bottom:22px;
+  }
+  .balance-strip .label{ font-size:11px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.08em; }
+  .balance-strip .value{ font-family:'IBM Plex Mono',monospace; font-size:14.5px; color:var(--text); }
+
+  .card{
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+    padding:28px;
+    box-shadow:0 20px 50px -24px rgba(0,0,0,0.55);
+    position:relative;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+  .card::before{
+    content:'';
+    position:absolute; top:-60%; right:-20%;
+    width:280px; height:280px;
+    background:radial-gradient(circle, rgba(212,175,55,0.12), transparent 70%);
+    pointer-events:none;
+  }
+
+  .card-eyebrow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+    position:relative;
+  }
+  .card-eyebrow .title{
+    font-size:11px;
+    color:var(--gold);
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .asset-pill{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 11px;
+    border-radius:999px;
+    background:rgba(79,191,168,0.12);
+    border:1px solid rgba(79,191,168,0.3);
+    color:var(--teal);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    font-weight:500;
+  }
+  .asset-pill .dot{ width:6px; height:6px; border-radius:50%; background:var(--teal); }
+
+  /* network selector */
+  .network-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    position:relative;
+  }
+  .network-tab{
+    flex:1;
+    padding:10px 12px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    background:var(--field);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:500;
+    cursor:pointer;
+    text-align:center;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .network-tab:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .network-tab.active{
+    border-color:var(--gold);
+    background:rgba(212,175,55,0.1);
+    color:var(--gold-bright);
+  }
+  .network-tab .fee{ display:block; font-size:10px; color:var(--text-faint); margin-top:2px; font-weight:400; }
+  .network-tab.active .fee{ color:var(--gold-dim); }
+
+  /* qr + address */
+  .qr-wrap{
+    display:flex;
+    justify-content:center;
+    padding:18px 0 6px;
+    position:relative;
+  }
+  .qr-frame{
+    padding:12px;
+    background:#fff;
+    border-radius:12px;
+    line-height:0;
+    box-shadow:0 12px 30px -14px rgba(0,0,0,0.6);
+  }
+  .qr-frame img{ display:block; width:168px; height:168px; }
+
+  .address-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:18px;
+    padding:13px 14px;
+    background:var(--field);
+    border:1px solid var(--line-soft);
+    border-radius:9px;
+    position:relative;
+  }
+  .address-text{
+    flex:1;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--text);
+    word-break:break-all;
+    letter-spacing:0.01em;
+  }
+  .copy-btn{
+    flex-shrink:0;
+    padding:7px 13px;
+    border-radius:7px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text-dim);
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .copy-btn:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .copy-btn.copied{ border-color:var(--good); color:var(--good); background:rgba(127,174,140,0.1); }
+  .copy-btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+
+  .warn-note{
+    display:flex;
+    gap:9px;
+    margin-top:16px;
+    padding:12px 14px;
+    background:rgba(201,138,75,0.08);
+    border:1px solid rgba(201,138,75,0.25);
+    border-radius:9px;
+    font-size:12px;
+    line-height:1.55;
+    color:var(--text-dim);
+    position:relative;
+  }
+  .warn-note .ic{ color:var(--amber); flex-shrink:0; font-size:14px; }
+  .warn-note b{ color:var(--text); font-weight:600; }
+
+  .meta-row{
+    display:flex;
+    justify-content:space-between;
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid var(--line-soft);
+    font-size:12px;
+    position:relative;
+  }
+  .meta-row span:first-child{ color:var(--text-faint); }
+  .meta-row span:last-child{ color:var(--text-dim); font-family:'IBM Plex Mono',monospace; }
+
+  /* simulate section */
+  .sim-title{
+    font-size:11px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+    text-align:center;
+  }
+  .amount-field{
+    display:flex;
+    align-items:baseline;
+    justify-content:center;
+    gap:6px;
+    padding:6px 0 4px;
+    position:relative;
+  }
+  .amount-currency{
+    font-family:'IBM Plex Mono',monospace;
+    font-weight:500;
+    font-size:20px;
+    color:var(--text-faint);
+    transition:color .15s ease;
+  }
+  .amount-field.filled .amount-currency{ color:var(--teal); }
+  .amount-hint{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    margin-top:2px;
+    transition:color .15s ease;
+  }
+  .amount-hint.warn{ color:var(--bad); }
+  input[type="number"]{
+    -moz-appearance:textfield;
+    max-width:220px;
+    background:transparent;
+    border:none;
+    outline:none;
+    text-align:center;
+    color:var(--text);
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:42px;
+    letter-spacing:-0.01em;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+  input[type="number"]::placeholder{ color:var(--text-faint); }
+
+  .quick-amounts{
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    margin-top:18px;
+    position:relative;
+  }
+  .chip{
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--field);
+    color:var(--text-dim);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .chip:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .chip.active{
+    border-color:var(--teal);
+    background:rgba(79,191,168,0.1);
+    color:var(--teal);
+  }
+  .chip:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+
+  .confirm-btn{
+    width:100%;
+    margin-top:22px;
+    padding:15px;
+    border-radius:999px;
+    font-size:14.5px;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    border:none;
+    background:linear-gradient(135deg, var(--teal), #3a9c88);
+    color:#06120F;
+    transition:box-shadow .15s ease, transform .12s ease;
+    position:relative;
+  }
+  .confirm-btn:hover{ box-shadow:0 8px 20px -6px rgba(79,191,168,0.4); }
+  .confirm-btn:active{ transform:translateY(1px); }
+  .confirm-btn:focus-visible{ outline:2px solid var(--gold-bright); outline-offset:2px; }
+  .confirm-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+
+  .form-error{
+    color:var(--bad);
+    font-size:12.5px;
+    margin-top:12px;
+    text-align:center;
+    display:none;
+    position:relative;
+  }
+  .form-error.shake{ animation:shake .32s ease; }
+  @keyframes shake{
+    0%, 100%{ transform:translateX(0); }
+    25%{ transform:translateX(-4px); }
+    75%{ transform:translateX(4px); }
+  }
+
+  .form-body{ position:relative; }
+  .form-body.hidden{ display:none; }
+
+  .success-state{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:20px 0 6px;
+    position:relative;
+  }
+  .success-state.show{ display:flex; }
+  .success-check{
+    width:52px; height:52px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(79,191,168,0.14);
+    color:var(--teal);
+    font-size:24px;
+    margin-bottom:16px;
+    animation:pop-in .35s cubic-bezier(.34,1.56,.64,1);
+  }
+  .success-title{ font-family:'Fraunces',serif; font-size:20px; color:var(--text); margin-bottom:6px; }
+  .success-amount{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--teal); margin-bottom:22px; }
+  @keyframes pop-in{
+    0%{ transform:scale(0.5); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+  }
+  .success-return{
+    padding:12px 26px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text);
+    font-size:13.5px;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    text-decoration:none;
+    transition:border-color .15s ease;
+  }
+  .success-return:hover{ border-color:var(--gold-dim); }
+
+  .note{
+    color:var(--text-faint);
+    font-size:12.5px;
+    line-height:1.6;
+    text-align:center;
+    margin-top:22px;
+  }
+
+  @media (max-width:480px){
+    nav{ padding:18px 20px; }
+    main{ padding:40px 18px 48px; }
+    .card{ padding:22px 18px; }
+    input[type="number"]{ font-size:36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="dashboard.html" class="logo">
+    <span class="mark"><span class="mark-ring"></span><span class="mark-body"></span><span class="mark-ring front"></span></span>
+    Saturn-Pay
+  </a>
+  <a href="dashboard.html" class="back-link">← Panele Dön</a>
+</nav>
+
+<main>
+  <div class="page-head">
+    <h1>USDT Yatır</h1>
+    <p>Kripto cüzdanınızdan USDT gönderin.</p>
+  </div>
+
+  <div class="balance-strip">
+    <span class="label">Mevcut Bakiye</span>
+    <span class="value" id="currentBalance">$0.00</span>
+  </div>
+
+  <div class="card">
+    <div class="card-eyebrow">
+      <span class="title">Yatırma Adresi</span>
+      <span class="asset-pill"><span class="dot"></span>USDT</span>
+    </div>
+
+    <div class="network-tabs" id="networkTabs">
+      <button type="button" class="network-tab active" data-network="TRX" data-address="TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u">
+        TRC20<span class="fee">Tron · düşük ücret</span>
+      </button>
+      <button type="button" class="network-tab" data-network="ETH" data-address="0x9F3aC72bE1D4f0C6a2E7B9d5F1c3A8e6D4b2C9F1">
+        ERC20<span class="fee">Ethereum</span>
+      </button>
+    </div>
+
+    <div class="qr-wrap">
+      <div class="qr-frame">
+        <img id="qrImage" src="" alt="Yatırma adresi QR kodu">
+      </div>
+    </div>
+
+    <div class="address-row">
+      <span class="address-text" id="addressText"></span>
+      <button type="button" class="copy-btn" id="copyBtn">Kopyala</button>
+    </div>
+
+    <div class="warn-note">
+      <span class="ic">⚠</span>
+      <span>Yalnızca <b id="warnNetwork">TRC20</b> ağı üzerinden <b>USDT</b> gönderin. Farklı bir ağ veya farklı bir varlık gönderirseniz fonlarınız kalıcı olarak kaybolabilir.</span>
+    </div>
+
+    <div class="meta-row">
+      <span>Min. yatırma</span>
+      <span>10 USDT</span>
+    </div>
+    <div class="meta-row">
+      <span>Gerekli onay</span>
+      <span id="confirmCount">20 onay</span>
+    </div>
+  </div>
+
+  <div class="card" id="simCard">
+    <div class="sim-title">Gönderdiğiniz Tutarı Girin</div>
+
+    <form id="depositForm" class="form-body" novalidate>
+      <div class="amount-field" id="amountField">
+        <span class="amount-currency">USDT</span>
+        <input type="number" id="depositAmount" placeholder="0.00" min="10" step="0.01" inputmode="decimal" autocomplete="off">
+      </div>
+      <div class="amount-hint" id="amountHint">Minimum yatırım: 10 USDT</div>
+
+      <div class="quick-amounts" id="quickAmounts">
+        <button type="button" class="chip" data-amt="10">10</button>
+        <button type="button" class="chip" data-amt="50">50</button>
+        <button type="button" class="chip" data-amt="100">100</button>
+        <button type="button" class="chip" data-amt="250">250</button>
+        <button type="button" class="chip" data-amt="500">500</button>
+      </div>
+
+      <button type="submit" class="confirm-btn" id="confirmBtn">Yatırmayı Onayla</button>
+      <p class="form-error" id="formError"></p>
+    </form>
+
+    <div class="success-state" id="successState">
+      <div class="success-check">✓</div>
+      <div class="success-title">Yatırıldı</div>
+      <div class="success-amount" id="successAmount">0 USDT</div>
+      <a href="dashboard.html" class="success-return">Panele Dön</a>
+    </div>
+  </div>
+
+  <div class="card" id="liveStatusCard" style="display:none;">
+    <div class="card-eyebrow">
+      <span class="title">Durum</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; padding:4px 0;">
+      <div style="width:8px; height:8px; border-radius:50%; background:var(--teal); flex-shrink:0; animation:pulse 1.6s ease-in-out infinite;"></div>
+      <span style="font-size:13px; color:var(--text-dim);" id="liveStatusText">Adrese gelecek USDT otomatik olarak algılanıp bakiyenize eklenecek.</span>
+    </div>
+    <div class="meta-row">
+      <span>Son kontrol</span>
+      <span id="lastCheckedText">—</span>
+    </div>
+  </div>
+
+  <p class="note" id="demoNote">
+    Bakiye ve işlemler yalnızca bu tarayıcıda saklanır; gerçek bir blok
+    zinciri ağına veya cüzdana bağlı değildir. Bu alan test amacıyla
+    yatırma işlemini yerel olarak simüle eder.
+  </p>
+</main>
+<style>
+  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+</style>
+
+<script>
+  // --- backend entegrasyonu ---
+  // Backend'i deploy ettikten sonra (bkz. docs/deployment.md) aldığın
+  // URL'i buraya yapıştır, örn: 'https://senin-projen.up.railway.app'
+  // Boş bırakırsan sayfa öncekiyle aynı şekilde, tamamen yerel/demo
+  // modda çalışmaya devam eder.
+  const API_BASE_URL = '';
+
+  const TX_KEY = 'saturnpay_transactions';
+
+  function makeId() {
+    return 'tx_' + Math.random().toString(36).slice(2, 10);
+  }
+
+  function formatUSD(n) {
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
+  }
+
+  function daysAgoISO(n) {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.toISOString();
+  }
+
+  function loadTransactions(user) {
+    const raw = localStorage.getItem(TX_KEY);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) { /* fall through to reseed */ }
+    }
+    let seed;
+    if (typeof user.balance === 'number' && user.balance > 0) {
+      seed = [
+        { id: makeId(), description: 'Başlangıç bakiyesi', amount: user.balance, date: daysAgoISO(0) },
+      ];
+    } else {
+      seed = [
+        { id: makeId(), description: 'Hesap açılış bonusu', amount: 250, date: daysAgoISO(14) },
+        { id: makeId(), description: 'USDT Yatırma (TRC20)', amount: 500, date: daysAgoISO(9) },
+        { id: makeId(), description: 'Aylık üyelik', amount: -19.99, date: daysAgoISO(5) },
+        { id: makeId(), description: 'Para Çekme', amount: -120, date: daysAgoISO(2) },
+      ];
+    }
+    localStorage.setItem(TX_KEY, JSON.stringify(seed));
+    return seed;
+  }
+
+  function saveTransactions(txs) {
+    localStorage.setItem(TX_KEY, JSON.stringify(txs));
+  }
+
+  function computeBalance(txs) {
+    return txs.reduce((sum, t) => sum + t.amount, 0);
+  }
+
+  // --- auth ---
+  const token = localStorage.getItem('saturnpay_token');
+  const userRaw = localStorage.getItem('saturnpay_user');
+  if (!token) {
+    window.location.href = 'login.html';
+  }
+  let user = {};
+  try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
+  const userId = user.id || user.email || user.username || '';
+
+  const LIVE_MODE = !!API_BASE_URL;
+
+  async function apiFetch(path, opts = {}) {
+    const res = await fetch(API_BASE_URL + path, {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-user-id': userId,
+        ...(opts.headers || {}),
+      },
+    });
+    if (!res.ok) throw new Error('API hatası: ' + res.status);
+    return res.json();
+  }
+
+  let transactions = loadTransactions(user);
+  document.getElementById('currentBalance').textContent = formatUSD(computeBalance(transactions));
+
+  // --- network / address / QR ---
+  const networkTabs = document.getElementById('networkTabs');
+  const addressText = document.getElementById('addressText');
+  const qrImage = document.getElementById('qrImage');
+  const copyBtn = document.getElementById('copyBtn');
+  const warnNetwork = document.getElementById('warnNetwork');
+  const confirmCount = document.getElementById('confirmCount');
+
+  const CONFIRMS = { TRX: '20 onay', ETH: '12 onay' };
+  const NETWORK_LABEL = { TRX: 'TRC20', ETH: 'ERC20' };
+  const liveAddressCache = {};
+
+  async function setNetwork(tab) {
+    [...networkTabs.children].forEach(t => t.classList.toggle('active', t === tab));
+    const network = tab.dataset.network;
+    warnNetwork.textContent = NETWORK_LABEL[network] || network;
+    confirmCount.textContent = CONFIRMS[network] || '—';
+    copyBtn.textContent = 'Kopyala';
+    copyBtn.classList.remove('copied');
+
+    let address = tab.dataset.address; // demo modda sabit adres
+
+    if (LIVE_MODE) {
+      if (liveAddressCache[network]) {
+        address = liveAddressCache[network];
+      } else {
+        addressText.textContent = 'Adres alınıyor...';
+        qrImage.src = '';
+        try {
+          const data = await apiFetch('/api/deposit-address', {
+            method: 'POST',
+            body: JSON.stringify({ network }),
+          });
+          address = data.address;
+          liveAddressCache[network] = address;
+        } catch (err) {
+          addressText.textContent = 'Adres alınamadı, backend URL/ağ bağlantısını kontrol edin.';
+          console.error(err);
+          return;
+        }
+      }
+    }
+
+    addressText.textContent = address;
+    qrImage.src = 'https://api.qrserver.com/v1/create-qr-code/?size=168x168&margin=0&data=' + encodeURIComponent(address);
+  }
+
+  networkTabs.addEventListener('click', function (e) {
+    const tab = e.target.closest('.network-tab');
+    if (!tab) return;
+    setNetwork(tab);
+  });
+
+  copyBtn.addEventListener('click', async function () {
+    try {
+      await navigator.clipboard.writeText(addressText.textContent);
+    } catch (e) {
+      const range = document.createRange();
+      range.selectNode(addressText);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+    }
+    copyBtn.textContent = 'Kopyalandı';
+    copyBtn.classList.add('copied');
+    setTimeout(() => {
+      copyBtn.textContent = 'Kopyala';
+      copyBtn.classList.remove('copied');
+    }, 1800);
+  });
+
+  setNetwork(networkTabs.querySelector('.network-tab.active'));
+
+  // --- simulate deposit form ---
+  const form = document.getElementById('depositForm');
+  const amountInput = document.getElementById('depositAmount');
+  const amountField = document.getElementById('amountField');
+  const amountHint = document.getElementById('amountHint');
+  const quickAmounts = document.getElementById('quickAmounts');
+  const formError = document.getElementById('formError');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const successState = document.getElementById('successState');
+  const successAmount = document.getElementById('successAmount');
+
+  function setChipActive(amt) {
+    [...quickAmounts.children].forEach(chip => {
+      chip.classList.toggle('active', parseFloat(chip.dataset.amt) === amt);
+    });
+  }
+
+  quickAmounts.addEventListener('click', function (e) {
+    const btn = e.target.closest('.chip');
+    if (!btn) return;
+    const amt = parseFloat(btn.dataset.amt);
+    amountInput.value = amt;
+    amountField.classList.add('filled');
+    setChipActive(amt);
+    amountHint.classList.remove('warn');
+    formError.style.display = 'none';
+    amountInput.focus();
+  });
+
+  amountInput.addEventListener('input', function () {
+    const val = parseFloat(amountInput.value);
+    amountField.classList.toggle('filled', !!amountInput.value);
+    setChipActive(val);
+    amountHint.classList.toggle('warn', !!amountInput.value && val < 10);
+  });
+
+  function showError(msg) {
+    formError.textContent = msg;
+    formError.style.display = 'block';
+    formError.classList.remove('shake');
+    void formError.offsetWidth;
+    formError.classList.add('shake');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const amt = parseFloat(amountInput.value);
+
+    if (!amt || amt <= 0) {
+      showError('Geçerli bir tutar girin.');
+      return;
+    }
+    if (amt < 10) {
+      showError('Minimum yatırma tutarı 10 USDT.');
+      return;
+    }
+
+    const activeNetwork = networkTabs.querySelector('.network-tab.active').dataset.network;
+    const activeNetworkLabel = NETWORK_LABEL[activeNetwork] || activeNetwork;
+    transactions.push({
+      id: makeId(),
+      description: 'USDT Yatırma (' + activeNetworkLabel + ')',
+      amount: amt,
+      date: new Date().toISOString(),
+    });
+    saveTransactions(transactions);
+
+    confirmBtn.disabled = true;
+    successAmount.textContent = amt.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USDT';
+    form.classList.add('hidden');
+    successState.classList.add('show');
+  });
+
+  // --- canlı mod: simülasyon kartını gizle, otomatik algılama durumunu göster ---
+  if (LIVE_MODE) {
+    document.getElementById('simCard').style.display = 'none';
+    document.getElementById('demoNote').style.display = 'none';
+    document.getElementById('liveStatusCard').style.display = 'block';
+
+    const lastCheckedText = document.getElementById('lastCheckedText');
+    const liveStatusText = document.getElementById('liveStatusText');
+    let lastTxCount = transactions.length;
+
+    async function pollLive() {
+      try {
+        const [balanceRes, txRes] = await Promise.all([
+          apiFetch('/api/balance'),
+          apiFetch('/api/transactions'),
+        ]);
+        document.getElementById('currentBalance').textContent = formatUSD(balanceRes.balance);
+        lastCheckedText.textContent = new Date().toLocaleTimeString('tr-TR');
+
+        if (Array.isArray(txRes) && txRes.length > lastTxCount) {
+          const newest = txRes[0];
+          liveStatusText.textContent = `Az önce ${formatUSD(newest.amount)} yatırıldı.`;
+          lastTxCount = txRes.length;
+        }
+      } catch (err) {
+        lastCheckedText.textContent = 'bağlantı hatası';
+        console.error(err);
+      }
+    }
+
+    pollLive();
+    setInterval(pollLive, 10_000);
+  }
+</script>
+
+</body>
+</html>

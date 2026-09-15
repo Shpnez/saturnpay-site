@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayarlar — Saturn-Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070A; --card: #12151C; --card-2: #181C25; --field: #14171F;
+    --line: #262B35; --line-soft: rgba(255,255,255,0.06);
+    --text: #EDEBE4; --text-dim: #8B93A4; --text-faint: #565E6E;
+    --gold: #D4AF37; --gold-bright: #F0CB6A; --gold-dim: #8C7222; --amber: #C98A4B;
+    --bad: #C97757;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{ background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; }
+  h1{ font-family:'Inter',sans-serif; font-weight:500; }
+  a{ color:inherit; text-decoration:none; }
+
+  .topbar{
+    display:flex; align-items:center; gap:14px;
+    padding:18px 20px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .back-btn{
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:1px solid var(--line);
+    color:var(--text-dim); cursor:pointer; font-size:16px; flex-shrink:0;
+  }
+  .back-btn:hover{ border-color:var(--gold-dim); color:var(--text); }
+  .topbar h1{ font-size:17px; }
+
+  main{ max-width:520px; margin:0 auto; padding:24px 20px 60px; }
+
+  .profile-card{
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+    padding:24px 22px;
+    margin-bottom:20px;
+    display:flex; align-items:center; gap:16px;
+  }
+  .avatar-big{
+    width:58px; height:58px; border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, var(--gold-bright), var(--gold) 50%, var(--amber) 100%);
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px; color:#141008; flex-shrink:0;
+  }
+  .profile-info .masked{ font-size:16px; font-weight:600; margin-bottom:5px; }
+  .profile-info .tag{
+    display:inline-block;
+    padding:3px 10px;
+    border-radius:999px;
+    background:rgba(212,175,55,0.1);
+    border:1px solid rgba(212,175,55,0.25);
+    color:var(--gold-bright);
+    font-size:10.5px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  .section-label{
+    font-size:11px; color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase; letter-spacing:0.08em;
+    margin:22px 4px 10px;
+  }
+
+  .settings-group{
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .settings-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 20px;
+    border-top:1px solid var(--line-soft);
+    cursor:pointer;
+    transition:background .12s ease;
+  }
+  .settings-row:first-child{ border-top:none; }
+  .settings-row:hover{ background:rgba(255,255,255,0.02); }
+  .settings-row .left{ display:flex; align-items:center; gap:12px; }
+  .settings-row .icon{ font-size:16px; width:20px; text-align:center; color:var(--text-dim); }
+  .settings-row .icon svg{ width:18px; height:18px; display:block; }
+  .settings-row .label{ font-size:14px; color:var(--text); }
+  .settings-row .right{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-faint); }
+  .settings-row .arrow{ color:var(--text-faint); font-size:14px; }
+
+  .logout-btn{
+    width:100%;
+    margin-top:26px;
+    padding:14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--bad);
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .logout-btn:hover{ border-color:var(--bad); background:rgba(201,119,87,0.08); }
+
+  /* basit panel (Help Center / Contact Support / e-posta değiştir) */
+  .overlay{
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(0,0,0,0.6);
+    z-index:20;
+    align-items:flex-end;
+    justify-content:center;
+  }
+  .overlay.show{ display:flex; }
+  .sheet{
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:18px 18px 0 0;
+    width:100%; max-width:520px;
+    padding:24px 22px 28px;
+  }
+  .sheet h2{ font-family:'Inter',sans-serif; font-size:18px; margin-bottom:14px; }
+  .sheet p{ color:var(--text-dim); font-size:13.5px; line-height:1.7; margin-bottom:14px; }
+  .sheet input{
+    width:100%;
+    padding:12px 14px;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--text);
+    font-size:14px;
+    outline:none;
+    margin-bottom:14px;
+  }
+  .sheet input:focus{ border-color:var(--gold-dim); box-shadow:0 0 0 3px rgba(212,175,55,0.2); }
+  .sheet-actions{ display:flex; gap:10px; }
+  .sheet-btn{
+    flex:1;
+    padding:12px;
+    border-radius:999px;
+    font-size:13.5px;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--text);
+  }
+  .sheet-btn.primary{
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color:#141008;
+    border:none;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
+  <h1>Ayarlar</h1>
+</div>
+
+<main>
+  <div class="profile-card">
+    <div class="avatar-big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><circle cx="12" cy="8" r="3.8"/><path d="M4.2 20c1.4-3.8 4.5-6 7.8-6s6.4 2.2 7.8 6"/></svg></div>
+    <div class="profile-info">
+      <div class="masked" id="maskedEmail">—</div>
+      <span class="tag">Site: Saturn-Pay</span>
+    </div>
+  </div>
+
+  <div class="section-label">Hesabım</div>
+  <div class="settings-group">
+    <div class="settings-row" id="rowUid">
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="M8 10v4M12 10v4M16 10v4"/></svg></span><span class="label">UID</span></div>
+      <div class="right"><span id="uidValue" class="mono">—</span></div>
+    </div>
+    <div class="settings-row" id="rowEmail">
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><span class="label">E-posta Değiştir</span></div>
+      <div class="right"><span class="arrow">›</span></div>
+    </div>
+  </div>
+
+  <div class="section-label">Destek</div>
+  <div class="settings-group">
+    <div class="settings-row" id="rowHelp">
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M9.3 9.6a2.7 2.7 0 0 1 5.2 1c0 1.6-2.2 2-2.4 3.3"/><path d="M12 17.2v.05"/></svg></span><span class="label">Yardım Merkezi</span></div>
+      <div class="right"><span class="arrow">›</span></div>
+    </div>
+    <div class="settings-row" id="rowContact">
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-4 3.5V17H6a2 2 0 0 1-2-2Z"/></svg></span><span class="label">Destek ile İletişim</span></div>
+      <div class="right"><span class="arrow">›</span></div>
+    </div>
+  </div>
+
+  <button class="logout-btn" id="logoutBtn">Çıkış Yap</button>
+</main>
+
+<!-- e-posta değiştirme paneli -->
+<div class="overlay" id="emailOverlay">
+  <div class="sheet">
+    <h2>E-posta Değiştir</h2>
+    <p>Hesabınızla ilişkili e-posta adresini güncelleyin.</p>
+    <input type="email" id="newEmailInput" placeholder="yeni@eposta.com">
+    <div class="sheet-actions">
+      <button class="sheet-btn" onclick="closeOverlay('emailOverlay')">Vazgeç</button>
+      <button class="sheet-btn primary" id="saveEmailBtn">Kaydet</button>
+    </div>
+  </div>
+</div>
+
+<!-- yardım merkezi paneli -->
+<div class="overlay" id="helpOverlay">
+  <div class="sheet">
+    <h2>Yardım Merkezi</h2>
+    <p>
+      <strong>Para yatırma ne kadar sürer?</strong><br>
+      Ağ onay sayısına göre değişir (TRC20 ~20, ERC20 ~12 onay).
+    </p>
+    <p>
+      <strong>Minimum yatırım/çekim tutarı nedir?</strong><br>
+      Yatırım için 10 USDT, çekim için 20 USDT.
+    </p>
+    <p>
+      <strong>Yanlış ağdan gönderim yaptım, ne yapmalıyım?</strong><br>
+      Lütfen Destek ile İletişim üzerinden bize ulaşın.
+    </p>
+    <div class="sheet-actions">
+      <button class="sheet-btn primary" onclick="closeOverlay('helpOverlay')">Kapat</button>
+    </div>
+  </div>
+</div>
+
+<!-- destek paneli -->
+<div class="overlay" id="contactOverlay">
+  <div class="sheet">
+    <h2>Destek ile İletişim</h2>
+    <p>Sorularınız için bize e-posta ile ulaşabilirsiniz:</p>
+    <p style="color:var(--gold-bright); font-family:'IBM Plex Mono',monospace;">destek@saturn-pay.com</p>
+    <div class="sheet-actions">
+      <button class="sheet-btn" onclick="closeOverlay('contactOverlay')">Kapat</button>
+      <button class="sheet-btn primary" onclick="window.location.href='mailto:destek@saturn-pay.com'">E-posta Gönder</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const token = localStorage.getItem('saturnpay_token');
+  const userRaw = localStorage.getItem('saturnpay_user');
+  if (!token) { window.location.href = 'login.html'; }
+  let user = {};
+  try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
+
+  function maskEmail(email) {
+    if (!email || email.indexOf('@') === -1) return email || '—';
+    const [name, domain] = email.split('@');
+    const visible = name.slice(0, 3);
+    return `${visible}${'*'.repeat(Math.max(name.length - 3, 3))}@****`;
+  }
+
+  function renderUser() {
+    document.getElementById('maskedEmail').textContent = maskEmail(user.email);
+    document.getElementById('uidValue').textContent = user.id || user.email || '—';
+  }
+  renderUser();
+
+  function openOverlay(id) { document.getElementById(id).classList.add('show'); }
+  function closeOverlay(id) { document.getElementById(id).classList.remove('show'); }
+
+  document.getElementById('rowEmail').addEventListener('click', () => {
+    document.getElementById('newEmailInput').value = user.email || '';
+    openOverlay('emailOverlay');
+  });
+  document.getElementById('rowHelp').addEventListener('click', () => openOverlay('helpOverlay'));
+  document.getElementById('rowContact').addEventListener('click', () => openOverlay('contactOverlay'));
+
+  document.getElementById('saveEmailBtn').addEventListener('click', () => {
+    const newEmail = document.getElementById('newEmailInput').value.trim();
+    if (!newEmail || newEmail.indexOf('@') === -1) return;
+    user.email = newEmail;
+    localStorage.setItem('saturnpay_user', JSON.stringify(user));
+    renderUser();
+    closeOverlay('emailOverlay');
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('saturnpay_token');
+    localStorage.removeItem('saturnpay_user');
+    window.location.href = 'login.html';
+  });
+</script>
+
+</body>
+</html>
