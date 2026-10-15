@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invests — Saturn-Pay</title>
+<title id="pageTitleTag">Invests — Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -104,11 +104,11 @@
 <body>
 
 <div class="topbar">
-  <button class="avatar-btn" id="avatarBtn" title="Ayarlar" aria-label="Ayarlar">
+  <button class="avatar-btn" id="avatarBtn" data-i18n-title="settingsTitle" data-i18n-aria="settingsTitle" title="Settings" aria-label="Settings">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.3-3.5 4.2-5.5 7.5-5.5s6.2 2 7.5 5.5"/></svg>
   </button>
   <span class="brand-mini">Saturn-Pay</span>
-  <button class="bell-btn" id="bellBtn" title="Bildirimler" aria-label="Bildirimler">
+  <button class="bell-btn" id="bellBtn" data-i18n-title="notifications" data-i18n-aria="notifications" title="Notifications" aria-label="Notifications">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10a6 6 0 0 1 12 0c0 3.2 1 4.8 1.6 5.6.3.4 0 1-.5 1H4.9c-.5 0-.8-.6-.5-1C5 14.8 6 13.2 6 10Z"/><path d="M9.5 19a2.6 2.6 0 0 0 5 0"/></svg>
     <span class="bell-dot"></span>
   </button>
@@ -116,18 +116,18 @@
 
 <main>
   <div class="page-head">
-    <h1>Invests</h1>
-    <p>Aktif yatırımlarınızın tam listesi.</p>
+    <h1 data-i18n="pageTitle">Invests</h1>
+    <p data-i18n="pageDesc">Full list of your active investments.</p>
   </div>
 
   <div class="summary-row">
     <div class="summary-stat">
       <div class="n" id="investCount">0</div>
-      <div class="l">Aktif Yatırım</div>
+      <div class="l" data-i18n="activeInvestments">Active Investments</div>
     </div>
     <div class="summary-stat">
       <div class="n" id="investTotal">$0</div>
-      <div class="l">Toplam Yatırılan</div>
+      <div class="l" data-i18n="totalInvested">Total Invested</div>
     </div>
   </div>
 
@@ -138,23 +138,96 @@
 
 <nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V19a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg></span>Home
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V19a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg></span><span data-i18n="navHome">Home</span>
   </a>
   <a href="investments.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 6h7v7"/></svg></span>Investments
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 6h7v7"/></svg></span><span data-i18n="navInvestments">Investments</span>
   </a>
   <a href="invests.html" class="nav-item active">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span>Invests
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span data-i18n="navInvests">Invests</span>
   </a>
   <a href="referral.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16"/><path d="M12 9v11"/><path d="M12 9c-1.2 0-3-1-3-2.6C9 5.1 10 4 11.3 4 12.7 4 12 7 12 9Z"/><path d="M12 9c1.2 0 3-1 3-2.6C15 5.1 14 4 12.7 4 11.3 4 12 7 12 9Z"/></svg></span>Referral
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16"/><path d="M12 9v11"/><path d="M12 9c-1.2 0-3-1-3-2.6C9 5.1 10 4 11.3 4 12.7 4 12 7 12 9Z"/><path d="M12 9c1.2 0 3-1 3-2.6C15 5.1 14 4 12.7 4 11.3 4 12 7 12 9Z"/></svg></span><span data-i18n="navReferral">Referral</span>
   </a>
   <a href="assets.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.6"/></svg></span>Assets
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.6"/></svg></span><span data-i18n="navAssets">Assets</span>
   </a>
 </nav>
 
 <script>
+  // ---------------------------------------------------------------
+  // Çeviriler — invests.html
+  // ---------------------------------------------------------------
+  const LANG_KEY = 'saturnpay_lang';
+  const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
+  const translations = {
+    en: {
+      settingsTitle: 'Settings', notifications: 'Notifications', noNotifications: 'You have no new notifications.',
+      pageTitle: 'Invests', pageDesc: 'Full list of your active investments.',
+      activeInvestments: 'Active Investments', totalInvested: 'Total Invested',
+      noActiveInvestments: 'You have no active investments yet.', active: 'Active',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    tr: {
+      settingsTitle: 'Ayarlar', notifications: 'Bildirimler', noNotifications: 'Şu an yeni bildiriminiz yok.',
+      pageTitle: 'Invests', pageDesc: 'Aktif yatırımlarınızın tam listesi.',
+      activeInvestments: 'Aktif Yatırım', totalInvested: 'Toplam Yatırılan',
+      noActiveInvestments: 'Henüz aktif bir yatırımınız yok.', active: 'Aktif',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    ru: {
+      settingsTitle: 'Настройки', notifications: 'Уведомления', noNotifications: 'У вас нет новых уведомлений.',
+      pageTitle: 'Invests', pageDesc: 'Полный список ваших активных инвестиций.',
+      activeInvestments: 'Активные инвестиции', totalInvested: 'Всего инвестировано',
+      noActiveInvestments: 'У вас пока нет активных инвестиций.', active: 'Активна',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    es: {
+      settingsTitle: 'Ajustes', notifications: 'Notificaciones', noNotifications: 'No tienes notificaciones nuevas.',
+      pageTitle: 'Invests', pageDesc: 'Lista completa de tus inversiones activas.',
+      activeInvestments: 'Inversiones Activas', totalInvested: 'Total Invertido',
+      noActiveInvestments: 'Aún no tienes inversiones activas.', active: 'Activa',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    fr: {
+      settingsTitle: 'Paramètres', notifications: 'Notifications', noNotifications: "Vous n'avez pas de nouvelles notifications.",
+      pageTitle: 'Invests', pageDesc: 'Liste complète de vos investissements actifs.',
+      activeInvestments: 'Investissements Actifs', totalInvested: 'Total Investi',
+      noActiveInvestments: "Vous n'avez pas encore d'investissements actifs.", active: 'Actif',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    de: {
+      settingsTitle: 'Einstellungen', notifications: 'Benachrichtigungen', noNotifications: 'Sie haben keine neuen Benachrichtigungen.',
+      pageTitle: 'Invests', pageDesc: 'Vollständige Liste Ihrer aktiven Investitionen.',
+      activeInvestments: 'Aktive Investitionen', totalInvested: 'Gesamt Investiert',
+      noActiveInvestments: 'Sie haben noch keine aktiven Investitionen.', active: 'Aktiv',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+  };
+
+  function getLang() { return localStorage.getItem(LANG_KEY) || 'en'; }
+  function t(key) { return (translations[getLang()] || translations.en)[key]; }
+
+  function applyLang() {
+    const code = getLang();
+    const dict = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key]) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      if (dict[key]) el.title = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria');
+      if (dict[key]) el.setAttribute('aria-label', dict[key]);
+    });
+    document.getElementById('pageTitleTag').textContent = `${dict.pageTitle} — Saturn-Pay`;
+  }
+
   const TX_KEY = 'saturnpay_transactions';
 
   function daysAgoISO(n) {
@@ -171,8 +244,9 @@
   function formatUSD(n) {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
   }
-  function formatDateTR(iso) {
-    return new Date(iso).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
+  function formatDateLocalized(iso) {
+    const locale = LOCALE_MAP[getLang()] || 'en-US';
+    return new Date(iso).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
   function loadTransactions(user) {
@@ -185,12 +259,12 @@
     }
     let seed;
     if (typeof user.balance === 'number' && user.balance > 0) {
-      seed = [{ id: makeId(), description: 'Başlangıç bakiyesi', amount: user.balance, date: daysAgoISO(0) }];
+      seed = [{ id: makeId(), description: 'Initial balance', amount: user.balance, date: daysAgoISO(0) }];
     } else {
       seed = [
-        { id: makeId(), description: 'USDT Yatırma (TRC20)', amount: 250, date: daysAgoISO(14) },
-        { id: makeId(), description: 'USDT Yatırma (ERC20)', amount: 500, date: daysAgoISO(9) },
-        { id: makeId(), description: 'USDT Çekme (TRC20)', amount: -120, date: daysAgoISO(2) },
+        { id: makeId(), description: 'USDT Deposit (TRC20)', amount: 250, date: daysAgoISO(14) },
+        { id: makeId(), description: 'USDT Deposit (ERC20)', amount: 500, date: daysAgoISO(9) },
+        { id: makeId(), description: 'USDT Withdrawal (TRC20)', amount: -120, date: daysAgoISO(2) },
       ];
     }
     localStorage.setItem(TX_KEY, JSON.stringify(seed));
@@ -206,39 +280,40 @@
   const transactions = loadTransactions(user);
 
   document.getElementById('avatarBtn').addEventListener('click', () => window.location.href = 'settings.html');
-  document.getElementById('bellBtn').addEventListener('click', () => alert('Şu an yeni bildiriminiz yok.'));
+  document.getElementById('bellBtn').addEventListener('click', () => alert(t('noNotifications')));
 
   function renderInvests() {
     const invests = transactions
-      .filter(t => t.amount > 0)
+      .filter(tx => tx.amount > 0)
       .sort((a, b) => new Date(a.date) - new Date(b.date)); // eskiden yeniye
 
-    const total = invests.reduce((s, t) => s + t.amount, 0);
+    const total = invests.reduce((s, tx) => s + tx.amount, 0);
     document.getElementById('investCount').textContent = invests.length;
     document.getElementById('investTotal').textContent = formatUSD(total);
 
     const listEl = document.getElementById('investList');
     if (invests.length === 0) {
-      listEl.innerHTML = '<div class="empty-note">Henüz aktif bir yatırımınız yok.</div>';
+      listEl.innerHTML = `<div class="empty-note">${t('noActiveInvestments')}</div>`;
       return;
     }
-    listEl.innerHTML = invests.map(t => `
+    listEl.innerHTML = invests.map(tx => `
       <div class="invest-row">
         <div class="invest-main">
           <div class="invest-badge">↑</div>
           <div>
-            <div class="invest-desc">${escapeHtml(t.description)}</div>
-            <div class="invest-date">${formatDateTR(t.date)}</div>
+            <div class="invest-desc">${escapeHtml(tx.description)}</div>
+            <div class="invest-date">${formatDateLocalized(tx.date)}</div>
           </div>
         </div>
         <div class="invest-right">
-          <div class="invest-amount">${formatUSD(t.amount)}</div>
-          <span class="invest-status">Aktif</span>
+          <div class="invest-amount">${formatUSD(tx.amount)}</div>
+          <span class="invest-status">${t('active')}</span>
         </div>
       </div>
     `).join('');
   }
 
+  applyLang();
   renderInvests();
 </script>
 

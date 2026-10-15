@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>USDT Çek — Saturn-Pay</title>
+<title id="pageTitleTag">Withdraw USDT — Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -435,61 +435,61 @@
     <span class="mark"><span class="mark-ring"></span><span class="mark-body"></span><span class="mark-ring front"></span></span>
     Saturn-Pay
   </a>
-  <a href="dashboard.html" class="back-link">← Panele Dön</a>
+  <a href="dashboard.html" class="back-link">← <span data-i18n="backToDashboard">Back to Dashboard</span></a>
 </nav>
 
 <main>
   <div class="page-head">
-    <h1>USDT Çek</h1>
-    <p>Bakiyenizi kripto cüzdanınıza gönderin.</p>
+    <h1 data-i18n="pageTitle">Withdraw USDT</h1>
+    <p data-i18n="pageDesc">Send your balance to your crypto wallet.</p>
   </div>
 
   <div class="balance-strip">
-    <span class="label">Kullanılabilir Bakiye</span>
+    <span class="label" data-i18n="availableBalance">Available Balance</span>
     <span class="value" id="currentBalance">$0.00</span>
   </div>
 
   <div class="card">
     <div class="card-eyebrow">
-      <span class="title">Çekim Adresi</span>
+      <span class="title" data-i18n="withdrawalAddress">Withdrawal Address</span>
       <span class="asset-pill"><span class="dot"></span>USDT</span>
     </div>
 
     <div class="network-tabs" id="networkTabs">
       <button type="button" class="network-tab active" data-network="TRC20" data-fee="1">
-        TRC20<span class="fee">Tron · 1 USDT ücret</span>
+        TRC20<span class="fee" data-i18n="tronFee">Tron · 1 USDT fee</span>
       </button>
       <button type="button" class="network-tab" data-network="ERC20" data-fee="8">
-        ERC20<span class="fee">Ethereum · 8 USDT ücret</span>
+        ERC20<span class="fee" data-i18n="ethFee">Ethereum · 8 USDT fee</span>
       </button>
       <button type="button" class="network-tab" data-network="BEP20" data-fee="0.5">
-        BEP20<span class="fee">BNB Chain · 0.5 USDT</span>
+        BEP20<span class="fee" data-i18n="bnbFee">BNB Chain · 0.5 USDT</span>
       </button>
     </div>
 
-    <label class="field-label" for="destAddress">Alıcı Cüzdan Adresi</label>
-    <input type="text" id="destAddress" class="address-input" placeholder="Örn. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u" autocomplete="off">
+    <label class="field-label" for="destAddress" data-i18n="recipientAddress">Recipient Wallet Address</label>
+    <input type="text" id="destAddress" class="address-input" data-i18n-placeholder="addressPlaceholder" placeholder="e.g. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u" autocomplete="off">
 
     <div class="warn-note">
       <span class="ic">⚠</span>
-      <span>Adresin seçtiğiniz <b id="warnNetwork">TRC20</b> ağıyla uyumlu olduğundan emin olun. Yanlış ağa gönderilen çekimler kalıcı olarak kaybolabilir.</span>
+      <span><span data-i18n="warnBefore">Make sure your address is compatible with the</span> <b id="warnNetwork">TRC20</b> <span data-i18n="warnAfter">network you selected. Withdrawals sent to the wrong network may be permanently lost.</span></span>
     </div>
 
     <div class="meta-row">
-      <span>İşlem süresi</span>
-      <span id="etaText">~5 dakika</span>
+      <span data-i18n="transactionTime">Transaction time</span>
+      <span id="etaText" data-i18n="etaValue">~5 minutes</span>
     </div>
   </div>
 
   <div class="card">
-    <div class="sim-title">Çekilecek Tutar</div>
+    <div class="sim-title" data-i18n="amountToWithdraw">Amount to Withdraw</div>
 
     <form id="withdrawForm" class="form-body" novalidate>
       <div class="amount-field" id="amountField">
         <span class="amount-currency">USDT</span>
         <input type="number" id="withdrawAmount" placeholder="0.00" min="20" step="0.01" inputmode="decimal" autocomplete="off">
       </div>
-      <div class="amount-hint" id="amountHint">Minimum çekim: 20 USDT</div>
+      <div class="amount-hint" id="amountHint" data-i18n="minWithdrawHint">Minimum withdrawal: 20 USDT</div>
 
       <div class="quick-amounts" id="quickAmounts">
         <button type="button" class="chip" data-amt="20">20</button>
@@ -500,34 +500,144 @@
       </div>
 
       <div class="fee-row">
-        <span class="label">Ağ ücreti</span>
+        <span class="label" data-i18n="networkFee">Network fee</span>
         <span class="value" id="feeValue">1 USDT</span>
       </div>
       <div class="fee-row">
-        <span class="label">Hesabınızdan düşülecek</span>
+        <span class="label" data-i18n="deductedFromAccount">Deducted from your account</span>
         <span class="value total" id="totalValue">0.00 USDT</span>
       </div>
 
-      <button type="submit" class="confirm-btn" id="confirmBtn">Çekim Talebini Onayla</button>
+      <button type="submit" class="confirm-btn" id="confirmBtn" data-i18n="confirmWithdrawal">Confirm Withdrawal Request</button>
       <p class="form-error" id="formError"></p>
     </form>
 
     <div class="success-state" id="successState">
       <div class="success-check">✓</div>
-      <div class="success-title">Çekim Talebi Alındı</div>
+      <div class="success-title" data-i18n="withdrawalReceived">Withdrawal Request Received</div>
       <div class="success-amount" id="successAmount">0 USDT</div>
-      <a href="dashboard.html" class="success-return">Panele Dön</a>
+      <a href="dashboard.html" class="success-return" data-i18n="backToDashboard">Back to Dashboard</a>
     </div>
   </div>
 
-  <p class="note">
-    Bakiye ve işlemler yalnızca bu tarayıcıda saklanır; gerçek bir blok
-    zinciri ağına veya cüzdana bağlı değildir. Bu alan test amacıyla
-    çekim işlemini yerel olarak simüle eder.
+  <p class="note" data-i18n="demoNoteText">
+    Balance and transactions are stored only in this browser; they are not
+    connected to a real blockchain network or wallet. This section
+    simulates the withdrawal locally for testing purposes.
   </p>
 </main>
 
 <script>
+  // ---------------------------------------------------------------
+  // Çeviriler — withdraw.html
+  // ---------------------------------------------------------------
+  const LANG_KEY = 'saturnpay_lang';
+
+  const translations = {
+    en: {
+      backToDashboard: 'Back to Dashboard', pageTitle: 'Withdraw USDT', pageDesc: 'Send your balance to your crypto wallet.',
+      availableBalance: 'Available Balance', withdrawalAddress: 'Withdrawal Address',
+      tronFee: 'Tron · 1 USDT fee', ethFee: 'Ethereum · 8 USDT fee', bnbFee: 'BNB Chain · 0.5 USDT',
+      recipientAddress: 'Recipient Wallet Address', addressPlaceholder: 'e.g. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u',
+      warnBefore: 'Make sure your address is compatible with the', warnAfter: 'network you selected. Withdrawals sent to the wrong network may be permanently lost.',
+      transactionTime: 'Transaction time', etaValue: '~5 minutes',
+      amountToWithdraw: 'Amount to Withdraw', minWithdrawHint: 'Minimum withdrawal: 20 USDT',
+      networkFee: 'Network fee', deductedFromAccount: 'Deducted from your account', confirmWithdrawal: 'Confirm Withdrawal Request',
+      withdrawalReceived: 'Withdrawal Request Received',
+      demoNoteText: 'Balance and transactions are stored only in this browser; they are not connected to a real blockchain network or wallet. This section simulates the withdrawal locally for testing purposes.',
+      enterAddress: 'Please enter a wallet address.', invalidAmount: 'Please enter a valid amount.',
+      minWithdrawError: 'Minimum withdrawal amount is 20 USDT.', insufficientBalance: 'Insufficient balance (amount + network fee).',
+    },
+    tr: {
+      backToDashboard: 'Panele Dön', pageTitle: 'USDT Çek', pageDesc: 'Bakiyenizi kripto cüzdanınıza gönderin.',
+      availableBalance: 'Kullanılabilir Bakiye', withdrawalAddress: 'Çekim Adresi',
+      tronFee: 'Tron · 1 USDT ücret', ethFee: 'Ethereum · 8 USDT ücret', bnbFee: 'BNB Chain · 0.5 USDT',
+      recipientAddress: 'Alıcı Cüzdan Adresi', addressPlaceholder: 'Örn. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u',
+      warnBefore: 'Adresin seçtiğiniz', warnAfter: 'ağıyla uyumlu olduğundan emin olun. Yanlış ağa gönderilen çekimler kalıcı olarak kaybolabilir.',
+      transactionTime: 'İşlem süresi', etaValue: '~5 dakika',
+      amountToWithdraw: 'Çekilecek Tutar', minWithdrawHint: 'Minimum çekim: 20 USDT',
+      networkFee: 'Ağ ücreti', deductedFromAccount: 'Hesabınızdan düşülecek', confirmWithdrawal: 'Çekim Talebini Onayla',
+      withdrawalReceived: 'Çekim Talebi Alındı',
+      demoNoteText: 'Bakiye ve işlemler yalnızca bu tarayıcıda saklanır; gerçek bir blok zinciri ağına veya cüzdana bağlı değildir. Bu alan test amacıyla çekim işlemini yerel olarak simüle eder.',
+      enterAddress: 'Lütfen bir cüzdan adresi girin.', invalidAmount: 'Geçerli bir tutar girin.',
+      minWithdrawError: 'Minimum çekim tutarı 20 USDT.', insufficientBalance: 'Yetersiz bakiye (tutar + ağ ücreti).',
+    },
+    ru: {
+      backToDashboard: 'Назад в панель', pageTitle: 'Вывести USDT', pageDesc: 'Отправьте баланс на свой криптокошелек.',
+      availableBalance: 'Доступный баланс', withdrawalAddress: 'Адрес для вывода',
+      tronFee: 'Tron · комиссия 1 USDT', ethFee: 'Ethereum · комиссия 8 USDT', bnbFee: 'BNB Chain · 0.5 USDT',
+      recipientAddress: 'Адрес кошелька получателя', addressPlaceholder: 'напр. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u',
+      warnBefore: 'Убедитесь, что ваш адрес совместим с сетью', warnAfter: ', которую вы выбрали. Средства, отправленные не в ту сеть, могут быть безвозвратно потеряны.',
+      transactionTime: 'Время обработки', etaValue: '~5 минут',
+      amountToWithdraw: 'Сумма для вывода', minWithdrawHint: 'Минимальный вывод: 20 USDT',
+      networkFee: 'Комиссия сети', deductedFromAccount: 'Будет списано с вашего счета', confirmWithdrawal: 'Подтвердить запрос на вывод',
+      withdrawalReceived: 'Запрос на вывод получен',
+      demoNoteText: 'Баланс и транзакции хранятся только в этом браузере; они не связаны с реальной блокчейн-сетью или кошельком. Этот раздел локально симулирует вывод средств в тестовых целях.',
+      enterAddress: 'Пожалуйста, введите адрес кошелька.', invalidAmount: 'Введите корректную сумму.',
+      minWithdrawError: 'Минимальная сумма вывода — 20 USDT.', insufficientBalance: 'Недостаточно средств (сумма + комиссия сети).',
+    },
+    es: {
+      backToDashboard: 'Volver al Panel', pageTitle: 'Retirar USDT', pageDesc: 'Envía tu saldo a tu billetera cripto.',
+      availableBalance: 'Saldo Disponible', withdrawalAddress: 'Dirección de Retiro',
+      tronFee: 'Tron · comisión 1 USDT', ethFee: 'Ethereum · comisión 8 USDT', bnbFee: 'BNB Chain · 0.5 USDT',
+      recipientAddress: 'Dirección de Billetera del Destinatario', addressPlaceholder: 'ej. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u',
+      warnBefore: 'Asegúrate de que tu dirección sea compatible con la red', warnAfter: 'que seleccionaste. Los retiros enviados a la red incorrecta pueden perderse permanentemente.',
+      transactionTime: 'Tiempo de transacción', etaValue: '~5 minutos',
+      amountToWithdraw: 'Monto a Retirar', minWithdrawHint: 'Retiro mínimo: 20 USDT',
+      networkFee: 'Comisión de red', deductedFromAccount: 'Se deducirá de tu cuenta', confirmWithdrawal: 'Confirmar Solicitud de Retiro',
+      withdrawalReceived: 'Solicitud de Retiro Recibida',
+      demoNoteText: 'El saldo y las transacciones se almacenan solo en este navegador; no están conectados a una red blockchain o billetera real. Esta sección simula el retiro localmente con fines de prueba.',
+      enterAddress: 'Por favor, introduce una dirección de billetera.', invalidAmount: 'Introduce un monto válido.',
+      minWithdrawError: 'El monto mínimo de retiro es 20 USDT.', insufficientBalance: 'Saldo insuficiente (monto + comisión de red).',
+    },
+    fr: {
+      backToDashboard: 'Retour au Tableau de Bord', pageTitle: 'Retirer des USDT', pageDesc: 'Envoyez votre solde vers votre portefeuille crypto.',
+      availableBalance: 'Solde Disponible', withdrawalAddress: 'Adresse de Retrait',
+      tronFee: 'Tron · frais de 1 USDT', ethFee: 'Ethereum · frais de 8 USDT', bnbFee: 'BNB Chain · 0.5 USDT',
+      recipientAddress: 'Adresse du Portefeuille du Destinataire', addressPlaceholder: 'ex. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u',
+      warnBefore: 'Assurez-vous que votre adresse est compatible avec le réseau', warnAfter: 'que vous avez sélectionné. Les retraits envoyés vers le mauvais réseau peuvent être perdus définitivement.',
+      transactionTime: 'Délai de traitement', etaValue: '~5 minutes',
+      amountToWithdraw: 'Montant à Retirer', minWithdrawHint: 'Retrait minimum : 20 USDT',
+      networkFee: 'Frais de réseau', deductedFromAccount: 'Sera déduit de votre compte', confirmWithdrawal: 'Confirmer la Demande de Retrait',
+      withdrawalReceived: 'Demande de Retrait Reçue',
+      demoNoteText: "Le solde et les transactions sont stockés uniquement dans ce navigateur ; ils ne sont pas connectés à un réseau blockchain ou un portefeuille réel. Cette section simule le retrait localement à des fins de test.",
+      enterAddress: 'Veuillez entrer une adresse de portefeuille.', invalidAmount: 'Veuillez entrer un montant valide.',
+      minWithdrawError: 'Le montant minimum de retrait est de 20 USDT.', insufficientBalance: 'Solde insuffisant (montant + frais de réseau).',
+    },
+    de: {
+      backToDashboard: 'Zurück zum Dashboard', pageTitle: 'USDT Auszahlen', pageDesc: 'Senden Sie Ihr Guthaben an Ihre Krypto-Wallet.',
+      availableBalance: 'Verfügbares Guthaben', withdrawalAddress: 'Auszahlungsadresse',
+      tronFee: 'Tron · 1 USDT Gebühr', ethFee: 'Ethereum · 8 USDT Gebühr', bnbFee: 'BNB Chain · 0.5 USDT',
+      recipientAddress: 'Wallet-Adresse des Empfängers', addressPlaceholder: 'z.B. TXn9mK4vLpQs8yD3fA7hC2eR6wZ1bN5oGxV8u',
+      warnBefore: 'Stellen Sie sicher, dass Ihre Adresse mit dem Netzwerk', warnAfter: 'kompatibel ist, das Sie ausgewählt haben. Auszahlungen an das falsche Netzwerk können dauerhaft verloren gehen.',
+      transactionTime: 'Bearbeitungszeit', etaValue: '~5 Minuten',
+      amountToWithdraw: 'Auszuzahlender Betrag', minWithdrawHint: 'Mindestauszahlung: 20 USDT',
+      networkFee: 'Netzwerkgebühr', deductedFromAccount: 'Wird von Ihrem Konto abgezogen', confirmWithdrawal: 'Auszahlungsantrag Bestätigen',
+      withdrawalReceived: 'Auszahlungsantrag Erhalten',
+      demoNoteText: 'Guthaben und Transaktionen werden nur in diesem Browser gespeichert; sie sind nicht mit einem echten Blockchain-Netzwerk oder einer Wallet verbunden. Dieser Bereich simuliert die Auszahlung lokal zu Testzwecken.',
+      enterAddress: 'Bitte geben Sie eine Wallet-Adresse ein.', invalidAmount: 'Bitte geben Sie einen gültigen Betrag ein.',
+      minWithdrawError: 'Der Mindestauszahlungsbetrag beträgt 20 USDT.', insufficientBalance: 'Unzureichendes Guthaben (Betrag + Netzwerkgebühr).',
+    },
+  };
+
+  function getLang() { return localStorage.getItem(LANG_KEY) || 'en'; }
+  function t(key) { return (translations[getLang()] || translations.en)[key]; }
+
+  function applyLang() {
+    const code = getLang();
+    const dict = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key]) el.placeholder = dict[key];
+    });
+    document.getElementById('pageTitleTag').textContent = `${dict.pageTitle} — Saturn-Pay`;
+  }
+
   const TX_KEY = 'saturnpay_transactions';
 
   function makeId() {
@@ -555,14 +665,14 @@
     let seed;
     if (typeof user.balance === 'number' && user.balance > 0) {
       seed = [
-        { id: makeId(), description: 'Başlangıç bakiyesi', amount: user.balance, date: daysAgoISO(0) },
+        { id: makeId(), description: 'Initial balance', amount: user.balance, date: daysAgoISO(0) },
       ];
     } else {
       seed = [
-        { id: makeId(), description: 'Hesap açılış bonusu', amount: 250, date: daysAgoISO(14) },
-        { id: makeId(), description: 'USDT Yatırma (TRC20)', amount: 500, date: daysAgoISO(9) },
-        { id: makeId(), description: 'Aylık üyelik', amount: -19.99, date: daysAgoISO(5) },
-        { id: makeId(), description: 'USDT Çekme (TRC20)', amount: -120, date: daysAgoISO(2) },
+        { id: makeId(), description: 'Account opening bonus', amount: 250, date: daysAgoISO(14) },
+        { id: makeId(), description: 'USDT Deposit (TRC20)', amount: 500, date: daysAgoISO(9) },
+        { id: makeId(), description: 'Monthly membership', amount: -19.99, date: daysAgoISO(5) },
+        { id: makeId(), description: 'USDT Withdrawal (TRC20)', amount: -120, date: daysAgoISO(2) },
       ];
     }
     localStorage.setItem(TX_KEY, JSON.stringify(seed));
@@ -602,7 +712,7 @@
   }
 
   function setNetwork(tab) {
-    [...networkTabs.children].forEach(t => t.classList.toggle('active', t === tab));
+    [...networkTabs.children].forEach(tb => tb.classList.toggle('active', tb === tab));
     warnNetwork.textContent = tab.dataset.network;
     feeValue.textContent = tab.dataset.fee + ' USDT';
     updateTotal();
@@ -674,27 +784,27 @@
     const activeNetwork = networkTabs.querySelector('.network-tab.active').dataset.network;
 
     if (!address) {
-      showError('Lütfen bir cüzdan adresi girin.');
+      showError(t('enterAddress'));
       destAddress.focus();
       return;
     }
     if (!amt || amt <= 0) {
-      showError('Geçerli bir tutar girin.');
+      showError(t('invalidAmount'));
       return;
     }
     if (amt < 20) {
-      showError('Minimum çekim tutarı 20 USDT.');
+      showError(t('minWithdrawError'));
       return;
     }
     const totalDebit = amt + fee;
     if (totalDebit > balance) {
-      showError('Yetersiz bakiye (tutar + ağ ücreti).');
+      showError(t('insufficientBalance'));
       return;
     }
 
     transactions.push({
       id: makeId(),
-      description: 'USDT Çekme (' + activeNetwork + ')',
+      description: 'USDT Withdrawal (' + activeNetwork + ')',
       amount: -totalDebit,
       date: new Date().toISOString(),
     });
@@ -706,6 +816,7 @@
     successState.classList.add('show');
   });
 
+  applyLang();
   updateTotal();
 </script>
 

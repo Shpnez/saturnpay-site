@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ayarlar — Saturn-Pay</title>
+<title id="pageTitleTag">Settings — Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -107,7 +107,7 @@
   }
   .logout-btn:hover{ border-color:var(--bad); background:rgba(201,119,87,0.08); }
 
-  /* basit panel (Help Center / Contact Support / e-posta değiştir) */
+  /* basit panel (Help Center / Contact Support / e-posta değiştir / dil) */
   .overlay{
     display:none;
     position:fixed; inset:0;
@@ -123,6 +123,8 @@
     border-radius:18px 18px 0 0;
     width:100%; max-width:520px;
     padding:24px 22px 28px;
+    max-height:80vh;
+    overflow-y:auto;
   }
   .sheet h2{ font-family:'Inter',sans-serif; font-size:18px; margin-bottom:14px; }
   .sheet p{ color:var(--text-dim); font-size:13.5px; line-height:1.7; margin-bottom:14px; }
@@ -155,13 +157,24 @@
     color:#141008;
     border:none;
   }
+
+  .lang-option{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 4px;
+    border-top:1px solid var(--line-soft);
+    cursor:pointer;
+  }
+  .lang-option:first-child{ border-top:none; }
+  .lang-option .name{ font-size:14.5px; color:var(--text); }
+  .lang-option .check{ color:var(--gold-bright); font-size:15px; opacity:0; }
+  .lang-option.active .check{ opacity:1; }
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <button class="back-btn" onclick="window.location.href='dashboard.html'">←</button>
-  <h1>Ayarlar</h1>
+  <h1 data-i18n="title">Settings</h1>
 </div>
 
 <main>
@@ -169,46 +182,50 @@
     <div class="avatar-big"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="26" height="26"><circle cx="12" cy="8" r="3.8"/><path d="M4.2 20c1.4-3.8 4.5-6 7.8-6s6.4 2.2 7.8 6"/></svg></div>
     <div class="profile-info">
       <div class="masked" id="maskedEmail">—</div>
-      <span class="tag">Site: Saturn-Pay</span>
+      <span class="tag"><span data-i18n="siteLabel">Site</span>: Saturn-Pay</span>
     </div>
   </div>
 
-  <div class="section-label">Hesabım</div>
+  <div class="section-label" data-i18n="sectionAccount">Account</div>
   <div class="settings-group">
     <div class="settings-row" id="rowUid">
       <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="17" height="12" rx="2"/><path d="M8 10v4M12 10v4M16 10v4"/></svg></span><span class="label">UID</span></div>
       <div class="right"><span id="uidValue" class="mono">—</span></div>
     </div>
     <div class="settings-row" id="rowEmail">
-      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><span class="label">E-posta Değiştir</span></div>
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><span class="label" data-i18n="changeEmail">Change Email</span></div>
       <div class="right"><span class="arrow">›</span></div>
+    </div>
+    <div class="settings-row" id="rowLang">
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M3.7 12h16.6M12 3.7c2.2 2.3 3.4 5.2 3.4 8.3s-1.2 6-3.4 8.3c-2.2-2.3-3.4-5.2-3.4-8.3S9.8 6 12 3.7Z"/></svg></span><span class="label" data-i18n="language">Language</span></div>
+      <div class="right"><span id="langValue">English</span><span class="arrow">›</span></div>
     </div>
   </div>
 
-  <div class="section-label">Destek</div>
+  <div class="section-label" data-i18n="sectionSupport">Support</div>
   <div class="settings-group">
     <div class="settings-row" id="rowHelp">
-      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M9.3 9.6a2.7 2.7 0 0 1 5.2 1c0 1.6-2.2 2-2.4 3.3"/><path d="M12 17.2v.05"/></svg></span><span class="label">Yardım Merkezi</span></div>
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.3"/><path d="M9.3 9.6a2.7 2.7 0 0 1 5.2 1c0 1.6-2.2 2-2.4 3.3"/><path d="M12 17.2v.05"/></svg></span><span class="label" data-i18n="helpCenter">Help Center</span></div>
       <div class="right"><span class="arrow">›</span></div>
     </div>
     <div class="settings-row" id="rowContact">
-      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-4 3.5V17H6a2 2 0 0 1-2-2Z"/></svg></span><span class="label">Destek ile İletişim</span></div>
+      <div class="left"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-4 3.5V17H6a2 2 0 0 1-2-2Z"/></svg></span><span class="label" data-i18n="contactSupport">Contact Support</span></div>
       <div class="right"><span class="arrow">›</span></div>
     </div>
   </div>
 
-  <button class="logout-btn" id="logoutBtn">Çıkış Yap</button>
+  <button class="logout-btn" id="logoutBtn" data-i18n="logout">Log Out</button>
 </main>
 
 <!-- e-posta değiştirme paneli -->
 <div class="overlay" id="emailOverlay">
   <div class="sheet">
-    <h2>E-posta Değiştir</h2>
-    <p>Hesabınızla ilişkili e-posta adresini güncelleyin.</p>
-    <input type="email" id="newEmailInput" placeholder="yeni@eposta.com">
+    <h2 data-i18n="emailTitle">Change Email</h2>
+    <p data-i18n="emailDesc">Update the email address linked to your account.</p>
+    <input type="email" id="newEmailInput" data-i18n-placeholder="emailPlaceholder" placeholder="new@email.com">
     <div class="sheet-actions">
-      <button class="sheet-btn" onclick="closeOverlay('emailOverlay')">Vazgeç</button>
-      <button class="sheet-btn primary" id="saveEmailBtn">Kaydet</button>
+      <button class="sheet-btn" onclick="closeOverlay('emailOverlay')" data-i18n="cancel">Cancel</button>
+      <button class="sheet-btn primary" id="saveEmailBtn" data-i18n="save">Save</button>
     </div>
   </div>
 </div>
@@ -216,21 +233,21 @@
 <!-- yardım merkezi paneli -->
 <div class="overlay" id="helpOverlay">
   <div class="sheet">
-    <h2>Yardım Merkezi</h2>
+    <h2 data-i18n="helpTitle">Help Center</h2>
     <p>
-      <strong>Para yatırma ne kadar sürer?</strong><br>
-      Ağ onay sayısına göre değişir (TRC20 ~20, ERC20 ~12 onay).
+      <strong data-i18n="helpQ1">How long does a deposit take?</strong><br>
+      <span data-i18n="helpA1">It depends on network confirmations (TRC20 ~20, ERC20 ~12 confirmations).</span>
     </p>
     <p>
-      <strong>Minimum yatırım/çekim tutarı nedir?</strong><br>
-      Yatırım için 10 USDT, çekim için 20 USDT.
+      <strong data-i18n="helpQ2">What are the minimum deposit/withdrawal amounts?</strong><br>
+      <span data-i18n="helpA2">10 USDT for deposits, 20 USDT for withdrawals.</span>
     </p>
     <p>
-      <strong>Yanlış ağdan gönderim yaptım, ne yapmalıyım?</strong><br>
-      Lütfen Destek ile İletişim üzerinden bize ulaşın.
+      <strong data-i18n="helpQ3">I sent funds on the wrong network, what should I do?</strong><br>
+      <span data-i18n="helpA3">Please reach out to us via Contact Support.</span>
     </p>
     <div class="sheet-actions">
-      <button class="sheet-btn primary" onclick="closeOverlay('helpOverlay')">Kapat</button>
+      <button class="sheet-btn primary" onclick="closeOverlay('helpOverlay')" data-i18n="close">Close</button>
     </div>
   </div>
 </div>
@@ -238,17 +255,170 @@
 <!-- destek paneli -->
 <div class="overlay" id="contactOverlay">
   <div class="sheet">
-    <h2>Destek ile İletişim</h2>
-    <p>Sorularınız için bize e-posta ile ulaşabilirsiniz:</p>
-    <p style="color:var(--gold-bright); font-family:'IBM Plex Mono',monospace;">destek@saturn-pay.com</p>
+    <h2 data-i18n="contactTitle">Contact Support</h2>
+    <p data-i18n="contactDesc">You can reach us by email for any questions:</p>
+    <p style="color:var(--gold-bright); font-family:'IBM Plex Mono',monospace;">support@saturn-pay.com</p>
     <div class="sheet-actions">
-      <button class="sheet-btn" onclick="closeOverlay('contactOverlay')">Kapat</button>
-      <button class="sheet-btn primary" onclick="window.location.href='mailto:destek@saturn-pay.com'">E-posta Gönder</button>
+      <button class="sheet-btn" onclick="closeOverlay('contactOverlay')" data-i18n="close">Close</button>
+      <button class="sheet-btn primary" onclick="window.location.href='mailto:support@saturn-pay.com'" data-i18n="sendEmail">Send Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- dil seçimi paneli -->
+<div class="overlay" id="langOverlay">
+  <div class="sheet">
+    <h2 data-i18n="langTitle">Language</h2>
+    <div id="langList"></div>
+    <div class="sheet-actions" style="margin-top:14px;">
+      <button class="sheet-btn primary" onclick="closeOverlay('langOverlay')" data-i18n="close">Close</button>
     </div>
   </div>
 </div>
 
 <script>
+  // ---------------------------------------------------------------
+  // Çeviriler — ana dil İngilizce, Türkçe/Rusça/İspanyolca/Fransızca/Almanca ile değiştirilebilir
+  // ---------------------------------------------------------------
+  const LANG_KEY = 'saturnpay_lang';
+  const LANGUAGES = [
+    { code: 'en', name: 'English' },
+    { code: 'tr', name: 'Türkçe' },
+    { code: 'ru', name: 'Русский' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+  ];
+
+  const translations = {
+    en: {
+      title: 'Settings', siteLabel: 'Site', sectionAccount: 'Account',
+      changeEmail: 'Change Email', language: 'Language',
+      sectionSupport: 'Support', helpCenter: 'Help Center', contactSupport: 'Contact Support',
+      logout: 'Log Out',
+      emailTitle: 'Change Email', emailDesc: 'Update the email address linked to your account.',
+      emailPlaceholder: 'new@email.com', cancel: 'Cancel', save: 'Save',
+      helpTitle: 'Help Center',
+      helpQ1: 'How long does a deposit take?', helpA1: 'It depends on network confirmations (TRC20 ~20, ERC20 ~12 confirmations).',
+      helpQ2: 'What are the minimum deposit/withdrawal amounts?', helpA2: '10 USDT for deposits, 20 USDT for withdrawals.',
+      helpQ3: 'I sent funds on the wrong network, what should I do?', helpA3: 'Please reach out to us via Contact Support.',
+      close: 'Close',
+      contactTitle: 'Contact Support', contactDesc: 'You can reach us by email for any questions:', sendEmail: 'Send Email',
+      langTitle: 'Language',
+    },
+    tr: {
+      title: 'Ayarlar', siteLabel: 'Site', sectionAccount: 'Hesabım',
+      changeEmail: 'E-posta Değiştir', language: 'Dil',
+      sectionSupport: 'Destek', helpCenter: 'Yardım Merkezi', contactSupport: 'Destek ile İletişim',
+      logout: 'Çıkış Yap',
+      emailTitle: 'E-posta Değiştir', emailDesc: 'Hesabınızla ilişkili e-posta adresini güncelleyin.',
+      emailPlaceholder: 'yeni@eposta.com', cancel: 'Vazgeç', save: 'Kaydet',
+      helpTitle: 'Yardım Merkezi',
+      helpQ1: 'Para yatırma ne kadar sürer?', helpA1: 'Ağ onay sayısına göre değişir (TRC20 ~20, ERC20 ~12 onay).',
+      helpQ2: 'Minimum yatırım/çekim tutarı nedir?', helpA2: 'Yatırım için 10 USDT, çekim için 20 USDT.',
+      helpQ3: 'Yanlış ağdan gönderim yaptım, ne yapmalıyım?', helpA3: 'Lütfen Destek ile İletişim üzerinden bize ulaşın.',
+      close: 'Kapat',
+      contactTitle: 'Destek ile İletişim', contactDesc: 'Sorularınız için bize e-posta ile ulaşabilirsiniz:', sendEmail: 'E-posta Gönder',
+      langTitle: 'Dil',
+    },
+    ru: {
+      title: 'Настройки', siteLabel: 'Сайт', sectionAccount: 'Аккаунт',
+      changeEmail: 'Изменить email', language: 'Язык',
+      sectionSupport: 'Поддержка', helpCenter: 'Центр помощи', contactSupport: 'Связаться с поддержкой',
+      logout: 'Выйти',
+      emailTitle: 'Изменить email', emailDesc: 'Обновите адрес электронной почты, привязанный к вашему аккаунту.',
+      emailPlaceholder: 'new@email.com', cancel: 'Отмена', save: 'Сохранить',
+      helpTitle: 'Центр помощи',
+      helpQ1: 'Сколько времени занимает депозит?', helpA1: 'Зависит от подтверждений сети (TRC20 ~20, ERC20 ~12 подтверждений).',
+      helpQ2: 'Какова минимальная сумма депозита/вывода?', helpA2: '10 USDT для депозита, 20 USDT для вывода.',
+      helpQ3: 'Я отправил средства не в ту сеть, что делать?', helpA3: 'Пожалуйста, свяжитесь с нами через раздел поддержки.',
+      close: 'Закрыть',
+      contactTitle: 'Связаться с поддержкой', contactDesc: 'По любым вопросам вы можете написать нам на email:', sendEmail: 'Отправить email',
+      langTitle: 'Язык',
+    },
+    es: {
+      title: 'Ajustes', siteLabel: 'Sitio', sectionAccount: 'Cuenta',
+      changeEmail: 'Cambiar Correo', language: 'Idioma',
+      sectionSupport: 'Soporte', helpCenter: 'Centro de Ayuda', contactSupport: 'Contactar Soporte',
+      logout: 'Cerrar Sesión',
+      emailTitle: 'Cambiar Correo', emailDesc: 'Actualiza el correo electrónico asociado a tu cuenta.',
+      emailPlaceholder: 'nuevo@correo.com', cancel: 'Cancelar', save: 'Guardar',
+      helpTitle: 'Centro de Ayuda',
+      helpQ1: '¿Cuánto tarda un depósito?', helpA1: 'Depende de las confirmaciones de red (TRC20 ~20, ERC20 ~12 confirmaciones).',
+      helpQ2: '¿Cuáles son los montos mínimos de depósito/retiro?', helpA2: '10 USDT para depósitos, 20 USDT para retiros.',
+      helpQ3: 'Envié fondos a la red equivocada, ¿qué hago?', helpA3: 'Por favor contáctanos a través de Soporte.',
+      close: 'Cerrar',
+      contactTitle: 'Contactar Soporte', contactDesc: 'Puedes escribirnos por correo para cualquier pregunta:', sendEmail: 'Enviar Correo',
+      langTitle: 'Idioma',
+    },
+    fr: {
+      title: 'Paramètres', siteLabel: 'Site', sectionAccount: 'Compte',
+      changeEmail: "Changer l'e-mail", language: 'Langue',
+      sectionSupport: 'Assistance', helpCenter: "Centre d'aide", contactSupport: "Contacter l'assistance",
+      logout: 'Déconnexion',
+      emailTitle: "Changer l'e-mail", emailDesc: 'Mettez à jour l\'adresse e-mail liée à votre compte.',
+      emailPlaceholder: 'nouveau@email.com', cancel: 'Annuler', save: 'Enregistrer',
+      helpTitle: "Centre d'aide",
+      helpQ1: 'Combien de temps prend un dépôt ?', helpA1: 'Cela dépend des confirmations réseau (TRC20 ~20, ERC20 ~12 confirmations).',
+      helpQ2: 'Quels sont les montants minimums de dépôt/retrait ?', helpA2: '10 USDT pour les dépôts, 20 USDT pour les retraits.',
+      helpQ3: "J'ai envoyé des fonds sur le mauvais réseau, que faire ?", helpA3: "Veuillez nous contacter via l'assistance.",
+      close: 'Fermer',
+      contactTitle: "Contacter l'assistance", contactDesc: 'Vous pouvez nous contacter par e-mail pour toute question :', sendEmail: 'Envoyer un e-mail',
+      langTitle: 'Langue',
+    },
+    de: {
+      title: 'Einstellungen', siteLabel: 'Seite', sectionAccount: 'Konto',
+      changeEmail: 'E-Mail Ändern', language: 'Sprache',
+      sectionSupport: 'Support', helpCenter: 'Hilfe-Center', contactSupport: 'Support Kontaktieren',
+      logout: 'Abmelden',
+      emailTitle: 'E-Mail Ändern', emailDesc: 'Aktualisieren Sie die mit Ihrem Konto verknüpfte E-Mail-Adresse.',
+      emailPlaceholder: 'neu@email.com', cancel: 'Abbrechen', save: 'Speichern',
+      helpTitle: 'Hilfe-Center',
+      helpQ1: 'Wie lange dauert eine Einzahlung?', helpA1: 'Abhängig von Netzwerkbestätigungen (TRC20 ~20, ERC20 ~12 Bestätigungen).',
+      helpQ2: 'Was sind die Mindestbeträge für Ein-/Auszahlungen?', helpA2: '10 USDT für Einzahlungen, 20 USDT für Auszahlungen.',
+      helpQ3: 'Ich habe Gelder an das falsche Netzwerk gesendet, was tun?', helpA3: 'Bitte kontaktieren Sie uns über den Support.',
+      close: 'Schließen',
+      contactTitle: 'Support Kontaktieren', contactDesc: 'Bei Fragen erreichen Sie uns per E-Mail:', sendEmail: 'E-Mail Senden',
+      langTitle: 'Sprache',
+    },
+  };
+
+  function getLang() { return localStorage.getItem(LANG_KEY) || 'en'; }
+  function setLang(code) { localStorage.setItem(LANG_KEY, code); applyLang(code); }
+
+  function applyLang(code) {
+    const t = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (t[key]) el.textContent = t[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (t[key]) el.placeholder = t[key];
+    });
+    document.getElementById('pageTitleTag').textContent = `${t.title} — Saturn-Pay`;
+    const langInfo = LANGUAGES.find(l => l.code === code) || LANGUAGES[0];
+    document.getElementById('langValue').textContent = langInfo.name;
+    renderLangList(code);
+  }
+
+  function renderLangList(activeCode) {
+    const el = document.getElementById('langList');
+    el.innerHTML = LANGUAGES.map(l => `
+      <div class="lang-option ${l.code === activeCode ? 'active' : ''}" data-code="${l.code}">
+        <span class="name">${l.name}</span>
+        <span class="check">✓</span>
+      </div>
+    `).join('');
+    el.querySelectorAll('.lang-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        setLang(opt.dataset.code);
+        closeOverlay('langOverlay');
+      });
+    });
+  }
+
   const token = localStorage.getItem('saturnpay_token');
   const userRaw = localStorage.getItem('saturnpay_user');
   if (!token) { window.location.href = 'login.html'; }
@@ -275,6 +445,7 @@
     document.getElementById('newEmailInput').value = user.email || '';
     openOverlay('emailOverlay');
   });
+  document.getElementById('rowLang').addEventListener('click', () => openOverlay('langOverlay'));
   document.getElementById('rowHelp').addEventListener('click', () => openOverlay('helpOverlay'));
   document.getElementById('rowContact').addEventListener('click', () => openOverlay('contactOverlay'));
 
@@ -292,6 +463,8 @@
     localStorage.removeItem('saturnpay_user');
     window.location.href = 'login.html';
   });
+
+  applyLang(getLang());
 </script>
 
 </body>

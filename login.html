@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giriş Yap — Saturn-Pay</title>
+<title id="pageTitleTag">Log In — Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #06070A;
@@ -40,7 +40,7 @@
     position:relative;
     overflow-x:hidden;
   }
-  h1{ font-family:'Fraunces',serif; font-weight:500; }
+  h1{ font-family:'Inter',sans-serif; font-weight:600; }
   .mono{ font-family:'IBM Plex Mono',monospace; }
 
   /* ambient starfield */
@@ -79,7 +79,7 @@
     position:relative;
     z-index:2;
   }
-  .logo{ display:flex; align-items:center; gap:11px; font-family:'Fraunces',serif; font-size:17px; font-weight:600; letter-spacing:-0.01em; color:var(--text); text-decoration:none; }
+  .logo{ display:flex; align-items:center; gap:11px; font-family:'Inter',sans-serif; font-size:17px; font-weight:600; letter-spacing:-0.01em; color:var(--text); text-decoration:none; }
 
   .mark{ position:relative; width:20px; height:20px; flex-shrink:0; }
   .mark-body{ position:absolute; inset:4px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, var(--amber) 100%); }
@@ -95,7 +95,11 @@
     border-radius:20px;
     font-family:'IBM Plex Mono',monospace;
     letter-spacing:0.04em;
+    text-decoration:none;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
   }
+  .lang-select:hover{ border-color:var(--gold-dim); color:var(--text); }
 
   main{
     flex:1;
@@ -109,7 +113,7 @@
     z-index:2;
   }
 
-  /* signature: saturn hero */
+  /* saturn hero */
   .saturn-hero{
     width:132px; height:132px;
     position:relative;
@@ -306,6 +310,7 @@
     border-radius:9px;
     color:var(--text-dim);
     font-size:14px;
+    font-family:'Inter',sans-serif;
     background:transparent;
     cursor:pointer;
     transition:border-color .15s ease, color .15s ease;
@@ -336,7 +341,7 @@
     <span class="mark"><span class="mark-ring"></span><span class="mark-body"></span><span class="mark-ring front"></span></span>
     Saturn-Pay
   </a>
-  <div class="lang-select">TR ▾</div>
+  <a href="settings.html" class="lang-select" id="langIndicator">EN ▾</a>
 </div>
 
 <main>
@@ -354,47 +359,214 @@
   </div>
 
   <div class="auth-card">
-    <h1>Giriş Yap</h1>
-    <p class="subtitle">Kod almak için e-posta adresinizi girin.</p>
+    <h1 data-i18n="login_title">Log In</h1>
+    <p class="subtitle" data-i18n="login_subtitle">Enter your email to receive a code.</p>
 
     <form id="loginForm">
-      <label for="email" id="emailLabel">E-posta</label>
-      <input type="email" id="email" placeholder="ornek@sirket.com" required>
+      <label for="email" id="emailLabel" data-i18n="label_email">Email</label>
+      <input type="email" id="email" data-i18n-placeholder="placeholder_email" placeholder="you@company.com" required>
 
       <div id="codeGroup" style="display:none;">
-        <label for="code">Doğrulama Kodu</label>
-        <input type="text" id="code" placeholder="6 haneli kod" inputmode="numeric" maxlength="6" style="margin-bottom:18px;">
+        <label for="code" data-i18n="label_code">Verification Code</label>
+        <input type="text" id="code" data-i18n-placeholder="placeholder_code" placeholder="6-digit code" inputmode="numeric" maxlength="6" style="margin-bottom:18px;">
       </div>
 
       <div class="verify-box" id="verifyBox" role="status" aria-live="polite">
         <div class="verify-spinner"></div>
         <div class="verify-label">
-          Doğrulanıyor…
-          <small>Otomatik trafik kontrolü</small>
+          <span data-i18n="verifying_text">Verifying…</span>
+          <small data-i18n="verifying_sub">Automatic traffic check</small>
         </div>
       </div>
 
       <p id="formError" style="color:#C97757;font-size:13px;margin:-6px 0 16px;display:none;"></p>
 
-      <button type="submit" class="btn-primary" id="submitBtn" disabled>Kod Gönder</button>
+      <button type="submit" class="btn-primary" id="submitBtn" disabled data-i18n="btn_send_code">Send Code</button>
     </form>
 
-    <div class="divider">veya</div>
+    <div class="divider" data-i18n="divider_or">or</div>
 
-    <a href="register.html" class="btn-secondary">Hesap Oluştur</a>
-    <button type="button" class="support-link">💬 Destek</button>
+    <a href="register.html" class="btn-secondary" data-i18n="btn_create_account">Create Account</a>
+    <button type="button" class="support-link" data-i18n="btn_support">💬 Support</button>
   </div>
 </main>
 
-<footer>© 2026 SATURN-PAY · TÜM HAKLARI SAKLIDIR</footer>
+<footer data-i18n="footer_copyright">© 2026 SATURN-PAY · ALL RIGHTS RESERVED</footer>
 
 <script>
+  // ── i18n (inline dictionary, same pattern as the other pages) ──────
+  const LANG_KEY = 'saturnpay_lang';
+  const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
+  const translations = {
+    en: {
+      login_title: 'Log In',
+      login_subtitle: 'Enter your email to receive a code.',
+      label_email: 'Email',
+      placeholder_email: 'you@company.com',
+      label_code: 'Verification Code',
+      placeholder_code: '6-digit code',
+      verifying_text: 'Verifying…',
+      verifying_sub: 'Automatic traffic check',
+      verified_text: 'Verified',
+      btn_send_code: 'Send Code',
+      btn_verify_code: 'Verify & Log In',
+      divider_or: 'or',
+      btn_create_account: 'Create Account',
+      btn_support: '💬 Support',
+      footer_copyright: '© 2026 SATURN-PAY · ALL RIGHTS RESERVED',
+      test_mode_prefix: 'Test mode — your code:',
+      err_no_account: 'No verified account found for this email.',
+      err_code_invalid: 'The code is incorrect.',
+      err_code_send_failed: 'Could not send the code. Please try again.',
+      err_code_verify_failed: 'Could not verify the code. Please try again.',
+      err_connection: 'Connection error. Please try again.',
+    },
+    tr: {
+      login_title: 'Giriş Yap',
+      login_subtitle: 'Kod almak için e-posta adresinizi girin.',
+      label_email: 'E-posta',
+      placeholder_email: 'siz@sirket.com',
+      label_code: 'Doğrulama Kodu',
+      placeholder_code: '6 haneli kod',
+      verifying_text: 'Doğrulanıyor…',
+      verifying_sub: 'Otomatik trafik kontrolü',
+      verified_text: 'Doğrulandı',
+      btn_send_code: 'Kod Gönder',
+      btn_verify_code: 'Doğrula ve Giriş Yap',
+      divider_or: 'veya',
+      btn_create_account: 'Hesap Oluştur',
+      btn_support: '💬 Destek',
+      footer_copyright: '© 2026 SATURN-PAY · TÜM HAKLARI SAKLIDIR',
+      test_mode_prefix: 'Test modu — kodunuz:',
+      err_no_account: 'Bu e-posta için doğrulanmış bir hesap bulunamadı.',
+      err_code_invalid: 'Kod hatalı.',
+      err_code_send_failed: 'Kod gönderilemedi. Lütfen tekrar deneyin.',
+      err_code_verify_failed: 'Kod doğrulanamadı. Lütfen tekrar deneyin.',
+      err_connection: 'Bağlantı hatası. Lütfen tekrar deneyin.',
+    },
+    ru: {
+      login_title: 'Вход',
+      login_subtitle: 'Введите свой email, чтобы получить код.',
+      label_email: 'Email',
+      placeholder_email: 'you@company.com',
+      label_code: 'Код подтверждения',
+      placeholder_code: '6-значный код',
+      verifying_text: 'Проверка…',
+      verifying_sub: 'Автоматическая проверка трафика',
+      verified_text: 'Проверено',
+      btn_send_code: 'Отправить код',
+      btn_verify_code: 'Подтвердить и войти',
+      divider_or: 'или',
+      btn_create_account: 'Создать аккаунт',
+      btn_support: '💬 Поддержка',
+      footer_copyright: '© 2026 SATURN-PAY · ВСЕ ПРАВА ЗАЩИЩЕНЫ',
+      test_mode_prefix: 'Тестовый режим — ваш код:',
+      err_no_account: 'Подтверждённый аккаунт с этим email не найден.',
+      err_code_invalid: 'Неверный код.',
+      err_code_send_failed: 'Не удалось отправить код. Попробуйте ещё раз.',
+      err_code_verify_failed: 'Не удалось проверить код. Попробуйте ещё раз.',
+      err_connection: 'Ошибка соединения. Попробуйте ещё раз.',
+    },
+    es: {
+      login_title: 'Iniciar sesión',
+      login_subtitle: 'Introduce tu correo para recibir un código.',
+      label_email: 'Correo electrónico',
+      placeholder_email: 'tu@empresa.com',
+      label_code: 'Código de verificación',
+      placeholder_code: 'Código de 6 dígitos',
+      verifying_text: 'Verificando…',
+      verifying_sub: 'Comprobación automática de tráfico',
+      verified_text: 'Verificado',
+      btn_send_code: 'Enviar código',
+      btn_verify_code: 'Verificar e iniciar sesión',
+      divider_or: 'o',
+      btn_create_account: 'Crear cuenta',
+      btn_support: '💬 Soporte',
+      footer_copyright: '© 2026 SATURN-PAY · TODOS LOS DERECHOS RESERVADOS',
+      test_mode_prefix: 'Modo de prueba — tu código:',
+      err_no_account: 'No se encontró una cuenta verificada para este correo.',
+      err_code_invalid: 'El código es incorrecto.',
+      err_code_send_failed: 'No se pudo enviar el código. Inténtalo de nuevo.',
+      err_code_verify_failed: 'No se pudo verificar el código. Inténtalo de nuevo.',
+      err_connection: 'Error de conexión. Inténtalo de nuevo.',
+    },
+    fr: {
+      login_title: 'Connexion',
+      login_subtitle: 'Saisissez votre e-mail pour recevoir un code.',
+      label_email: 'E-mail',
+      placeholder_email: 'vous@entreprise.com',
+      label_code: 'Code de vérification',
+      placeholder_code: 'Code à 6 chiffres',
+      verifying_text: 'Vérification…',
+      verifying_sub: 'Contrôle automatique du trafic',
+      verified_text: 'Vérifié',
+      btn_send_code: 'Envoyer le code',
+      btn_verify_code: 'Vérifier et se connecter',
+      divider_or: 'ou',
+      btn_create_account: 'Créer un compte',
+      btn_support: '💬 Assistance',
+      footer_copyright: '© 2026 SATURN-PAY · TOUS DROITS RÉSERVÉS',
+      test_mode_prefix: 'Mode test — votre code :',
+      err_no_account: 'Aucun compte vérifié trouvé pour cet e-mail.',
+      err_code_invalid: 'Le code est incorrect.',
+      err_code_send_failed: "Impossible d'envoyer le code. Veuillez réessayer.",
+      err_code_verify_failed: 'Impossible de vérifier le code. Veuillez réessayer.',
+      err_connection: 'Erreur de connexion. Veuillez réessayer.',
+    },
+    de: {
+      login_title: 'Anmelden',
+      login_subtitle: 'Gib deine E-Mail-Adresse ein, um einen Code zu erhalten.',
+      label_email: 'E-Mail',
+      placeholder_email: 'du@firma.com',
+      label_code: 'Bestätigungscode',
+      placeholder_code: '6-stelliger Code',
+      verifying_text: 'Wird überprüft…',
+      verifying_sub: 'Automatische Verkehrsprüfung',
+      verified_text: 'Überprüft',
+      btn_send_code: 'Code senden',
+      btn_verify_code: 'Bestätigen und anmelden',
+      divider_or: 'oder',
+      btn_create_account: 'Konto erstellen',
+      btn_support: '💬 Support',
+      footer_copyright: '© 2026 SATURN-PAY · ALLE RECHTE VORBEHALTEN',
+      test_mode_prefix: 'Testmodus — dein Code:',
+      err_no_account: 'Für diese E-Mail wurde kein bestätigtes Konto gefunden.',
+      err_code_invalid: 'Der Code ist falsch.',
+      err_code_send_failed: 'Der Code konnte nicht gesendet werden. Bitte versuche es erneut.',
+      err_code_verify_failed: 'Der Code konnte nicht überprüft werden. Bitte versuche es erneut.',
+      err_connection: 'Verbindungsfehler. Bitte versuche es erneut.',
+    },
+  };
+
+  function getLang() {
+    const code = localStorage.getItem(LANG_KEY) || 'en';
+    return translations[code] ? code : 'en';
+  }
+  function t(key) {
+    return (translations[getLang()] || translations.en)[key];
+  }
+  function applyLang() {
+    const code = getLang();
+    const dict = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key] !== undefined) el.placeholder = dict[key];
+    });
+    document.getElementById('pageTitleTag').textContent = `${dict.login_title} — Saturn-Pay`;
+    document.getElementById('langIndicator').textContent = code.toUpperCase() + ' ▾';
+  }
+
+  // ── Auth ───────────────────────────────────────────────────────────
   const API_BASE = "http://localhost:3000/api/auth";
 
-  // ── TEST MODU ──────────────────────────────────────────────────────
-  // register.html ile aynı mock akışı: gerçek bir backend hazır olana
-  // kadar giriş akışını burada, tarayıcıda simüle ediyoruz. Backend
-  // hazır olduğunda MOCK_MODE'u false yapın.
+  // TEST MODE: simulates the login flow in the browser. Set to true only
+  // for local testing without a backend.
   const MOCK_MODE = false;
   const MOCK_DELAY = 550;
 
@@ -413,7 +585,7 @@
       hint.style.cssText = 'margin:-6px 0 16px;padding:10px 14px;border:1px dashed var(--gold-dim);border-radius:8px;font-family:\'IBM Plex Mono\',monospace;font-size:12.5px;color:var(--gold-bright);';
       codeGroup.appendChild(hint);
     }
-    hint.textContent = `TEST MODU · Kodunuz: ${code}`;
+    hint.textContent = `${t('test_mode_prefix')} ${code}`;
   }
 
   async function mockRequestCode(payload) {
@@ -421,7 +593,7 @@
     const db = mockDb();
     const email = payload.email;
     if (!db[email] || !db[email].verified) {
-      return { ok: false, data: { error: 'Bu e-posta ile kayıtlı bir hesap bulunamadı. Önce hesap oluşturun.' } };
+      return { ok: false, data: { error: t('err_no_account') } };
     }
     const code = mockCode();
     db[email].code = code;
@@ -435,7 +607,7 @@
     const db = mockDb();
     const record = db[payload.email];
     if (!record || record.code !== payload.code) {
-      return { ok: false, data: { error: 'Kod hatalı veya süresi dolmuş.' } };
+      return { ok: false, data: { error: t('err_code_invalid') } };
     }
     const token = 'mock_' + Math.random().toString(36).slice(2, 14);
     return { ok: true, data: { token, user: { id: record.id, name: record.name, email: record.email } } };
@@ -454,7 +626,6 @@
     const data = await res.json();
     return { ok: res.ok, data };
   }
-  // ── /TEST MODU ─────────────────────────────────────────────────────
 
   const form = document.getElementById('loginForm');
   const emailInput = document.getElementById('email');
@@ -467,7 +638,7 @@
   let step = 'email';
 
   setTimeout(() => {
-    verifyBox.innerHTML = '<div style="color:#7FAE8C;font-size:16px;">✓</div><div class="verify-label">Doğrulandı</div>';
+    verifyBox.innerHTML = `<div style="color:#7FAE8C;font-size:16px;">✓</div><div class="verify-label">${t('verified_text')}</div>`;
     submitBtn.disabled = false;
   }, 1400);
 
@@ -490,14 +661,14 @@
         const { ok, data } = await callAuthApi('request-code', { email: emailInput.value });
 
         if (!ok) {
-          showError(data.error || 'Kod gönderilemedi.');
+          showError(data.error || t('err_code_send_failed'));
           return;
         }
 
         step = 'code';
         emailInput.disabled = true;
         codeGroup.style.display = 'block';
-        submitBtn.textContent = 'Kodu Doğrula';
+        submitBtn.textContent = t('btn_verify_code');
         codeInput.focus();
       } else {
         const { ok, data } = await callAuthApi('verify-code', {
@@ -506,7 +677,7 @@
         });
 
         if (!ok) {
-          showError(data.error || 'Kod doğrulanamadı.');
+          showError(data.error || t('err_code_verify_failed'));
           return;
         }
 
@@ -515,11 +686,13 @@
         window.location.href = 'dashboard.html';
       }
     } catch (err) {
-      showError('Sunucuya bağlanılamadı. Bağlantınızı kontrol edin.');
+      showError(t('err_connection'));
     } finally {
       submitBtn.disabled = false;
     }
   });
+
+  applyLang();
 </script>
 
 </body>

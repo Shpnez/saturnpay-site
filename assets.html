@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Assets — Saturn-Pay</title>
+<title id="pageTitleTag">Assets — Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -81,6 +81,7 @@
     background:linear-gradient(175deg, var(--card-2), var(--card));
     border:1px solid var(--line-soft); border-radius:14px; padding:22px 20px;
   }
+  .card-title{ font-size:10.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:14px; }
   .recent-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-top:1px solid var(--line-soft); }
   .recent-row:first-child{ border-top:none; }
 
@@ -102,56 +103,141 @@
 <body>
 
 <div class="topbar">
-  <button class="avatar-btn" id="avatarBtn" title="Ayarlar" aria-label="Ayarlar">
+  <button class="avatar-btn" id="avatarBtn" data-i18n-title="settingsTitle" data-i18n-aria="settingsTitle" title="Settings" aria-label="Settings">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.3-3.5 4.2-5.5 7.5-5.5s6.2 2 7.5 5.5"/></svg>
   </button>
   <span class="brand-mini">Saturn-Pay</span>
   <button class="history-btn" id="historyBtn">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>
-    Geçmiş
+    <span data-i18n="history">History</span>
   </button>
 </div>
 
 <main>
   <div class="page-head">
     <h1>Assets</h1>
-    <p>Bakiyenizi yönetin — para yatırın veya çekin.</p>
+    <p data-i18n="pageDesc">Manage your balance — deposit or withdraw funds.</p>
   </div>
 
   <div class="balance-card">
-    <div class="balance-label">Kullanılabilir Bakiye</div>
+    <div class="balance-label" data-i18n="availableBalance">Available Balance</div>
     <div class="balance-value" id="balanceValue">$0.00</div>
     <div class="balance-actions">
-      <button class="action-btn deposit" id="goDepositBtn">↓ Para Yatır</button>
-      <button class="action-btn withdraw" id="goWithdrawBtn">↑ Para Çek</button>
+      <button class="action-btn deposit" id="goDepositBtn"><span data-i18n="depositArrow">↓ Deposit</span></button>
+      <button class="action-btn withdraw" id="goWithdrawBtn"><span data-i18n="withdrawArrow">↑ Withdraw</span></button>
     </div>
   </div>
 
   <div class="card">
-    <div style="font-size:10.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:14px;">Son İşlemler</div>
+    <div class="card-title" data-i18n="recentTransactions">Recent Transactions</div>
     <div id="recentList"></div>
   </div>
 </main>
 
 <nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V19a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg></span>Home
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 9.5V19a1 1 0 0 0 1 1H9a1 1 0 0 0 1-1v-4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V19a1 1 0 0 0 1 1h2.5a1 1 0 0 0 1-1V9.5"/></svg></span><span data-i18n="navHome">Home</span>
   </a>
   <a href="investments.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 6h7v7"/></svg></span>Investments
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 9 11l4 4 8-8"/><path d="M14 6h7v7"/></svg></span><span data-i18n="navInvestments">Investments</span>
   </a>
   <a href="invests.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span>Invests
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg></span><span data-i18n="navInvests">Invests</span>
   </a>
   <a href="referral.html" class="nav-item">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16"/><path d="M12 9v11"/><path d="M12 9c-1.2 0-3-1-3-2.6C9 5.1 10 4 11.3 4 12.7 4 12 7 12 9Z"/><path d="M12 9c1.2 0 3-1 3-2.6C15 5.1 14 4 12.7 4 11.3 4 12 7 12 9Z"/></svg></span>Referral
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16"/><path d="M12 9v11"/><path d="M12 9c-1.2 0-3-1-3-2.6C9 5.1 10 4 11.3 4 12.7 4 12 7 12 9Z"/><path d="M12 9c1.2 0 3-1 3-2.6C15 5.1 14 4 12.7 4 11.3 4 12 7 12 9Z"/></svg></span><span data-i18n="navReferral">Referral</span>
   </a>
   <a href="assets.html" class="nav-item active">
-    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.6"/></svg></span>Assets
+    <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="14.5" r="1.6"/></svg></span><span data-i18n="navAssets">Assets</span>
   </a>
 </nav>
 
 <script>
+  // ---------------------------------------------------------------
+  // Çeviriler — assets.html
+  // ---------------------------------------------------------------
+  const LANG_KEY = 'saturnpay_lang';
+  const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
+  const translations = {
+    en: {
+      settingsTitle: 'Settings', history: 'History',
+      pageDesc: 'Manage your balance — deposit or withdraw funds.',
+      availableBalance: 'Available Balance', depositArrow: '↓ Deposit', withdrawArrow: '↑ Withdraw',
+      recentTransactions: 'Recent Transactions', noTransactions: 'No transactions yet.',
+      initialBalance: 'Initial balance',
+      depositTRC20: 'USDT Deposit (TRC20)', depositERC20: 'USDT Deposit (ERC20)', withdrawalTRC20: 'USDT Withdrawal (TRC20)',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    tr: {
+      settingsTitle: 'Ayarlar', history: 'Geçmiş',
+      pageDesc: 'Bakiyenizi yönetin — para yatırın veya çekin.',
+      availableBalance: 'Kullanılabilir Bakiye', depositArrow: '↓ Para Yatır', withdrawArrow: '↑ Para Çek',
+      recentTransactions: 'Son İşlemler', noTransactions: 'Henüz işlem yok.',
+      initialBalance: 'Başlangıç bakiyesi',
+      depositTRC20: 'USDT Yatırma (TRC20)', depositERC20: 'USDT Yatırma (ERC20)', withdrawalTRC20: 'USDT Çekme (TRC20)',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    ru: {
+      settingsTitle: 'Настройки', history: 'История',
+      pageDesc: 'Управляйте своим балансом — вносите или выводите средства.',
+      availableBalance: 'Доступный Баланс', depositArrow: '↓ Пополнить', withdrawArrow: '↑ Вывести',
+      recentTransactions: 'Последние Операции', noTransactions: 'Пока нет операций.',
+      initialBalance: 'Начальный баланс',
+      depositTRC20: 'Пополнение USDT (TRC20)', depositERC20: 'Пополнение USDT (ERC20)', withdrawalTRC20: 'Вывод USDT (TRC20)',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    es: {
+      settingsTitle: 'Ajustes', history: 'Historial',
+      pageDesc: 'Gestiona tu saldo — deposita o retira fondos.',
+      availableBalance: 'Saldo Disponible', depositArrow: '↓ Depositar', withdrawArrow: '↑ Retirar',
+      recentTransactions: 'Transacciones Recientes', noTransactions: 'Aún no hay transacciones.',
+      initialBalance: 'Saldo inicial',
+      depositTRC20: 'Depósito USDT (TRC20)', depositERC20: 'Depósito USDT (ERC20)', withdrawalTRC20: 'Retiro USDT (TRC20)',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    fr: {
+      settingsTitle: 'Paramètres', history: 'Historique',
+      pageDesc: 'Gérez votre solde — déposez ou retirez des fonds.',
+      availableBalance: 'Solde Disponible', depositArrow: '↓ Déposer', withdrawArrow: '↑ Retirer',
+      recentTransactions: 'Transactions Récentes', noTransactions: 'Aucune transaction pour le moment.',
+      initialBalance: 'Solde initial',
+      depositTRC20: 'Dépôt USDT (TRC20)', depositERC20: 'Dépôt USDT (ERC20)', withdrawalTRC20: 'Retrait USDT (TRC20)',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+    de: {
+      settingsTitle: 'Einstellungen', history: 'Verlauf',
+      pageDesc: 'Verwalten Sie Ihr Guthaben — zahlen Sie ein oder aus.',
+      availableBalance: 'Verfügbares Guthaben', depositArrow: '↓ Einzahlen', withdrawArrow: '↑ Auszahlen',
+      recentTransactions: 'Letzte Transaktionen', noTransactions: 'Noch keine Transaktionen.',
+      initialBalance: 'Anfangsguthaben',
+      depositTRC20: 'USDT Einzahlung (TRC20)', depositERC20: 'USDT Einzahlung (ERC20)', withdrawalTRC20: 'USDT Auszahlung (TRC20)',
+      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
+    },
+  };
+
+  function getLang() { return localStorage.getItem(LANG_KEY) || 'en'; }
+  function t(key) { return (translations[getLang()] || translations.en)[key]; }
+
+  function applyLang() {
+    const code = getLang();
+    const dict = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      if (dict[key]) el.title = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria');
+      if (dict[key]) el.setAttribute('aria-label', dict[key]);
+    });
+    document.getElementById('pageTitleTag').textContent = `Assets — Saturn-Pay`;
+  }
+
   const TX_KEY = 'saturnpay_transactions';
 
   function daysAgoISO(n) { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString(); }
@@ -160,19 +246,22 @@
     return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
   }
   function formatUSD(n) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n); }
-  function formatDateTR(iso) { return new Date(iso).toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' }); }
+  function formatDateLocalized(iso) {
+    const locale = LOCALE_MAP[getLang()] || 'en-US';
+    return new Date(iso).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+  }
 
   function loadTransactions(user) {
     const raw = localStorage.getItem(TX_KEY);
     if (raw) { try { const p = JSON.parse(raw); if (Array.isArray(p)) return p; } catch (e) {} }
     let seed;
     if (typeof user.balance === 'number' && user.balance > 0) {
-      seed = [{ id: makeId(), description: 'Başlangıç bakiyesi', amount: user.balance, date: daysAgoISO(0) }];
+      seed = [{ id: makeId(), description: 'Initial balance', amount: user.balance, date: daysAgoISO(0) }];
     } else {
       seed = [
-        { id: makeId(), description: 'USDT Yatırma (TRC20)', amount: 250, date: daysAgoISO(14) },
-        { id: makeId(), description: 'USDT Yatırma (ERC20)', amount: 500, date: daysAgoISO(9) },
-        { id: makeId(), description: 'USDT Çekme (TRC20)', amount: -120, date: daysAgoISO(2) },
+        { id: makeId(), description: 'USDT Deposit (TRC20)', amount: 250, date: daysAgoISO(14) },
+        { id: makeId(), description: 'USDT Deposit (ERC20)', amount: 500, date: daysAgoISO(9) },
+        { id: makeId(), description: 'USDT Withdrawal (TRC20)', amount: -120, date: daysAgoISO(2) },
       ];
     }
     localStorage.setItem(TX_KEY, JSON.stringify(seed));
@@ -199,24 +288,25 @@
     const recent = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
     const el = document.getElementById('recentList');
     if (recent.length === 0) {
-      el.innerHTML = '<p style="color:var(--text-dim); font-size:13px; text-align:center; padding:12px 0;">Henüz işlem yok.</p>';
+      el.innerHTML = `<p style="color:var(--text-dim); font-size:13px; text-align:center; padding:12px 0;">${t('noTransactions')}</p>`;
       return;
     }
-    el.innerHTML = recent.map(t => {
-      const isIn = t.amount >= 0;
+    el.innerHTML = recent.map(tx => {
+      const isIn = tx.amount >= 0;
       return `
         <div class="recent-row">
           <div>
-            <div style="font-size:13.5px; color:var(--text);">${escapeHtml(t.description)}</div>
-            <div style="font-size:11px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; margin-top:2px;">${formatDateTR(t.date)}</div>
+            <div style="font-size:13.5px; color:var(--text);">${escapeHtml(tx.description)}</div>
+            <div style="font-size:11px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; margin-top:2px;">${formatDateLocalized(tx.date)}</div>
           </div>
           <div style="font-family:'IBM Plex Mono',monospace; font-size:13px; color:${isIn ? 'var(--good)' : 'var(--bad)'};">
-            ${isIn ? '+' : ''}${formatUSD(t.amount)}
+            ${isIn ? '+' : ''}${formatUSD(tx.amount)}
           </div>
         </div>`;
     }).join('');
   }
 
+  applyLang();
   renderRecent();
 </script>
 
