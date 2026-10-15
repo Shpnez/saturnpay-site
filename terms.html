@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitleTag">Terms of Use — Saturn-Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070A;
+    --bg-2: #0A0C11;
+    --card: #12151C;
+    --card-2: #181C25;
+    --field: #14171F;
+    --line: #262B35;
+    --line-soft: rgba(255,255,255,0.06);
+    --text: #EDEBE4;
+    --text-dim: #8B93A4;
+    --text-faint: #565E6E;
+    --gold: #D4AF37;
+    --gold-bright: #F0CB6A;
+    --gold-dim: #8C7222;
+    --amber: #C98A4B;
+    --focus: rgba(212,175,55,0.30);
+    --good: #7FAE8C;
+    --bad: #C97757;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+    overflow-x:hidden;
+  }
+  h1{ font-family:'Inter',sans-serif; font-weight:600; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+
+  /* ambient starfield */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(237,235,228,0.35), transparent),
+      radial-gradient(1px 1px at 26% 62%, rgba(237,235,228,0.25), transparent),
+      radial-gradient(1.5px 1.5px at 41% 8%, rgba(237,235,228,0.3), transparent),
+      radial-gradient(1px 1px at 58% 44%, rgba(237,235,228,0.2), transparent),
+      radial-gradient(1px 1px at 73% 76%, rgba(237,235,228,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 88% 22%, rgba(237,235,228,0.22), transparent),
+      radial-gradient(1px 1px at 95% 58%, rgba(237,235,228,0.28), transparent),
+      radial-gradient(1px 1px at 8% 88%, rgba(237,235,228,0.2), transparent),
+      radial-gradient(1px 1px at 65% 92%, rgba(237,235,228,0.25), transparent);
+    background-repeat:no-repeat;
+    pointer-events:none;
+  }
+  body::after{
+    content:'';
+    position:fixed; inset:0;
+    z-index:0;
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(212,175,55,0.07), transparent 70%);
+    pointer-events:none;
+  }
+
+  .topbar{
+    width:100%;
+    max-width:1180px;
+    padding:26px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    z-index:2;
+  }
+  .logo{ display:flex; align-items:center; gap:11px; font-family:'Inter',sans-serif; font-size:17px; font-weight:600; letter-spacing:-0.01em; color:var(--text); text-decoration:none; }
+
+  .mark{ position:relative; width:20px; height:20px; flex-shrink:0; }
+  .mark-body{ position:absolute; inset:4px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, var(--amber) 100%); }
+  .mark-ring{ position:absolute; top:50%; left:50%; width:26px; height:9px; border:1.2px solid var(--gold-dim); border-radius:50%; transform:translate(-50%,-50%) rotate(-18deg); }
+  .mark-ring.front{ border-color:var(--gold-bright); clip-path:polygon(0 50%, 100% 50%, 100% 100%, 0 100%); z-index:1; }
+  .mark-body{ z-index:0; }
+
+  .lang-select{
+    display:flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--text-dim);
+    border:1px solid var(--line);
+    padding:8px 14px;
+    border-radius:20px;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .lang-select:hover{ border-color:var(--gold-dim); color:var(--text); }
+
+  main{
+    flex:1;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:20px 20px 60px;
+    position:relative;
+    z-index:2;
+  }
+
+  /* saturn hero */
+  .saturn-hero{
+    width:132px; height:132px;
+    position:relative;
+    margin-bottom:8px;
+  }
+  .saturn-planet{
+    position:absolute; inset:26px;
+    border-radius:50%;
+    background:radial-gradient(circle at 33% 28%, var(--gold-bright) 0%, var(--gold) 48%, var(--amber) 82%, #5E4019 100%);
+    box-shadow:
+      0 0 46px rgba(212,175,55,0.28),
+      inset -9px -9px 18px rgba(0,0,0,0.4),
+      inset 4px 4px 10px rgba(255,255,255,0.15);
+    z-index:2;
+  }
+  .saturn-rings{
+    position:absolute; inset:0;
+    animation:ring-drift 22s ease-in-out infinite;
+  }
+  .ring{
+    position:absolute; top:50%; left:50%;
+    border-radius:50%;
+    border-style:solid;
+    transform:translate(-50%,-50%) rotate(-17deg);
+  }
+  .ring-back-1{ width:230px; height:78px; border-width:1.5px; border-color:rgba(212,175,55,0.55); z-index:1; }
+  .ring-back-2{ width:230px; height:78px; border-width:6px; border-color:rgba(140,114,34,0.28); z-index:1; transform:translate(-50%,-50%) rotate(-17deg) scale(0.92); }
+  .ring-front-1{ width:230px; height:78px; border-width:1.5px; border-color:rgba(240,203,106,0.85); z-index:3; clip-path:polygon(0 50%,100% 50%,100% 100%,0 100%); }
+  .ring-front-2{ width:230px; height:78px; border-width:6px; border-color:rgba(212,175,55,0.32); z-index:3; transform:translate(-50%,-50%) rotate(-17deg) scale(0.92); clip-path:polygon(0 50%,100% 50%,100% 100%,0 100%); }
+  .moon{
+    position:absolute; top:50%; left:50%;
+    width:4px; height:4px; border-radius:50%;
+    background:var(--gold-bright);
+    box-shadow:0 0 8px 2px rgba(240,203,106,0.7);
+    z-index:4;
+    animation:moon-orbit 9s linear infinite;
+  }
+  @keyframes ring-drift{
+    0%,100%{ transform:rotate(0deg); }
+    50%{ transform:rotate(2deg); }
+  }
+  @keyframes moon-orbit{
+    0%{ transform:translate(-50%,-50%) rotate(-17deg) translateX(115px) rotate(17deg) scaleY(1); opacity:0; }
+    8%{ opacity:1; }
+    50%{ transform:translate(-50%,-50%) rotate(163deg) translateX(115px) rotate(-163deg) scaleY(1); opacity:1; }
+    92%{ opacity:1; }
+    100%{ transform:translate(-50%,-50%) rotate(343deg) translateX(115px) rotate(-343deg) scaleY(1); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .saturn-rings, .moon{ animation:none; }
+  }
+
+  .auth-card{
+    width:100%;
+    max-width:420px;
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:16px;
+    padding:40px 34px;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+  .auth-card h1{
+    font-size:27px;
+    margin-bottom:8px;
+    letter-spacing:-0.01em;
+    text-align:center;
+  }
+  .auth-card .subtitle{
+    font-size:14px;
+    color:var(--text-dim);
+    margin-bottom:30px;
+    text-align:center;
+    line-height:1.5;
+  }
+  label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:9px;
+  }
+  input[type="email"], input[type="text"]{
+    width:100%;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:14px 16px;
+    color:var(--text);
+    font-size:15px;
+    font-family:'Inter',sans-serif;
+    margin-bottom:18px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input::placeholder{ color:var(--text-faint); }
+  input:focus{
+    outline:none;
+    border-color:var(--gold-dim);
+    box-shadow:0 0 0 3px var(--focus);
+  }
+  input:disabled{ opacity:0.55; }
+
+  .verify-box{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:14px 16px;
+    margin-bottom:22px;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .verify-spinner{
+    width:17px;height:17px;
+    border-radius:50%;
+    border:2px solid var(--line);
+    border-top-color:var(--gold);
+    animation:spin 0.9s linear infinite;
+    flex-shrink:0;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .verify-label small{ display:block; color:var(--text-faint); font-size:11px; margin-top:2px; }
+
+  .btn-primary{
+    width:100%;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color:#141008;
+    border:none;
+    padding:15px;
+    border-radius:9px;
+    font-size:14.5px;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    margin-bottom:26px;
+    transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  }
+  .btn-primary:hover:not(:disabled){ transform:translateY(-1px); box-shadow:0 8px 20px -6px rgba(212,175,55,0.45); }
+  .btn-primary:active:not(:disabled){ transform:translateY(0); }
+  .btn-primary:disabled{
+    background:#2B2A22;
+    color:#5C5847;
+    cursor:not-allowed;
+  }
+  .btn-primary:focus-visible, .btn-secondary:focus-visible, input:focus-visible{
+    outline:2px solid var(--gold-bright);
+    outline-offset:2px;
+  }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .divider::before,.divider::after{
+    content:''; flex:1; height:1px; background:var(--line);
+  }
+
+  .btn-secondary{
+    display:block;
+    width:100%;
+    text-align:center;
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--text);
+    font-size:14px;
+    font-weight:500;
+    margin-bottom:14px;
+    background:transparent;
+    cursor:pointer;
+    text-decoration:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-secondary:hover{ border-color:var(--gold-dim); background:rgba(212,175,55,0.06); }
+
+  .support-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--text-dim);
+    font-size:14px;
+    font-family:'Inter',sans-serif;
+    background:transparent;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .support-link:hover{ border-color:var(--gold-dim); color:var(--text); }
+
+  footer{
+    position:relative;
+    z-index:2;
+    padding:20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--text-faint);
+    text-align:center;
+  }
+
+  .doc-card{ max-width:720px; }
+  .doc-card h1{ text-align:center; }
+  .doc-card h2{ font-size:15px; font-weight:600; color:var(--gold-bright); margin:26px 0 8px; }
+  .doc-card p{ font-size:14px; line-height:1.65; color:var(--text-dim); }
+  .doc-card .updated{ text-align:center; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--text-faint); margin-bottom:8px; }
+  .doc-card .back{ margin-top:30px; }
+  .hero-actions{ display:flex; flex-direction:column; gap:12px; }
+  .hero-actions .btn-primary{ display:block; text-align:center; text-decoration:none; margin-bottom:0; }
+  .hero-actions .btn-secondary{ margin-bottom:0; }
+  .links-row{ display:flex; justify-content:center; gap:18px; margin-top:22px; font-size:13px; }
+  .links-row a{ color:var(--text-dim); text-decoration:none; }
+  .links-row a:hover{ color:var(--gold-bright); }
+  @media (max-width:480px){
+    .saturn-hero{ width:104px; height:104px; margin-bottom:2px; }
+    .auth-card{ padding:32px 24px; border-radius:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">
+    <span class="mark"><span class="mark-ring"></span><span class="mark-body"></span><span class="mark-ring front"></span></span>
+    Saturn-Pay
+  </a>
+  <a href="settings.html" class="lang-select" id="langIndicator">EN ▾</a>
+</div>
+
+<main>
+  <div class="auth-card doc-card">
+    <h1 data-i18n="terms_title">Terms of Use</h1>
+    <p class="updated" data-i18n="terms_updated">Last updated: October 2026</p>
+    <h2 data-i18n="t_h1">1. Acceptance</h2>
+    <p data-i18n="t_p1">By creating an account or using Saturn-Pay you agree to these terms. If you do not agree, please do not use the service.</p>
+    <h2 data-i18n="t_h2">2. The service</h2>
+    <p data-i18n="t_p2">Saturn-Pay lets you deposit USDT, view your balance and follow your investments. Features may change, be added or be removed over time.</p>
+    <h2 data-i18n="t_h3">3. Your account</h2>
+    <p data-i18n="t_p3">You are responsible for the email address linked to your account and for any activity that happens after a successful login. Never share your verification codes with anyone.</p>
+    <h2 data-i18n="t_h4">4. Deposits and withdrawals</h2>
+    <p data-i18n="t_p4">Only USDT on the TRC20 (Tron) and ERC20 (Ethereum) networks is supported. Always check that the network you choose matches the address you use. Blockchain transfers cannot be reversed, and funds sent on the wrong network or to a wrong address may be lost. Minimum amounts and network fees apply and are shown before you confirm.</p>
+    <h2 data-i18n="t_h5">5. Investment risk</h2>
+    <p data-i18n="t_p5">Investing involves risk, including the loss of part or all of your funds. Nothing in the service is financial advice, and past results do not guarantee future results.</p>
+    <h2 data-i18n="t_h6">6. Referral program</h2>
+    <p data-i18n="t_p6">You may invite friends with your referral link. Bonuses are credited only under the conditions shown in the referral page and may be changed or ended at any time. Abuse such as self-referral or fake accounts can lead to bonuses being cancelled.</p>
+    <h2 data-i18n="t_h7">7. Prohibited use</h2>
+    <p data-i18n="t_p7">You may not use Saturn-Pay for illegal activity, fraud, money laundering, or to attack or disrupt the service. We may suspend or close accounts that break these rules.</p>
+    <h2 data-i18n="t_h8">8. Changes to these terms</h2>
+    <p data-i18n="t_p8">We may update these terms from time to time. Continuing to use the service after an update means you accept the new version.</p>
+    <h2 data-i18n="t_h9">9. Contact</h2>
+    <p data-i18n="t_p9">Questions? Open Settings and use Help Center or Contact Support.</p>
+    <a href="index.html" class="btn-secondary back" data-i18n="btn_back_home">Back to home</a>
+  </div>
+</main>
+
+<footer data-i18n="footer_copyright">© 2026 SATURN-PAY · ALL RIGHTS RESERVED</footer>
+
+<script>
+  const LANG_KEY = 'saturnpay_lang';
+  const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
+  const translations = {
+    en: {
+      terms_title: 'Terms of Use',
+      terms_updated: 'Last updated: October 2026',
+      btn_back_home: 'Back to home',
+      footer_copyright: '© 2026 SATURN-PAY · ALL RIGHTS RESERVED',
+      t_h1: '1. Acceptance',
+      t_p1: 'By creating an account or using Saturn-Pay you agree to these terms. If you do not agree, please do not use the service.',
+      t_h2: '2. The service',
+      t_p2: 'Saturn-Pay lets you deposit USDT, view your balance and follow your investments. Features may change, be added or be removed over time.',
+      t_h3: '3. Your account',
+      t_p3: 'You are responsible for the email address linked to your account and for any activity that happens after a successful login. Never share your verification codes with anyone.',
+      t_h4: '4. Deposits and withdrawals',
+      t_p4: 'Only USDT on the TRC20 (Tron) and ERC20 (Ethereum) networks is supported. Always check that the network you choose matches the address you use. Blockchain transfers cannot be reversed, and funds sent on the wrong network or to a wrong address may be lost. Minimum amounts and network fees apply and are shown before you confirm.',
+      t_h5: '5. Investment risk',
+      t_p5: 'Investing involves risk, including the loss of part or all of your funds. Nothing in the service is financial advice, and past results do not guarantee future results.',
+      t_h6: '6. Referral program',
+      t_p6: 'You may invite friends with your referral link. Bonuses are credited only under the conditions shown in the referral page and may be changed or ended at any time. Abuse such as self-referral or fake accounts can lead to bonuses being cancelled.',
+      t_h7: '7. Prohibited use',
+      t_p7: 'You may not use Saturn-Pay for illegal activity, fraud, money laundering, or to attack or disrupt the service. We may suspend or close accounts that break these rules.',
+      t_h8: '8. Changes to these terms',
+      t_p8: 'We may update these terms from time to time. Continuing to use the service after an update means you accept the new version.',
+      t_h9: '9. Contact',
+      t_p9: 'Questions? Open Settings and use Help Center or Contact Support.',
+    },
+    tr: {
+      terms_title: 'Kullanım Koşulları',
+      terms_updated: 'Son güncelleme: Ekim 2026',
+      btn_back_home: 'Ana sayfaya dön',
+      footer_copyright: '© 2026 SATURN-PAY · TÜM HAKLARI SAKLIDIR',
+      t_h1: '1. Kabul',
+      t_p1: 'Bir hesap oluşturarak veya Saturn-Pay\'i kullanarak bu koşulları kabul etmiş olursunuz. Kabul etmiyorsanız lütfen hizmeti kullanmayın.',
+      t_h2: '2. Hizmet',
+      t_p2: 'Saturn-Pay, USDT yatırmanızı, bakiyenizi görmenizi ve yatırımlarınızı takip etmenizi sağlar. Özellikler zaman içinde değişebilir, eklenebilir veya kaldırılabilir.',
+      t_h3: '3. Hesabınız',
+      t_p3: 'Hesabınıza bağlı e-posta adresinden ve başarılı bir girişten sonra yapılan tüm işlemlerden siz sorumlusunuz. Doğrulama kodlarınızı kimseyle paylaşmayın.',
+      t_h4: '4. Para yatırma ve çekme',
+      t_p4: 'Yalnızca TRC20 (Tron) ve ERC20 (Ethereum) ağlarındaki USDT desteklenir. Seçtiğiniz ağın kullandığınız adresle uyumlu olduğundan her zaman emin olun. Blokzincir transferleri geri alınamaz; yanlış ağa veya yanlış adrese gönderilen tutarlar kaybolabilir. Asgari tutarlar ve ağ ücretleri geçerlidir ve onaylamadan önce gösterilir.',
+      t_h5: '5. Yatırım riski',
+      t_p5: 'Yatırım, fonlarınızın bir kısmını veya tamamını kaybetme riski dahil risk içerir. Hizmetteki hiçbir içerik finansal tavsiye değildir ve geçmiş sonuçlar gelecekteki sonuçları garanti etmez.',
+      t_h6: '6. Davet programı',
+      t_p6: 'Davet bağlantınızla arkadaşlarınızı davet edebilirsiniz. Bonuslar yalnızca davet sayfasında gösterilen koşullarla eklenir ve istenildiği zaman değiştirilebilir veya sona erdirilebilir. Kendini davet etme veya sahte hesap gibi kötüye kullanımlar bonusların iptaline yol açabilir.',
+      t_h7: '7. Yasaklı kullanım',
+      t_p7: 'Saturn-Pay\'i yasa dışı faaliyetler, dolandırıcılık, kara para aklama veya hizmete saldırmak ya da hizmeti aksatmak için kullanamazsınız. Bu kuralları ihlal eden hesapları askıya alabilir veya kapatabiliriz.',
+      t_h8: '8. Koşullardaki değişiklikler',
+      t_p8: 'Bu koşulları zaman zaman güncelleyebiliriz. Güncellemeden sonra hizmeti kullanmaya devam etmeniz yeni sürümü kabul ettiğiniz anlamına gelir.',
+      t_h9: '9. İletişim',
+      t_p9: 'Sorularınız mı var? Ayarlar\'ı açın ve Yardım Merkezi veya Destek ile İletişim\'i kullanın.',
+    },
+    ru: {
+      terms_title: 'Условия использования',
+      terms_updated: 'Последнее обновление: октябрь 2026',
+      btn_back_home: 'На главную',
+      footer_copyright: '© 2026 SATURN-PAY · ВСЕ ПРАВА ЗАЩИЩЕНЫ',
+      t_h1: '1. Принятие условий',
+      t_p1: 'Создавая аккаунт или используя Saturn-Pay, вы соглашаетесь с этими условиями. Если вы не согласны, не используйте сервис.',
+      t_h2: '2. Сервис',
+      t_p2: 'Saturn-Pay позволяет пополнять баланс в USDT, видеть свой баланс и следить за инвестициями. Функции могут со временем меняться, добавляться или удаляться.',
+      t_h3: '3. Ваш аккаунт',
+      t_p3: 'Вы отвечаете за email, привязанный к аккаунту, и за любые действия после успешного входа. Никому не сообщайте свои коды подтверждения.',
+      t_h4: '4. Пополнение и вывод',
+      t_p4: 'Поддерживается только USDT в сетях TRC20 (Tron) и ERC20 (Ethereum). Всегда проверяйте, что выбранная сеть соответствует используемому адресу. Блокчейн-переводы необратимы, а средства, отправленные не в той сети или на неверный адрес, могут быть утрачены. Действуют минимальные суммы и комиссии сети, они показываются до подтверждения.',
+      t_h5: '5. Инвестиционный риск',
+      t_p5: 'Инвестиции связаны с риском, включая потерю части или всех средств. Ничто в сервисе не является финансовой рекомендацией, а прошлые результаты не гарантируют будущих.',
+      t_h6: '6. Реферальная программа',
+      t_p6: 'Вы можете приглашать друзей по своей реферальной ссылке. Бонусы начисляются только на условиях, указанных на странице приглашений, и могут быть изменены или прекращены в любое время. Злоупотребления, такие как приглашение самого себя или фиктивные аккаунты, могут привести к аннулированию бонусов.',
+      t_h7: '7. Запрещённое использование',
+      t_p7: 'Запрещается использовать Saturn-Pay для незаконной деятельности, мошенничества, отмывания денег, а также для атак на сервис или нарушения его работы. Мы можем приостановить или закрыть аккаунты, нарушающие эти правила.',
+      t_h8: '8. Изменения условий',
+      t_p8: 'Мы можем время от времени обновлять эти условия. Продолжая пользоваться сервисом после обновления, вы принимаете новую версию.',
+      t_h9: '9. Контакты',
+      t_p9: 'Есть вопросы? Откройте «Настройки» и воспользуйтесь Центром помощи или службой поддержки.',
+    },
+    es: {
+      terms_title: 'Términos de uso',
+      terms_updated: 'Última actualización: octubre de 2026',
+      btn_back_home: 'Volver al inicio',
+      footer_copyright: '© 2026 SATURN-PAY · TODOS LOS DERECHOS RESERVADOS',
+      t_h1: '1. Aceptación',
+      t_p1: 'Al crear una cuenta o usar Saturn-Pay aceptas estos términos. Si no estás de acuerdo, no uses el servicio.',
+      t_h2: '2. El servicio',
+      t_p2: 'Saturn-Pay te permite depositar USDT, ver tu saldo y seguir tus inversiones. Las funciones pueden cambiar, añadirse o eliminarse con el tiempo.',
+      t_h3: '3. Tu cuenta',
+      t_p3: 'Eres responsable del correo vinculado a tu cuenta y de toda actividad posterior a un inicio de sesión correcto. No compartas tus códigos de verificación con nadie.',
+      t_h4: '4. Depósitos y retiros',
+      t_p4: 'Solo se admite USDT en las redes TRC20 (Tron) y ERC20 (Ethereum). Comprueba siempre que la red elegida coincide con la dirección que usas. Las transferencias en blockchain no se pueden revertir, y los fondos enviados a una red o dirección incorrecta pueden perderse. Se aplican importes mínimos y comisiones de red, que se muestran antes de confirmar.',
+      t_h5: '5. Riesgo de inversión',
+      t_p5: 'Invertir conlleva riesgos, incluida la pérdida de parte o la totalidad de tus fondos. Nada en el servicio constituye asesoramiento financiero, y los resultados pasados no garantizan resultados futuros.',
+      t_h6: '6. Programa de referidos',
+      t_p6: 'Puedes invitar a amigos con tu enlace de referido. Las bonificaciones se acreditan solo en las condiciones que se muestran en la página de referidos y pueden modificarse o finalizar en cualquier momento. Los abusos, como el autorreferido o las cuentas falsas, pueden provocar la cancelación de bonificaciones.',
+      t_h7: '7. Uso prohibido',
+      t_p7: 'No puedes usar Saturn-Pay para actividades ilegales, fraude, blanqueo de capitales, ni para atacar o interrumpir el servicio. Podemos suspender o cerrar las cuentas que incumplan estas normas.',
+      t_h8: '8. Cambios en estos términos',
+      t_p8: 'Podemos actualizar estos términos de vez en cuando. Seguir usando el servicio tras una actualización implica que aceptas la nueva versión.',
+      t_h9: '9. Contacto',
+      t_p9: '¿Preguntas? Abre Ajustes y usa el Centro de ayuda o Contactar con soporte.',
+    },
+    fr: {
+      terms_title: 'Conditions d\'utilisation',
+      terms_updated: 'Dernière mise à jour : octobre 2026',
+      btn_back_home: 'Retour à l\'accueil',
+      footer_copyright: '© 2026 SATURN-PAY · TOUS DROITS RÉSERVÉS',
+      t_h1: '1. Acceptation',
+      t_p1: 'En créant un compte ou en utilisant Saturn-Pay, vous acceptez ces conditions. Si vous n\'êtes pas d\'accord, n\'utilisez pas le service.',
+      t_h2: '2. Le service',
+      t_p2: 'Saturn-Pay vous permet de déposer des USDT, de consulter votre solde et de suivre vos investissements. Les fonctionnalités peuvent évoluer, être ajoutées ou supprimées au fil du temps.',
+      t_h3: '3. Votre compte',
+      t_p3: 'Vous êtes responsable de l\'adresse e-mail liée à votre compte et de toute activité après une connexion réussie. Ne communiquez jamais vos codes de vérification.',
+      t_h4: '4. Dépôts et retraits',
+      t_p4: 'Seuls les USDT sur les réseaux TRC20 (Tron) et ERC20 (Ethereum) sont pris en charge. Vérifiez toujours que le réseau choisi correspond à l\'adresse utilisée. Les transferts sur la blockchain sont irréversibles, et les fonds envoyés sur le mauvais réseau ou à une mauvaise adresse peuvent être perdus. Des montants minimums et des frais de réseau s\'appliquent et sont affichés avant la confirmation.',
+      t_h5: '5. Risque d\'investissement',
+      t_p5: 'Investir comporte des risques, y compris la perte d\'une partie ou de la totalité de vos fonds. Rien dans le service ne constitue un conseil financier, et les résultats passés ne garantissent pas les résultats futurs.',
+      t_h6: '6. Programme de parrainage',
+      t_p6: 'Vous pouvez inviter des amis avec votre lien de parrainage. Les bonus ne sont crédités que dans les conditions indiquées sur la page de parrainage et peuvent être modifiés ou supprimés à tout moment. Les abus, comme l\'auto-parrainage ou les faux comptes, peuvent entraîner l\'annulation des bonus.',
+      t_h7: '7. Utilisation interdite',
+      t_p7: 'Vous ne pouvez pas utiliser Saturn-Pay pour des activités illégales, de la fraude, du blanchiment d\'argent, ni pour attaquer ou perturber le service. Nous pouvons suspendre ou fermer les comptes qui enfreignent ces règles.',
+      t_h8: '8. Modifications des conditions',
+      t_p8: 'Nous pouvons mettre à jour ces conditions de temps à autre. Continuer à utiliser le service après une mise à jour signifie que vous acceptez la nouvelle version.',
+      t_h9: '9. Contact',
+      t_p9: 'Des questions ? Ouvrez Paramètres et utilisez le Centre d\'aide ou Contacter l\'assistance.',
+    },
+    de: {
+      terms_title: 'Nutzungsbedingungen',
+      terms_updated: 'Zuletzt aktualisiert: Oktober 2026',
+      btn_back_home: 'Zurück zur Startseite',
+      footer_copyright: '© 2026 SATURN-PAY · ALLE RECHTE VORBEHALTEN',
+      t_h1: '1. Zustimmung',
+      t_p1: 'Mit der Erstellung eines Kontos oder der Nutzung von Saturn-Pay stimmst du diesen Bedingungen zu. Wenn du nicht einverstanden bist, nutze den Dienst bitte nicht.',
+      t_h2: '2. Der Dienst',
+      t_p2: 'Mit Saturn-Pay kannst du USDT einzahlen, dein Guthaben einsehen und deine Investitionen verfolgen. Funktionen können sich mit der Zeit ändern, hinzukommen oder entfallen.',
+      t_h3: '3. Dein Konto',
+      t_p3: 'Du bist für die mit deinem Konto verknüpfte E-Mail-Adresse und für alle Aktivitäten nach einer erfolgreichen Anmeldung verantwortlich. Gib deine Bestätigungscodes niemals weiter.',
+      t_h4: '4. Ein- und Auszahlungen',
+      t_p4: 'Unterstützt wird nur USDT in den Netzwerken TRC20 (Tron) und ERC20 (Ethereum). Prüfe immer, ob das gewählte Netzwerk zur verwendeten Adresse passt. Blockchain-Überweisungen lassen sich nicht rückgängig machen, und Gelder, die im falschen Netzwerk oder an eine falsche Adresse gesendet werden, können verloren gehen. Mindestbeträge und Netzwerkgebühren gelten und werden vor der Bestätigung angezeigt.',
+      t_h5: '5. Anlagerisiko',
+      t_p5: 'Investitionen sind mit Risiken verbunden, einschließlich des Verlusts eines Teils oder des gesamten Geldes. Nichts im Dienst stellt eine Finanzberatung dar, und vergangene Ergebnisse garantieren keine zukünftigen.',
+      t_h6: '6. Empfehlungsprogramm',
+      t_p6: 'Du kannst Freunde mit deinem Empfehlungslink einladen. Boni werden nur unter den auf der Empfehlungsseite angezeigten Bedingungen gutgeschrieben und können jederzeit geändert oder beendet werden. Missbrauch wie Selbstempfehlung oder gefälschte Konten kann zum Verfall von Boni führen.',
+      t_h7: '7. Verbotene Nutzung',
+      t_p7: 'Du darfst Saturn-Pay nicht für illegale Aktivitäten, Betrug, Geldwäsche oder zum Angriff auf bzw. zur Störung des Dienstes verwenden. Wir können Konten sperren oder schließen, die gegen diese Regeln verstoßen.',
+      t_h8: '8. Änderungen dieser Bedingungen',
+      t_p8: 'Wir können diese Bedingungen von Zeit zu Zeit aktualisieren. Wenn du den Dienst nach einer Aktualisierung weiter nutzt, akzeptierst du die neue Fassung.',
+      t_h9: '9. Kontakt',
+      t_p9: 'Fragen? Öffne die Einstellungen und nutze das Help Center oder den Support.',
+    },
+  };
+
+  function getLang() {
+    const code = localStorage.getItem(LANG_KEY) || 'en';
+    return translations[code] ? code : 'en';
+  }
+  function t(key) {
+    return (translations[getLang()] || translations.en)[key];
+  }
+  function applyLang() {
+    const code = getLang();
+    const dict = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.getElementById('pageTitleTag').textContent = `${dict.terms_title} — Saturn-Pay`;
+    document.getElementById('langIndicator').textContent = code.toUpperCase() + ' ▾';
+  }
+
+  applyLang();
+</script>
+
+</body>
+</html>
