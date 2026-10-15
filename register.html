@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitleTag">Create Account — Saturn-Pay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070A;
+    --bg-2: #0A0C11;
+    --card: #12151C;
+    --card-2: #181C25;
+    --field: #14171F;
+    --line: #262B35;
+    --line-soft: rgba(255,255,255,0.06);
+    --text: #EDEBE4;
+    --text-dim: #8B93A4;
+    --text-faint: #565E6E;
+    --gold: #D4AF37;
+    --gold-bright: #F0CB6A;
+    --gold-dim: #8C7222;
+    --amber: #C98A4B;
+    --focus: rgba(212,175,55,0.30);
+    --good: #7FAE8C;
+    --bad: #C97757;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:relative;
+    overflow-x:hidden;
+  }
+  h1{ font-family:'Inter',sans-serif; font-weight:600; }
+  .mono{ font-family:'IBM Plex Mono',monospace; }
+
+  /* ambient starfield */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    z-index:0;
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(237,235,228,0.35), transparent),
+      radial-gradient(1px 1px at 26% 62%, rgba(237,235,228,0.25), transparent),
+      radial-gradient(1.5px 1.5px at 41% 8%, rgba(237,235,228,0.3), transparent),
+      radial-gradient(1px 1px at 58% 44%, rgba(237,235,228,0.2), transparent),
+      radial-gradient(1px 1px at 73% 76%, rgba(237,235,228,0.3), transparent),
+      radial-gradient(1.5px 1.5px at 88% 22%, rgba(237,235,228,0.22), transparent),
+      radial-gradient(1px 1px at 95% 58%, rgba(237,235,228,0.28), transparent),
+      radial-gradient(1px 1px at 8% 88%, rgba(237,235,228,0.2), transparent),
+      radial-gradient(1px 1px at 65% 92%, rgba(237,235,228,0.25), transparent);
+    background-repeat:no-repeat;
+    pointer-events:none;
+  }
+  body::after{
+    content:'';
+    position:fixed; inset:0;
+    z-index:0;
+    background:radial-gradient(ellipse 900px 500px at 50% -10%, rgba(212,175,55,0.07), transparent 70%);
+    pointer-events:none;
+  }
+
+  .topbar{
+    width:100%;
+    max-width:1180px;
+    padding:26px 32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    z-index:2;
+  }
+  .logo{ display:flex; align-items:center; gap:11px; font-family:'Inter',sans-serif; font-size:17px; font-weight:600; letter-spacing:-0.01em; color:var(--text); text-decoration:none; }
+
+  /* mini saturn mark */
+  .mark{ position:relative; width:20px; height:20px; flex-shrink:0; }
+  .mark-body{ position:absolute; inset:4px; border-radius:50%; background:radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, var(--amber) 100%); }
+  .mark-ring{ position:absolute; top:50%; left:50%; width:26px; height:9px; border:1.2px solid var(--gold-dim); border-radius:50%; transform:translate(-50%,-50%) rotate(-18deg); }
+  .mark-ring.front{ border-color:var(--gold-bright); clip-path:polygon(0 50%, 100% 50%, 100% 100%, 0 100%); z-index:1; }
+  .mark-body{ z-index:0; }
+
+  .lang-select{
+    display:flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--text-dim);
+    border:1px solid var(--line);
+    padding:8px 14px;
+    border-radius:20px;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.04em;
+    text-decoration:none;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .lang-select:hover{ border-color:var(--gold-dim); color:var(--text); }
+
+  main{
+    flex:1;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:20px 20px 60px;
+    position:relative;
+    z-index:2;
+  }
+
+  /* signature: saturn hero */
+  .saturn-hero{
+    width:132px; height:132px;
+    position:relative;
+    margin-bottom:8px;
+  }
+  .saturn-planet{
+    position:absolute; inset:26px;
+    border-radius:50%;
+    background:radial-gradient(circle at 33% 28%, var(--gold-bright) 0%, var(--gold) 48%, var(--amber) 82%, #5E4019 100%);
+    box-shadow:
+      0 0 46px rgba(212,175,55,0.28),
+      inset -9px -9px 18px rgba(0,0,0,0.4),
+      inset 4px 4px 10px rgba(255,255,255,0.15);
+    z-index:2;
+  }
+  .saturn-rings{
+    position:absolute; inset:0;
+    animation:ring-drift 22s ease-in-out infinite;
+  }
+  .ring{
+    position:absolute; top:50%; left:50%;
+    border-radius:50%;
+    border-style:solid;
+    transform:translate(-50%,-50%) rotate(-17deg);
+  }
+  .ring-back-1{ width:230px; height:78px; border-width:1.5px; border-color:rgba(212,175,55,0.55); z-index:1; }
+  .ring-back-2{ width:230px; height:78px; border-width:6px; border-color:rgba(140,114,34,0.28); z-index:1; transform:translate(-50%,-50%) rotate(-17deg) scale(0.92); }
+  .ring-front-1{ width:230px; height:78px; border-width:1.5px; border-color:rgba(240,203,106,0.85); z-index:3; clip-path:polygon(0 50%,100% 50%,100% 100%,0 100%); }
+  .ring-front-2{ width:230px; height:78px; border-width:6px; border-color:rgba(212,175,55,0.32); z-index:3; transform:translate(-50%,-50%) rotate(-17deg) scale(0.92); clip-path:polygon(0 50%,100% 50%,100% 100%,0 100%); }
+  .moon{
+    position:absolute; top:50%; left:50%;
+    width:4px; height:4px; border-radius:50%;
+    background:var(--gold-bright);
+    box-shadow:0 0 8px 2px rgba(240,203,106,0.7);
+    z-index:4;
+    animation:moon-orbit 9s linear infinite;
+  }
+  @keyframes ring-drift{
+    0%,100%{ transform:rotate(0deg); }
+    50%{ transform:rotate(2deg); }
+  }
+  @keyframes moon-orbit{
+    0%{ transform:translate(-50%,-50%) rotate(-17deg) translateX(115px) rotate(17deg) scaleY(1); opacity:0; }
+    8%{ opacity:1; }
+    50%{ transform:translate(-50%,-50%) rotate(163deg) translateX(115px) rotate(-163deg) scaleY(1); opacity:1; }
+    92%{ opacity:1; }
+    100%{ transform:translate(-50%,-50%) rotate(343deg) translateX(115px) rotate(-343deg) scaleY(1); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .saturn-rings, .moon{ animation:none; }
+  }
+
+  .auth-card{
+    width:100%;
+    max-width:420px;
+    background:linear-gradient(175deg, var(--card-2), var(--card));
+    border:1px solid var(--line-soft);
+    border-radius:16px;
+    padding:40px 34px;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,0.6);
+  }
+  .auth-card h1{
+    font-size:27px;
+    margin-bottom:8px;
+    letter-spacing:-0.01em;
+    text-align:center;
+  }
+  .auth-card .subtitle{
+    font-size:14px;
+    color:var(--text-dim);
+    margin-bottom:30px;
+    text-align:center;
+    line-height:1.5;
+  }
+  label{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    margin-bottom:9px;
+  }
+  input[type="email"], input[type="text"]{
+    width:100%;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:14px 16px;
+    color:var(--text);
+    font-size:15px;
+    font-family:'Inter',sans-serif;
+    margin-bottom:18px;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  input::placeholder{ color:var(--text-faint); }
+  input:focus{
+    outline:none;
+    border-color:var(--gold-dim);
+    box-shadow:0 0 0 3px var(--focus);
+  }
+  input:disabled{ opacity:0.55; }
+
+  .checkbox-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin-bottom:22px;
+  }
+  .checkbox-row input[type="checkbox"]{
+    margin-top:3px;
+    width:16px;
+    height:16px;
+    accent-color:var(--gold);
+    flex-shrink:0;
+  }
+  .checkbox-row label{
+    margin-bottom:0;
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    text-transform:none;
+    letter-spacing:normal;
+    color:var(--text-dim);
+    line-height:1.5;
+  }
+  .checkbox-row a{ color:var(--gold); text-decoration:underline; }
+
+  .verify-box{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    background:var(--field);
+    border:1px solid var(--line);
+    border-radius:9px;
+    padding:14px 16px;
+    margin-bottom:22px;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+  .verify-spinner{
+    width:17px;height:17px;
+    border-radius:50%;
+    border:2px solid var(--line);
+    border-top-color:var(--gold);
+    animation:spin 0.9s linear infinite;
+    flex-shrink:0;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .verify-label small{ display:block; color:var(--text-faint); font-size:11px; margin-top:2px; }
+
+  .btn-primary{
+    width:100%;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold));
+    color:#141008;
+    border:none;
+    padding:15px;
+    border-radius:9px;
+    font-size:14.5px;
+    font-weight:600;
+    font-family:'Inter',sans-serif;
+    cursor:pointer;
+    margin-bottom:26px;
+    transition:transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  }
+  .btn-primary:hover:not(:disabled){ transform:translateY(-1px); box-shadow:0 8px 20px -6px rgba(212,175,55,0.45); }
+  .btn-primary:active:not(:disabled){ transform:translateY(0); }
+  .btn-primary:disabled{
+    background:#2B2A22;
+    color:#5C5847;
+    cursor:not-allowed;
+  }
+  .btn-primary:focus-visible, .btn-secondary:focus-visible, input:focus-visible{
+    outline:2px solid var(--gold-bright);
+    outline-offset:2px;
+  }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    color:var(--text-faint);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .divider::before,.divider::after{
+    content:''; flex:1; height:1px; background:var(--line);
+  }
+
+  .btn-secondary{
+    display:block;
+    width:100%;
+    text-align:center;
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    color:var(--text);
+    font-size:14px;
+    font-weight:500;
+    margin-bottom:14px;
+    background:transparent;
+    cursor:pointer;
+    text-decoration:none;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .btn-secondary:hover{ border-color:var(--gold-dim); background:rgba(212,175,55,0.06); }
+
+  footer{
+    position:relative;
+    z-index:2;
+    padding:20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.03em;
+    color:var(--text-faint);
+    text-align:center;
+  }
+
+  @media (max-width:480px){
+    .saturn-hero{ width:104px; height:104px; margin-bottom:2px; }
+    .auth-card{ padding:32px 24px; border-radius:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="logo">
+    <span class="mark"><span class="mark-ring"></span><span class="mark-body"></span><span class="mark-ring front"></span></span>
+    Saturn-Pay
+  </a>
+  <a href="settings.html" class="lang-select" id="langIndicator">EN ▾</a>
+</div>
+
+<main>
+  <div class="saturn-hero" aria-hidden="true">
+    <div class="saturn-rings">
+      <div class="ring ring-back-2"></div>
+      <div class="ring ring-back-1"></div>
+    </div>
+    <div class="saturn-planet"></div>
+    <div class="saturn-rings">
+      <div class="ring ring-front-2"></div>
+      <div class="ring ring-front-1"></div>
+    </div>
+    <div class="moon"></div>
+  </div>
+
+  <div class="auth-card">
+    <h1 data-i18n="register_title">Create account</h1>
+    <p class="subtitle" data-i18n="register_subtitle">Set up your account with a few details.</p>
+
+    <form id="registerForm">
+      <label for="name" id="nameLabel" data-i18n="label_name">Full Name</label>
+      <input type="text" id="name" data-i18n-placeholder="placeholder_name" placeholder="Your full name" required>
+
+      <label for="email" id="emailLabel" data-i18n="label_email">Email</label>
+      <input type="email" id="email" data-i18n-placeholder="placeholder_email" placeholder="you@company.com" required>
+
+      <div id="codeGroup" style="display:none;">
+        <label for="code" data-i18n="label_code">Verification Code</label>
+        <input type="text" id="code" data-i18n-placeholder="placeholder_code" placeholder="6-digit code" inputmode="numeric" maxlength="6" style="margin-bottom:18px;">
+      </div>
+
+      <div class="checkbox-row" id="termsRow">
+        <input type="checkbox" id="terms">
+        <label for="terms"><span data-i18n="terms_before">I have read and accept the </span><a href="terms.html" target="_blank" data-i18n="terms_link">Terms of Use</a><span data-i18n="terms_after">.</span></label>
+      </div>
+
+      <div class="verify-box" id="verifyBox" role="status" aria-live="polite">
+        <div class="verify-spinner"></div>
+        <div class="verify-label">
+          <span data-i18n="verifying_text">Verifying…</span>
+          <small data-i18n="verifying_sub">Automatic traffic check</small>
+        </div>
+      </div>
+
+      <p id="formError" style="color:#C97757;font-size:13px;margin:-6px 0 16px;display:none;"></p>
+
+      <button type="submit" class="btn-primary" id="submitBtn" disabled data-i18n="btn_create_account">Create Account</button>
+    </form>
+
+    <div class="divider" data-i18n="divider_or">or</div>
+
+    <a href="login.html" class="btn-secondary" data-i18n="btn_have_account">I already have an account</a>
+  </div>
+</main>
+
+<footer data-i18n="footer_copyright">© 2026 SATURN-PAY · ALL RIGHTS RESERVED</footer>
+
+<script>
+  // ── i18n (inline dictionary, same pattern as the other pages) ──────
+  const LANG_KEY = 'saturnpay_lang';
+  const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
+
+  const translations = {
+    en: {
+      register_title: 'Create account',
+      register_subtitle: 'Set up your account with a few details.',
+      label_name: 'Full Name',
+      placeholder_name: 'Your full name',
+      label_email: 'Email',
+      placeholder_email: 'you@company.com',
+      label_code: 'Verification Code',
+      placeholder_code: '6-digit code',
+      terms_before: 'I have read and accept the ',
+      terms_link: 'Terms of Use',
+      terms_after: '.',
+      verifying_text: 'Verifying…',
+      verifying_sub: 'Automatic traffic check',
+      verified_text: 'Verified',
+      btn_create_account: 'Create Account',
+      btn_verify_code: 'Verify Code',
+      btn_have_account: 'I already have an account',
+      divider_or: 'or',
+      footer_copyright: '© 2026 SATURN-PAY · ALL RIGHTS RESERVED',
+      test_mode_prefix: 'TEST MODE · Your code:',
+      err_terms: 'You must accept the terms of use to continue.',
+      err_exists: 'An account with this email already exists.',
+      err_no_account: 'No account found for this email.',
+      err_code_invalid: 'The code is incorrect or has expired.',
+      err_code_send_failed: 'Could not send the code.',
+      err_code_verify_failed: 'Could not verify the code.',
+      err_connection: 'Could not reach the server. Check your connection.',
+    },
+    tr: {
+      register_title: 'Hesap oluştur',
+      register_subtitle: 'Birkaç bilgiyle hesabınızı oluşturun.',
+      label_name: 'Ad Soyad',
+      placeholder_name: 'Adınız Soyadınız',
+      label_email: 'E-posta',
+      placeholder_email: 'ornek@sirket.com',
+      label_code: 'Doğrulama Kodu',
+      placeholder_code: '6 haneli kod',
+      terms_before: '',
+      terms_link: 'Kullanım Koşulları',
+      terms_after: '\'nı okudum ve kabul ediyorum.',
+      verifying_text: 'Doğrulanıyor…',
+      verifying_sub: 'Otomatik trafik kontrolü',
+      verified_text: 'Doğrulandı',
+      btn_create_account: 'Hesap Oluştur',
+      btn_verify_code: 'Kodu Doğrula',
+      btn_have_account: 'Zaten hesabım var',
+      divider_or: 'veya',
+      footer_copyright: '© 2026 SATURN-PAY · TÜM HAKLARI SAKLIDIR',
+      test_mode_prefix: 'TEST MODU · Kodunuz:',
+      err_terms: 'Devam etmek için kullanım koşullarını kabul etmelisiniz.',
+      err_exists: 'Bu e-posta ile zaten bir hesap var.',
+      err_no_account: 'Bu e-posta ile kayıtlı bir hesap bulunamadı.',
+      err_code_invalid: 'Kod hatalı veya süresi dolmuş.',
+      err_code_send_failed: 'Kod gönderilemedi.',
+      err_code_verify_failed: 'Kod doğrulanamadı.',
+      err_connection: 'Sunucuya bağlanılamadı. Bağlantınızı kontrol edin.',
+    },
+    ru: {
+      register_title: 'Создать аккаунт',
+      register_subtitle: 'Создайте аккаунт, указав несколько данных.',
+      label_name: 'Имя и фамилия',
+      placeholder_name: 'Ваше имя и фамилия',
+      label_email: 'Email',
+      placeholder_email: 'you@company.com',
+      label_code: 'Код подтверждения',
+      placeholder_code: '6-значный код',
+      terms_before: 'Я прочитал(а) и принимаю ',
+      terms_link: 'Условия использования',
+      terms_after: '.',
+      verifying_text: 'Проверка…',
+      verifying_sub: 'Автоматическая проверка трафика',
+      verified_text: 'Проверено',
+      btn_create_account: 'Создать аккаунт',
+      btn_verify_code: 'Подтвердить код',
+      btn_have_account: 'У меня уже есть аккаунт',
+      divider_or: 'или',
+      footer_copyright: '© 2026 SATURN-PAY · ВСЕ ПРАВА ЗАЩИЩЕНЫ',
+      test_mode_prefix: 'ТЕСТОВЫЙ РЕЖИМ · Ваш код:',
+      err_terms: 'Чтобы продолжить, примите условия использования.',
+      err_exists: 'Аккаунт с этим email уже существует.',
+      err_no_account: 'Аккаунт с этим email не найден.',
+      err_code_invalid: 'Код неверный или срок его действия истёк.',
+      err_code_send_failed: 'Не удалось отправить код.',
+      err_code_verify_failed: 'Не удалось проверить код.',
+      err_connection: 'Не удалось подключиться к серверу. Проверьте соединение.',
+    },
+    es: {
+      register_title: 'Crear cuenta',
+      register_subtitle: 'Configura tu cuenta con unos pocos datos.',
+      label_name: 'Nombre completo',
+      placeholder_name: 'Tu nombre completo',
+      label_email: 'Correo electrónico',
+      placeholder_email: 'tu@empresa.com',
+      label_code: 'Código de verificación',
+      placeholder_code: 'Código de 6 dígitos',
+      terms_before: 'He leído y acepto los ',
+      terms_link: 'Términos de uso',
+      terms_after: '.',
+      verifying_text: 'Verificando…',
+      verifying_sub: 'Comprobación automática de tráfico',
+      verified_text: 'Verificado',
+      btn_create_account: 'Crear cuenta',
+      btn_verify_code: 'Verificar código',
+      btn_have_account: 'Ya tengo una cuenta',
+      divider_or: 'o',
+      footer_copyright: '© 2026 SATURN-PAY · TODOS LOS DERECHOS RESERVADOS',
+      test_mode_prefix: 'MODO DE PRUEBA · Tu código:',
+      err_terms: 'Debes aceptar los términos de uso para continuar.',
+      err_exists: 'Ya existe una cuenta con este correo.',
+      err_no_account: 'No se encontró una cuenta con este correo.',
+      err_code_invalid: 'El código es incorrecto o ha caducado.',
+      err_code_send_failed: 'No se pudo enviar el código.',
+      err_code_verify_failed: 'No se pudo verificar el código.',
+      err_connection: 'No se pudo conectar con el servidor. Revisa tu conexión.',
+    },
+    fr: {
+      register_title: 'Créer un compte',
+      register_subtitle: 'Créez votre compte en quelques informations.',
+      label_name: 'Nom complet',
+      placeholder_name: 'Votre nom complet',
+      label_email: 'E-mail',
+      placeholder_email: 'vous@entreprise.com',
+      label_code: 'Code de vérification',
+      placeholder_code: 'Code à 6 chiffres',
+      terms_before: 'J\'ai lu et j\'accepte les ',
+      terms_link: 'Conditions d\'utilisation',
+      terms_after: '.',
+      verifying_text: 'Vérification…',
+      verifying_sub: 'Contrôle automatique du trafic',
+      verified_text: 'Vérifié',
+      btn_create_account: 'Créer un compte',
+      btn_verify_code: 'Vérifier le code',
+      btn_have_account: 'J\'ai déjà un compte',
+      divider_or: 'ou',
+      footer_copyright: '© 2026 SATURN-PAY · TOUS DROITS RÉSERVÉS',
+      test_mode_prefix: 'MODE TEST · Votre code :',
+      err_terms: 'Vous devez accepter les conditions d\'utilisation pour continuer.',
+      err_exists: 'Un compte existe déjà avec cet e-mail.',
+      err_no_account: 'Aucun compte trouvé pour cet e-mail.',
+      err_code_invalid: 'Le code est incorrect ou a expiré.',
+      err_code_send_failed: 'Impossible d\'envoyer le code.',
+      err_code_verify_failed: 'Impossible de vérifier le code.',
+      err_connection: 'Impossible de joindre le serveur. Vérifiez votre connexion.',
+    },
+    de: {
+      register_title: 'Konto erstellen',
+      register_subtitle: 'Richte dein Konto mit wenigen Angaben ein.',
+      label_name: 'Vollständiger Name',
+      placeholder_name: 'Dein vollständiger Name',
+      label_email: 'E-Mail',
+      placeholder_email: 'du@firma.com',
+      label_code: 'Bestätigungscode',
+      placeholder_code: '6-stelliger Code',
+      terms_before: 'Ich habe die ',
+      terms_link: 'Nutzungsbedingungen',
+      terms_after: ' gelesen und akzeptiere sie.',
+      verifying_text: 'Wird überprüft…',
+      verifying_sub: 'Automatische Verkehrsprüfung',
+      verified_text: 'Überprüft',
+      btn_create_account: 'Konto erstellen',
+      btn_verify_code: 'Code bestätigen',
+      btn_have_account: 'Ich habe bereits ein Konto',
+      divider_or: 'oder',
+      footer_copyright: '© 2026 SATURN-PAY · ALLE RECHTE VORBEHALTEN',
+      test_mode_prefix: 'TESTMODUS · Dein Code:',
+      err_terms: 'Du musst die Nutzungsbedingungen akzeptieren, um fortzufahren.',
+      err_exists: 'Mit dieser E-Mail existiert bereits ein Konto.',
+      err_no_account: 'Für diese E-Mail wurde kein Konto gefunden.',
+      err_code_invalid: 'Der Code ist falsch oder abgelaufen.',
+      err_code_send_failed: 'Der Code konnte nicht gesendet werden.',
+      err_code_verify_failed: 'Der Code konnte nicht überprüft werden.',
+      err_connection: 'Server nicht erreichbar. Bitte prüfe deine Verbindung.',
+    },
+  };
+
+  function getLang() {
+    const code = localStorage.getItem(LANG_KEY) || 'en';
+    return translations[code] ? code : 'en';
+  }
+  function t(key) {
+    return (translations[getLang()] || translations.en)[key];
+  }
+  function applyLang() {
+    const code = getLang();
+    const dict = translations[code] || translations.en;
+    document.documentElement.lang = code;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key] !== undefined) el.placeholder = dict[key];
+    });
+    document.getElementById('pageTitleTag').textContent = `${dict.register_title} — Saturn-Pay`;
+    document.getElementById('langIndicator').textContent = code.toUpperCase() + ' ▾';
+  }
+
+
+  // ── Auth ───────────────────────────────────────────────────────────
+  // Set API_BASE to your deployed auth backend URL.
+  const API_BASE = "http://localhost:3000/api/auth";
+
+  // ── TEST MODU ──────────────────────────────────────────────────────
+  // Gerçek bir backend hazır olana kadar kayıt/giriş akışını burada,
+  // tarayıcıda simüle ediyoruz. Backend hazır olduğunda MOCK_MODE'u
+  // false yapın; kod hiçbir başka değişiklik gerektirmeden gerçek
+  // API_BASE'e fetch atmaya geri döner.
+  const MOCK_MODE = false;
+  const MOCK_DELAY = 550;
+
+  function mockDb() {
+    try { return JSON.parse(localStorage.getItem('saturnpay_mock_users') || '{}'); }
+    catch (e) { return {}; }
+  }
+  function saveMockDb(db) { localStorage.setItem('saturnpay_mock_users', JSON.stringify(db)); }
+  function mockCode() { return String(Math.floor(100000 + Math.random() * 900000)); }
+  function mockId() { return 'usr_' + Math.random().toString(36).slice(2, 10); }
+
+  function showMockCode(code) {
+    let hint = document.getElementById('mockCodeHint');
+    if (!hint) {
+      hint = document.createElement('p');
+      hint.id = 'mockCodeHint';
+      hint.style.cssText = 'margin:-6px 0 16px;padding:10px 14px;border:1px dashed var(--gold-dim);border-radius:8px;font-family:\'IBM Plex Mono\',monospace;font-size:12.5px;color:var(--gold-bright);';
+      codeGroup.appendChild(hint);
+    }
+    hint.textContent = `${t('test_mode_prefix')} ${code}`;
+  }
+
+  async function mockRequestCode(payload, mode) {
+    await new Promise(r => setTimeout(r, MOCK_DELAY));
+    const db = mockDb();
+    const email = payload.email;
+    if (mode === 'register') {
+      if (db[email] && db[email].verified) {
+        return { ok: false, data: { error: t('err_exists') } };
+      }
+      const code = mockCode();
+      db[email] = { name: payload.name, email, id: (db[email] && db[email].id) || mockId(), code, verified: false };
+      saveMockDb(db);
+      showMockCode(code);
+      return { ok: true, data: { sent: true } };
+    }
+    if (!db[email] || !db[email].verified) {
+      return { ok: false, data: { error: t('err_no_account') } };
+    }
+    const code = mockCode();
+    db[email].code = code;
+    saveMockDb(db);
+    showMockCode(code);
+    return { ok: true, data: { sent: true } };
+  }
+
+  async function mockVerifyCode(payload) {
+    await new Promise(r => setTimeout(r, MOCK_DELAY));
+    const db = mockDb();
+    const record = db[payload.email];
+    if (!record || record.code !== payload.code) {
+      return { ok: false, data: { error: t('err_code_invalid') } };
+    }
+    record.verified = true;
+    saveMockDb(db);
+    const token = 'mock_' + Math.random().toString(36).slice(2, 14);
+    return { ok: true, data: { token, user: { id: record.id, name: record.name, email: record.email } } };
+  }
+
+  async function callAuthApi(action, payload) {
+    if (MOCK_MODE) {
+      if (action === 'request-code') return mockRequestCode(payload, 'register');
+      if (action === 'verify-code') return mockVerifyCode(payload);
+    }
+    const res = await fetch(`${API_BASE}/${action}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    return { ok: res.ok, data };
+  }
+  // ── /TEST MODU ─────────────────────────────────────────────────────
+
+  const form = document.getElementById('registerForm');
+  const nameInput = document.getElementById('name');
+  const emailInput = document.getElementById('email');
+  const codeGroup = document.getElementById('codeGroup');
+  const codeInput = document.getElementById('code');
+  const termsRow = document.getElementById('termsRow');
+  const termsCheckbox = document.getElementById('terms');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorEl = document.getElementById('formError');
+  const verifyBox = document.getElementById('verifyBox');
+
+  let step = 'details'; // 'details' -> kod iste, 'code' -> kodu doğrula
+
+  // Basit ön-uç doğrulama simülasyonu: gerçek bot/insan doğrulaması
+  // sunucu tarafında ayrı bir servisle (örn. Turnstile/hCaptcha) yapılmalı.
+  setTimeout(() => {
+    verifyBox.innerHTML = `<div style="color:#7FAE8C;font-size:16px;">✓</div><div class="verify-label">${t('verified_text')}</div>`;
+    submitBtn.disabled = false;
+  }, 1400);
+
+  function showError(message) {
+    errorEl.textContent = message;
+    errorEl.style.display = 'block';
+  }
+
+  function clearError() {
+    errorEl.style.display = 'none';
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    clearError();
+
+    if (step === 'details' && !termsCheckbox.checked) {
+      showError(t('err_terms'));
+      return;
+    }
+
+    submitBtn.disabled = true;
+
+    try {
+      if (step === 'details') {
+        const { ok, data } = await callAuthApi('request-code', {
+          email: emailInput.value,
+          name: nameInput.value,
+          termsAccepted: termsCheckbox.checked,
+        });
+
+        if (!ok) {
+          showError(data.error || t('err_code_send_failed'));
+          return;
+        }
+
+        step = 'code';
+        nameInput.disabled = true;
+        emailInput.disabled = true;
+        termsRow.style.display = 'none';
+        codeGroup.style.display = 'block';
+        submitBtn.textContent = t('btn_verify_code');
+        codeInput.focus();
+      } else {
+        const { ok, data } = await callAuthApi('verify-code', {
+          email: emailInput.value,
+          code: codeInput.value,
+        });
+
+        if (!ok) {
+          showError(data.error || t('err_code_verify_failed'));
+          return;
+        }
+
+        // Oturum token'ını ve kullanıcı bilgisini sakla, yönlendir.
+        localStorage.setItem('saturnpay_token', data.token);
+        localStorage.setItem('saturnpay_user', JSON.stringify(data.user));
+        window.location.href = 'dashboard.html';
+      }
+    } catch (err) {
+      showError(t('err_connection'));
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+
+  applyLang();
+</script>
+
+</body>
+</html>
