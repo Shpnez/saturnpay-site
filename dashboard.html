@@ -522,7 +522,31 @@
   let user = {};
   try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
 
+
+  // --- investment plans (shared logic with investments.html / invests.html) ---
+  const INV_KEY = 'saturnpay_investments';
+  function round2(n) { return Math.round(n * 100) / 100; }
+  function loadInvestments() {
+    try { const a = JSON.parse(localStorage.getItem(INV_KEY) || '[]'); return Array.isArray(a) ? a : []; }
+    catch (e) { return []; }
+  }
+  function settleMatured() {
+    const invs = loadInvestments();
+    let txs; try { txs = JSON.parse(localStorage.getItem(TX_KEY) || '[]'); } catch (e) { txs = []; }
+    const now = Date.now();
+    let changed = false;
+    invs.forEach(inv => {
+      if (!inv.settled && now >= inv.endTs) {
+        inv.settled = true; changed = true;
+        txs.push({ id: makeId(), description: 'Payout: ' + inv.name, amount: round2(inv.amount + inv.profit), date: new Date(inv.endTs).toISOString() });
+      }
+    });
+    if (changed) { localStorage.setItem(INV_KEY, JSON.stringify(invs)); localStorage.setItem(TX_KEY, JSON.stringify(txs)); }
+    return changed;
+  }
   let transactions = loadTransactions(user);
+  settleMatured();
+  transactions = loadTransactions(user);
   let balanceHidden = false;
   let currentRangeDays = 7;
 
@@ -564,27 +588,27 @@
   });
 
   function renderInvests() {
-    const invests = transactions.filter(tx => tx.amount > 0);
-    const total = invests.reduce((s, tx) => s + tx.amount, 0);
-    document.getElementById('investCount').textContent = invests.length;
+    const active = loadInvestments().filter(i => !i.settled);
+    const total = active.reduce((s, i) => s + i.amount, 0);
+    document.getElementById('investCount').textContent = active.length;
     document.getElementById('investTotal').textContent = formatUSD(total);
 
-    const recent = [...invests].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+    const recent = [...active].sort((a, b) => a.endTs - b.endTs).slice(0, 3);
     const listEl = document.getElementById('investList');
     if (recent.length === 0) {
       listEl.innerHTML = `<div class="invest-empty">${t('noActiveInvestments')}</div>`;
       return;
     }
-    listEl.innerHTML = recent.map(tx => `
+    listEl.innerHTML = recent.map(i => `
       <div class="invest-row">
         <div class="invest-main">
           <div class="invest-badge">↑</div>
           <div>
-            <div class="invest-desc">${escapeHtml(tx.description)}</div>
-            <div class="invest-date">${formatDateLocalized(tx.date)}</div>
+            <div class="invest-desc">${escapeHtml(i.name)}</div>
+            <div class="invest-date">${formatDateLocalized(new Date(i.startTs).toISOString())}</div>
           </div>
         </div>
-        <div class="invest-amount">${formatUSD(tx.amount)}</div>
+        <div class="invest-amount">${formatUSD(i.amount)}</div>
       </div>
     `).join('');
   }

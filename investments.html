@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitleTag">Investments — Saturn-Pay</title>
+<title id="pageTitleTag">Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -48,48 +48,43 @@
 
   main{ max-width:520px; margin:0 auto; padding:14px 20px 40px; }
 
-  .page-head{ padding:8px 0 18px; }
+  .page-head{ padding:8px 0 4px; }
   .page-head h1{ font-size:21px; margin-bottom:4px; }
   .page-head p{ color:var(--text-dim); font-size:13px; }
 
-  .filter-tabs{ display:flex; gap:8px; margin-bottom:16px; }
-  .filter-tab{
-    padding:7px 14px; border-radius:999px; border:1px solid var(--line);
-    background:var(--field); color:var(--text-dim);
-    font-size:12.5px; cursor:pointer;
-    transition:border-color .15s ease, color .15s ease, background .15s ease;
-  }
-  .filter-tab:hover{ border-color:var(--gold-dim); color:var(--text); }
-  .filter-tab.active{
-    border-color:var(--gold); background:rgba(212,175,55,0.1); color:var(--gold-bright);
-  }
+  .summary-row{ display:flex; gap:24px; padding:18px 2px 20px; }
+  .summary-stat .n{ font-size:22px; font-weight:500; color:var(--text); }
+  .summary-stat .l{ font-size:11px; color:var(--text-faint); margin-top:3px; }
 
-  .card{
+  .invest-card{
     background:linear-gradient(175deg, var(--card-2), var(--card));
     border:1px solid var(--line-soft);
     border-radius:14px;
-    padding:20px 20px 8px;
+    padding:6px 20px;
   }
-
-  .tx-row{
+  .invest-row{
     display:flex; align-items:center; justify-content:space-between;
-    padding:14px 0; border-top:1px solid var(--line-soft); gap:12px;
+    padding:15px 0; border-top:1px solid var(--line-soft); gap:12px;
   }
-  .tx-row:first-child{ border-top:none; padding-top:0; }
-  .tx-main{ display:flex; align-items:center; gap:12px; min-width:0; }
-  .tx-badge{
+  .invest-row:first-child{ border-top:none; }
+  .invest-main{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .invest-badge{
     width:34px; height:34px; border-radius:50%;
+    background:rgba(212,175,55,0.12); color:var(--gold-bright);
     display:flex; align-items:center; justify-content:center;
     font-size:14px; flex-shrink:0;
   }
-  .tx-badge.in{ background:rgba(127,174,140,0.15); color:var(--good); }
-  .tx-badge.out{ background:rgba(201,119,87,0.15); color:var(--bad); }
-  .tx-desc{ font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .tx-date{ font-size:11.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; margin-top:2px; }
-  .tx-amount{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; flex-shrink:0; }
-  .tx-amount.in{ color:var(--good); }
-  .tx-amount.out{ color:var(--bad); }
-  .empty-note{ color:var(--text-dim); font-size:13px; text-align:center; padding:24px 0; }
+  .invest-desc{ font-size:14px; color:var(--text); }
+  .invest-date{ font-size:11.5px; color:var(--text-faint); font-family:'IBM Plex Mono',monospace; margin-top:2px; }
+  .invest-right{ text-align:right; flex-shrink:0; }
+  .invest-amount{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--good); }
+  .invest-status{
+    display:inline-block; margin-top:4px;
+    padding:2px 9px; border-radius:999px;
+    background:rgba(127,174,140,0.12); border:1px solid rgba(127,174,140,0.3);
+    color:var(--good); font-size:10px; font-family:'IBM Plex Mono',monospace;
+  }
+  .empty-note{ color:var(--text-dim); font-size:13px; text-align:center; padding:30px 0; }
 
   .bottom-nav{
     position:fixed; left:0; right:0; bottom:0; z-index:5;
@@ -101,10 +96,131 @@
     padding:11px 4px 9px; color:var(--text-faint); font-size:10.5px; cursor:pointer;
     transition:color .15s ease;
   }
-  .nav-item .icon{ font-size:19px; line-height:1; }
   .nav-item .icon svg{ width:21px; height:21px; display:block; }
   .nav-item:hover{ color:var(--text-dim); }
   .nav-item.active{ color:var(--gold-bright); }
+
+  .balance-strip{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:14px 18px; margin-bottom:14px; }
+  .balance-strip .l{ font-size:11.5px; color:var(--text-dim); }
+  .balance-strip .v{ font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--gold-bright); margin-top:2px; }
+  .link-pill{ font-size:12.5px; color:var(--gold-bright); border:1px solid var(--gold-dim); border-radius:999px; padding:7px 14px; }
+  .note{ font-size:11.5px; color:var(--text-faint); line-height:1.5; margin:4px 2px 14px; }
+  .plan-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:18px 18px 16px; margin-bottom:12px; }
+  .plan-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .plan-name{ font-size:17px; font-weight:600; }
+  .plan-badge{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--good);
+    background:rgba(127,174,140,0.12); border:1px solid rgba(127,174,140,0.3); border-radius:999px; padding:3px 10px; }
+  .plan-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+  .plan-stats .k{ font-size:11px; color:var(--text-dim); margin-bottom:3px; }
+  .plan-stats .v{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--text); }
+  .btn-gold{ width:100%; border:none; border-radius:9px; padding:13px; font-size:14px; font-weight:600;
+    font-family:'Inter',sans-serif; cursor:pointer; color:#141008;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold)); }
+  .btn-gold:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-ghost{ width:100%; border:1px solid var(--line); border-radius:9px; padding:12px; font-size:14px;
+    font-family:'Inter',sans-serif; cursor:pointer; color:var(--text); background:transparent; margin-top:10px; display:block; text-align:center; }
+  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.62); display:none; align-items:flex-end; justify-content:center; z-index:20; }
+  .overlay.open{ display:flex; }
+  .sheet{ width:100%; max-width:520px; background:var(--card); border:1px solid var(--line-soft);
+    border-radius:18px 18px 0 0; padding:22px 20px 26px; }
+  .sheet h2{ font-size:18px; margin-bottom:14px; }
+  .sheet label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:7px; }
+  .sheet input{ width:100%; background:var(--field); border:1px solid var(--line); border-radius:9px; padding:13px 14px;
+    color:var(--text); font-size:16px; font-family:'IBM Plex Mono',monospace; }
+  .sheet input:focus{ outline:none; border-color:var(--gold-dim); }
+  .hint{ font-size:11.5px; color:var(--text-faint); margin:7px 0 14px; }
+  .preview{ border-top:1px solid var(--line-soft); padding-top:10px; margin-bottom:14px; }
+  .preview .r{ display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:var(--text-dim); }
+  .preview .r b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .err{ color:var(--bad); font-size:12.5px; min-height:18px; margin-bottom:8px; }
+  .ok-box{ text-align:center; padding:10px 0 4px; }
+  .ok-box .tick{ font-size:30px; color:var(--good); }
+  .ok-box p{ margin:8px 0 16px; font-size:15px; }
+  .inv-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:16px 18px; margin-bottom:12px; }
+  .inv-top{ display:flex; align-items:center; gap:16px; }
+  .ring{ position:relative; width:68px; height:68px; flex-shrink:0; }
+  .ring svg{ width:68px; height:68px; transform:rotate(-90deg); }
+  .ring .pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold-bright); }
+  .inv-info{ flex:1; min-width:0; }
+  .inv-name{ font-size:15.5px; font-weight:600; }
+  .inv-meta{ font-size:12px; color:var(--text-dim); margin-top:3px; }
+  .left-big{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--text); margin-top:6px; }
+  .left-big small{ font-family:'Inter',sans-serif; font-size:11px; color:var(--text-faint); margin-right:6px; }
+  .bar{ height:6px; background:var(--field); border-radius:999px; overflow:hidden; margin:14px 0 10px; }
+  .bar i{ display:block; height:100%; background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright)); border-radius:999px; }
+  .inv-foot{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); }
+  .inv-foot b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .section-title{ font-size:13px; color:var(--text-dim); margin:22px 2px 10px; }
+  .done-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line-soft); font-size:13.5px; }
+  .done-row:first-child{ border-top:none; }
+  .done-row .p{ font-family:'IBM Plex Mono',monospace; color:var(--good); font-size:13px; }
+  .done-wrap{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft); border-radius:14px; padding:4px 18px; }
+
+  .balance-strip{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:14px 18px; margin-bottom:14px; }
+  .balance-strip .l{ font-size:11.5px; color:var(--text-dim); }
+  .balance-strip .v{ font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--gold-bright); margin-top:2px; }
+  .link-pill{ font-size:12.5px; color:var(--gold-bright); border:1px solid var(--gold-dim); border-radius:999px; padding:7px 14px; }
+  .note{ font-size:11.5px; color:var(--text-faint); line-height:1.5; margin:4px 2px 14px; }
+  .plan-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:18px 18px 16px; margin-bottom:12px; }
+  .plan-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .plan-name{ font-size:17px; font-weight:600; }
+  .plan-badge{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--good);
+    background:rgba(127,174,140,0.12); border:1px solid rgba(127,174,140,0.3); border-radius:999px; padding:3px 10px; }
+  .plan-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+  .plan-stats .k{ font-size:11px; color:var(--text-dim); margin-bottom:3px; }
+  .plan-stats .v{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--text); }
+  .btn-gold{ width:100%; border:none; border-radius:9px; padding:13px; font-size:14px; font-weight:600;
+    font-family:'Inter',sans-serif; cursor:pointer; color:#141008;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold)); }
+  .btn-gold:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-ghost{ width:100%; border:1px solid var(--line); border-radius:9px; padding:12px; font-size:14px;
+    font-family:'Inter',sans-serif; cursor:pointer; color:var(--text); background:transparent; margin-top:10px; display:block; text-align:center; }
+  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.62); display:none; align-items:flex-end; justify-content:center; z-index:20; }
+  .overlay.open{ display:flex; }
+  .sheet{ width:100%; max-width:520px; background:var(--card); border:1px solid var(--line-soft);
+    border-radius:18px 18px 0 0; padding:22px 20px 26px; }
+  .sheet h2{ font-size:18px; margin-bottom:14px; }
+  .sheet label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:7px; }
+  .sheet input{ width:100%; background:var(--field); border:1px solid var(--line); border-radius:9px; padding:13px 14px;
+    color:var(--text); font-size:16px; font-family:'IBM Plex Mono',monospace; }
+  .sheet input:focus{ outline:none; border-color:var(--gold-dim); }
+  .hint{ font-size:11.5px; color:var(--text-faint); margin:7px 0 14px; }
+  .preview{ border-top:1px solid var(--line-soft); padding-top:10px; margin-bottom:14px; }
+  .preview .r{ display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:var(--text-dim); }
+  .preview .r b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .err{ color:var(--bad); font-size:12.5px; min-height:18px; margin-bottom:8px; }
+  .ok-box{ text-align:center; padding:10px 0 4px; }
+  .ok-box .tick{ font-size:30px; color:var(--good); }
+  .ok-box p{ margin:8px 0 16px; font-size:15px; }
+  .inv-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:16px 18px; margin-bottom:12px; }
+  .inv-top{ display:flex; align-items:center; gap:16px; }
+  .ring{ position:relative; width:68px; height:68px; flex-shrink:0; }
+  .ring svg{ width:68px; height:68px; transform:rotate(-90deg); }
+  .ring .pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold-bright); }
+  .inv-info{ flex:1; min-width:0; }
+  .inv-name{ font-size:15.5px; font-weight:600; }
+  .inv-meta{ font-size:12px; color:var(--text-dim); margin-top:3px; }
+  .left-big{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--text); margin-top:6px; }
+  .left-big small{ font-family:'Inter',sans-serif; font-size:11px; color:var(--text-faint); margin-right:6px; }
+  .bar{ height:6px; background:var(--line); border-radius:999px; overflow:hidden; margin:14px 0 10px; }
+  .bar i{ display:block; height:100%; background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright)); border-radius:999px; }
+  .inv-foot{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); }
+  .inv-foot b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .section-title{ font-size:13px; color:var(--text-dim); margin:22px 2px 10px; }
+  .done-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line-soft); font-size:13.5px; }
+  .done-row:first-child{ border-top:none; }
+  .done-row .p{ font-family:'IBM Plex Mono',monospace; color:var(--good); font-size:13px; }
+  .done-wrap{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft); border-radius:14px; padding:4px 18px; }
 </style>
 </head>
 <body>
@@ -122,20 +238,43 @@
 
 <main>
   <div class="page-head">
-    <h1 data-i18n="pageTitle">Investments</h1>
-    <p data-i18n="pageDesc">All your deposit and withdrawal transactions.</p>
+    <h1 data-i18n="pageTitle">Investment Plans</h1>
+    <p data-i18n="pageDesc">Choose a plan, invest and receive your return when it ends.</p>
   </div>
 
-  <div class="filter-tabs" id="filterTabs">
-    <button class="filter-tab active" data-filter="all" data-i18n="filterAll">All</button>
-    <button class="filter-tab" data-filter="in" data-i18n="filterIn">Deposits</button>
-    <button class="filter-tab" data-filter="out" data-i18n="filterOut">Withdrawals</button>
+  <div class="balance-strip">
+    <div><div class="l" data-i18n="availableBalance">Available Balance</div><div class="v" id="balanceVal">$0.00</div></div>
+    <a href="deposit.html" class="link-pill" data-i18n="depositLink">Deposit</a>
   </div>
+  <p class="note" id="fastNote" style="display:none;" data-i18n="fastNote"></p>
+  <p class="note" data-i18n="demoNote"></p>
 
-  <div class="card">
-    <div id="txList"></div>
-  </div>
+  <div id="planList"></div>
 </main>
+
+<div class="overlay" id="sheetOverlay">
+  <div class="sheet" role="dialog" aria-modal="true">
+    <div id="sheetForm">
+      <h2 id="sheetTitle"></h2>
+      <label for="amountInput" data-i18n="amountLabel">Amount (USDT)</label>
+      <input type="text" id="amountInput" inputmode="decimal" autocomplete="off" placeholder="0.00">
+      <div class="hint" id="rangeHint"></div>
+      <div class="preview">
+        <div class="r"><span data-i18n="expectedProfit">Expected profit</span><b id="pvProfit">—</b></div>
+        <div class="r"><span data-i18n="payoutTotal">Total payout</span><b id="pvPayout">—</b></div>
+        <div class="r"><span data-i18n="endsOn">Ends on</span><b id="pvEnds">—</b></div>
+      </div>
+      <div class="err" id="sheetErr"></div>
+      <button class="btn-gold" id="confirmBtn" data-i18n="confirmInvest">Confirm Investment</button>
+      <button class="btn-ghost" id="cancelBtn" data-i18n="cancel">Cancel</button>
+    </div>
+    <div class="ok-box" id="sheetOk" style="display:none;">
+      <div class="tick">✓</div>
+      <p data-i18n="okInvested">Investment started!</p>
+      <a href="invests.html" class="btn-gold" style="display:block;text-align:center;text-decoration:none;" data-i18n="viewInvests">View my active plans</a>
+    </div>
+  </div>
+</div>
 
 <nav class="bottom-nav">
   <a href="dashboard.html" class="nav-item">
@@ -160,94 +299,293 @@
   const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
 
   const translations = {
-    en: {
-      settingsTitle: 'Settings', notifications: 'Notifications', noNotifications: 'You have no new notifications.',
-      pageTitle: 'Investments', pageDesc: 'All your deposit and withdrawal transactions.',
-      filterAll: 'All', filterIn: 'Deposits', filterOut: 'Withdrawals', noTxInFilter: 'No transactions in this filter.',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    tr: {
-      settingsTitle: 'Ayarlar', notifications: 'Bildirimler', noNotifications: 'Şu an yeni bildiriminiz yok.',
-      pageTitle: 'Investments', pageDesc: 'Tüm para yatırma ve çekme işlemleriniz.',
-      filterAll: 'Tümü', filterIn: 'Yatırım', filterOut: 'Çekim', noTxInFilter: 'Bu filtrede işlem yok.',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    ru: {
-      settingsTitle: 'Настройки', notifications: 'Уведомления', noNotifications: 'У вас нет новых уведомлений.',
-      pageTitle: 'Investments', pageDesc: 'Все ваши операции пополнения и вывода.',
-      filterAll: 'Все', filterIn: 'Пополнения', filterOut: 'Выводы', noTxInFilter: 'Нет операций по этому фильтру.',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    es: {
-      settingsTitle: 'Ajustes', notifications: 'Notificaciones', noNotifications: 'No tienes notificaciones nuevas.',
-      pageTitle: 'Investments', pageDesc: 'Todas tus transacciones de depósito y retiro.',
-      filterAll: 'Todo', filterIn: 'Depósitos', filterOut: 'Retiros', noTxInFilter: 'No hay transacciones en este filtro.',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    fr: {
-      settingsTitle: 'Paramètres', notifications: 'Notifications', noNotifications: "Vous n'avez pas de nouvelles notifications.",
-      pageTitle: 'Investments', pageDesc: 'Toutes vos transactions de dépôt et de retrait.',
-      filterAll: 'Tout', filterIn: 'Dépôts', filterOut: 'Retraits', noTxInFilter: 'Aucune transaction dans ce filtre.',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    de: {
-      settingsTitle: 'Einstellungen', notifications: 'Benachrichtigungen', noNotifications: 'Sie haben keine neuen Benachrichtigungen.',
-      pageTitle: 'Investments', pageDesc: 'Alle Ihre Einzahlungs- und Auszahlungstransaktionen.',
-      filterAll: 'Alle', filterIn: 'Einzahlungen', filterOut: 'Auszahlungen', noTxInFilter: 'Keine Transaktionen in diesem Filter.',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-  };
+  "en": {
+    "settingsTitle": "Settings",
+    "notifications": "Notifications",
+    "noNotifications": "You have no new notifications.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "d",
+    "unitH": "h",
+    "unitM": "m",
+    "unitS": "s",
+    "endsOn": "Ends on",
+    "expectedProfit": "Expected profit",
+    "demoNote": "Demo only: rates are illustrative and no real funds are involved.",
+    "pageTitle": "Investment Plans",
+    "pageDesc": "Choose a plan, invest and receive your return when it ends.",
+    "availableBalance": "Available Balance",
+    "depositLink": "Deposit",
+    "duration": "Duration",
+    "daysUnit": "days",
+    "dailyReturn": "Daily",
+    "minAmount": "Minimum",
+    "btnInvest": "Invest",
+    "amountLabel": "Amount (USDT)",
+    "minLabel": "Min",
+    "maxLabel": "Max",
+    "payoutTotal": "Total payout",
+    "confirmInvest": "Confirm Investment",
+    "cancel": "Cancel",
+    "errInvalid": "Enter a valid amount.",
+    "errMin": "The amount is below the plan minimum.",
+    "errMax": "The amount is above the plan maximum.",
+    "errBalance": "Insufficient balance.",
+    "okInvested": "Investment started!",
+    "viewInvests": "View my active plans",
+    "fastNote": "Fast demo mode: 1 day = 1 minute."
+  },
+  "tr": {
+    "settingsTitle": "Ayarlar",
+    "notifications": "Bildirimler",
+    "noNotifications": "Şu an yeni bildiriminiz yok.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "g",
+    "unitH": "sa",
+    "unitM": "dk",
+    "unitS": "sn",
+    "endsOn": "Bitiş",
+    "expectedProfit": "Beklenen kâr",
+    "demoNote": "Yalnızca demo: oranlar örnektir ve gerçek para söz konusu değildir.",
+    "pageTitle": "Yatırım Planları",
+    "pageDesc": "Bir plan seçin, yatırım yapın; süre bitince getirinizi alın.",
+    "availableBalance": "Kullanılabilir Bakiye",
+    "depositLink": "Para Yatır",
+    "duration": "Süre",
+    "daysUnit": "gün",
+    "dailyReturn": "Günlük",
+    "minAmount": "Minimum",
+    "btnInvest": "Yatırım Yap",
+    "amountLabel": "Tutar (USDT)",
+    "minLabel": "Min",
+    "maxLabel": "Maks",
+    "payoutTotal": "Toplam ödeme",
+    "confirmInvest": "Yatırımı Onayla",
+    "cancel": "İptal",
+    "errInvalid": "Geçerli bir tutar girin.",
+    "errMin": "Tutar plan minimumunun altında.",
+    "errMax": "Tutar plan maksimumunun üstünde.",
+    "errBalance": "Yetersiz bakiye.",
+    "okInvested": "Yatırım başlatıldı!",
+    "viewInvests": "Aktif planlarımı gör",
+    "fastNote": "Hızlı demo modu: 1 gün = 1 dakika."
+  },
+  "ru": {
+    "settingsTitle": "Настройки",
+    "notifications": "Уведомления",
+    "noNotifications": "У вас нет новых уведомлений.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "д",
+    "unitH": "ч",
+    "unitM": "м",
+    "unitS": "с",
+    "endsOn": "Окончание",
+    "expectedProfit": "Ожидаемая прибыль",
+    "demoNote": "Только демо: ставки примерные, реальные средства не используются.",
+    "pageTitle": "Инвестиционные планы",
+    "pageDesc": "Выберите план, инвестируйте и получите доход по окончании срока.",
+    "availableBalance": "Доступный баланс",
+    "depositLink": "Пополнить",
+    "duration": "Срок",
+    "daysUnit": "дн.",
+    "dailyReturn": "В день",
+    "minAmount": "Минимум",
+    "btnInvest": "Инвестировать",
+    "amountLabel": "Сумма (USDT)",
+    "minLabel": "Мин",
+    "maxLabel": "Макс",
+    "payoutTotal": "Итого к выплате",
+    "confirmInvest": "Подтвердить инвестицию",
+    "cancel": "Отмена",
+    "errInvalid": "Введите корректную сумму.",
+    "errMin": "Сумма меньше минимума плана.",
+    "errMax": "Сумма больше максимума плана.",
+    "errBalance": "Недостаточно средств.",
+    "okInvested": "Инвестиция запущена!",
+    "viewInvests": "Мои активные планы",
+    "fastNote": "Быстрый демо-режим: 1 день = 1 минута."
+  },
+  "es": {
+    "settingsTitle": "Ajustes",
+    "notifications": "Notificaciones",
+    "noNotifications": "No tienes notificaciones nuevas.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "d",
+    "unitH": "h",
+    "unitM": "m",
+    "unitS": "s",
+    "endsOn": "Finaliza",
+    "expectedProfit": "Beneficio esperado",
+    "demoNote": "Solo demo: las tasas son ilustrativas y no hay fondos reales.",
+    "pageTitle": "Planes de inversión",
+    "pageDesc": "Elige un plan, invierte y recibe tu rendimiento al finalizar.",
+    "availableBalance": "Saldo disponible",
+    "depositLink": "Depositar",
+    "duration": "Duración",
+    "daysUnit": "días",
+    "dailyReturn": "Diario",
+    "minAmount": "Mínimo",
+    "btnInvest": "Invertir",
+    "amountLabel": "Importe (USDT)",
+    "minLabel": "Mín",
+    "maxLabel": "Máx",
+    "payoutTotal": "Pago total",
+    "confirmInvest": "Confirmar inversión",
+    "cancel": "Cancelar",
+    "errInvalid": "Introduce un importe válido.",
+    "errMin": "El importe es inferior al mínimo del plan.",
+    "errMax": "El importe supera el máximo del plan.",
+    "errBalance": "Saldo insuficiente.",
+    "okInvested": "¡Inversión iniciada!",
+    "viewInvests": "Ver mis planes activos",
+    "fastNote": "Modo demo rápido: 1 día = 1 minuto."
+  },
+  "fr": {
+    "settingsTitle": "Paramètres",
+    "notifications": "Notifications",
+    "noNotifications": "Vous n'avez pas de nouvelles notifications.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "j",
+    "unitH": "h",
+    "unitM": "min",
+    "unitS": "s",
+    "endsOn": "Fin",
+    "expectedProfit": "Gain attendu",
+    "demoNote": "Démo uniquement : les taux sont indicatifs et aucun fonds réel n'est utilisé.",
+    "pageTitle": "Plans d'investissement",
+    "pageDesc": "Choisissez un plan, investissez et recevez votre rendement à l'échéance.",
+    "availableBalance": "Solde disponible",
+    "depositLink": "Déposer",
+    "duration": "Durée",
+    "daysUnit": "jours",
+    "dailyReturn": "Par jour",
+    "minAmount": "Minimum",
+    "btnInvest": "Investir",
+    "amountLabel": "Montant (USDT)",
+    "minLabel": "Min",
+    "maxLabel": "Max",
+    "payoutTotal": "Paiement total",
+    "confirmInvest": "Confirmer l'investissement",
+    "cancel": "Annuler",
+    "errInvalid": "Saisissez un montant valide.",
+    "errMin": "Le montant est inférieur au minimum du plan.",
+    "errMax": "Le montant dépasse le maximum du plan.",
+    "errBalance": "Solde insuffisant.",
+    "okInvested": "Investissement lancé !",
+    "viewInvests": "Voir mes plans actifs",
+    "fastNote": "Mode démo rapide : 1 jour = 1 minute."
+  },
+  "de": {
+    "settingsTitle": "Einstellungen",
+    "notifications": "Benachrichtigungen",
+    "noNotifications": "Du hast keine neuen Benachrichtigungen.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "T",
+    "unitH": "Std",
+    "unitM": "Min",
+    "unitS": "s",
+    "endsOn": "Endet am",
+    "expectedProfit": "Erwarteter Gewinn",
+    "demoNote": "Nur Demo: Die Sätze sind beispielhaft, es sind keine echten Gelder beteiligt.",
+    "pageTitle": "Anlagepläne",
+    "pageDesc": "Wähle einen Plan, investiere und erhalte am Ende deine Rendite.",
+    "availableBalance": "Verfügbares Guthaben",
+    "depositLink": "Einzahlen",
+    "duration": "Laufzeit",
+    "daysUnit": "Tage",
+    "dailyReturn": "Täglich",
+    "minAmount": "Minimum",
+    "btnInvest": "Investieren",
+    "amountLabel": "Betrag (USDT)",
+    "minLabel": "Min",
+    "maxLabel": "Max",
+    "payoutTotal": "Gesamtauszahlung",
+    "confirmInvest": "Investition bestätigen",
+    "cancel": "Abbrechen",
+    "errInvalid": "Gib einen gültigen Betrag ein.",
+    "errMin": "Der Betrag liegt unter dem Mindestbetrag des Plans.",
+    "errMax": "Der Betrag liegt über dem Höchstbetrag des Plans.",
+    "errBalance": "Unzureichendes Guthaben.",
+    "okInvested": "Investition gestartet!",
+    "viewInvests": "Meine aktiven Pläne ansehen",
+    "fastNote": "Schneller Demo-Modus: 1 Tag = 1 Minute."
+  }
+};
 
-  function getLang() { return localStorage.getItem(LANG_KEY) || 'en'; }
+  function getLang() { const c = localStorage.getItem(LANG_KEY) || 'en'; return translations[c] ? c : 'en'; }
   function t(key) { return (translations[getLang()] || translations.en)[key]; }
-
   function applyLang() {
     const code = getLang();
     const dict = translations[code] || translations.en;
     document.documentElement.lang = code;
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (dict[key]) el.textContent = dict[key];
+      if (dict[key] !== undefined) el.textContent = dict[key];
     });
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
       const key = el.getAttribute('data-i18n-title');
-      if (dict[key]) el.title = dict[key];
+      if (dict[key] !== undefined) el.title = dict[key];
     });
     document.querySelectorAll('[data-i18n-aria]').forEach(el => {
       const key = el.getAttribute('data-i18n-aria');
-      if (dict[key]) el.setAttribute('aria-label', dict[key]);
+      if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
     });
     document.getElementById('pageTitleTag').textContent = `${dict.pageTitle} — Saturn-Pay`;
   }
 
   const TX_KEY = 'saturnpay_transactions';
-
-  function daysAgoISO(n) {
-    const d = new Date();
-    d.setDate(d.getDate() - n);
-    return d.toISOString();
-  }
+  const INV_KEY = 'saturnpay_investments';
+  function daysAgoISO(n) { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString(); }
   function makeId() { return 'tx_' + Math.random().toString(36).slice(2, 10); }
+  function round2(n) { return Math.round(n * 100) / 100; }
   function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
-  function formatUSD(n) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
-  }
-  function formatDateLocalized(iso) {
+  function formatUSD(n) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n); }
+  function formatDateLocalized(ms) {
     const locale = LOCALE_MAP[getLang()] || 'en-US';
-    return new Date(iso).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(ms).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  function formatDateTimeLocalized(ms) {
+    const locale = LOCALE_MAP[getLang()] || 'en-US';
+    return new Date(ms).toLocaleString(locale, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function fmtLeft(ms) {
+    if (ms <= 0) return '0' + t('unitS');
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+    if (d > 0) return `${d}${t('unitD')} ${h}${t('unitH')}`;
+    if (h > 0) return `${h}${t('unitH')} ${m}${t('unitM')}`;
+    return `${m}${t('unitM')} ${sec}${t('unitS')}`;
   }
 
   function loadTransactions(user) {
     const raw = localStorage.getItem(TX_KEY);
     if (raw) {
-      try {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) return parsed;
-      } catch (e) { /* yeniden oluştur */ }
+      try { const p = JSON.parse(raw); if (Array.isArray(p)) return p; } catch (e) {}
     }
     let seed;
     if (typeof user.balance === 'number' && user.balance > 0) {
@@ -262,57 +600,136 @@
     localStorage.setItem(TX_KEY, JSON.stringify(seed));
     return seed;
   }
+  function loadInvestments() {
+    try { const a = JSON.parse(localStorage.getItem(INV_KEY) || '[]'); return Array.isArray(a) ? a : []; }
+    catch (e) { return []; }
+  }
+  function saveInvestments(a) { localStorage.setItem(INV_KEY, JSON.stringify(a)); }
+  // Credits principal + profit for plans whose end time has passed. Returns true if anything changed.
+  function settleMatured() {
+    const invs = loadInvestments();
+    let txs; try { txs = JSON.parse(localStorage.getItem(TX_KEY) || '[]'); } catch (e) { txs = []; }
+    const now = Date.now();
+    let changed = false;
+    invs.forEach(inv => {
+      if (!inv.settled && now >= inv.endTs) {
+        inv.settled = true; changed = true;
+        txs.push({ id: makeId(), description: 'Payout: ' + inv.name, amount: round2(inv.amount + inv.profit), date: new Date(inv.endTs).toISOString() });
+      }
+    });
+    if (changed) { saveInvestments(invs); localStorage.setItem(TX_KEY, JSON.stringify(txs)); }
+    return changed;
+  }
 
   const token = localStorage.getItem('saturnpay_token');
   const userRaw = localStorage.getItem('saturnpay_user');
   if (!token) { window.location.href = 'login.html'; }
   let user = {};
   try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
-
-  const transactions = loadTransactions(user);
-  let currentFilter = 'all';
+  loadTransactions(user);
+  settleMatured();
 
   document.getElementById('avatarBtn').addEventListener('click', () => window.location.href = 'settings.html');
   document.getElementById('bellBtn').addEventListener('click', () => alert(t('noNotifications')));
 
-  function renderTx() {
-    const list = document.getElementById('txList');
-    let filtered = [...transactions];
-    if (currentFilter === 'in') filtered = filtered.filter(tx => tx.amount >= 0);
-    if (currentFilter === 'out') filtered = filtered.filter(tx => tx.amount < 0);
-    const sorted = filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+  // ── Plans (demo rates — edit these to change what is offered) ─────
+  const PLANS = [
+    { id: 'starter', name: 'Starter', days: 7,  daily: 0.8, min: 10,  max: 499 },
+    { id: 'silver',  name: 'Silver',  days: 14, daily: 1.0, min: 100, max: 1999 },
+    { id: 'gold',    name: 'Gold',    days: 30, daily: 1.2, min: 500, max: 10000 },
+  ];
+  const FAST = new URLSearchParams(location.search).get('fast') === '1';
+  const DAY_MS = FAST ? 60000 : 86400000;
+  if (FAST) document.getElementById('fastNote').style.display = 'block';
 
-    if (sorted.length === 0) {
-      list.innerHTML = `<p class="empty-note">${t('noTxInFilter')}</p>`;
-      return;
-    }
-    list.innerHTML = sorted.map(tx => {
-      const isIn = tx.amount >= 0;
-      return `
-        <div class="tx-row">
-          <div class="tx-main">
-            <div class="tx-badge ${isIn ? 'in' : 'out'}">${isIn ? '↓' : '↑'}</div>
-            <div style="min-width:0;">
-              <div class="tx-desc">${escapeHtml(tx.description)}</div>
-              <div class="tx-date">${formatDateLocalized(tx.date)}</div>
-            </div>
-          </div>
-          <div class="tx-amount ${isIn ? 'in' : 'out'}">${isIn ? '+' : ''}${formatUSD(tx.amount)}</div>
-        </div>`;
-    }).join('');
+  function balance() {
+    let txs; try { txs = JSON.parse(localStorage.getItem(TX_KEY) || '[]'); } catch (e) { txs = []; }
+    return round2(txs.reduce((s, x) => s + x.amount, 0));
+  }
+  function totalPct(p) { return round2(p.daily * p.days); }
+
+  function renderPlans() {
+    document.getElementById('balanceVal').textContent = formatUSD(balance());
+    document.getElementById('planList').innerHTML = PLANS.map(p => `
+      <div class="plan-card">
+        <div class="plan-head"><div class="plan-name">${escapeHtml(p.name)}</div><div class="plan-badge">+${totalPct(p)}%</div></div>
+        <div class="plan-stats">
+          <div><div class="k">${t('duration')}</div><div class="v">${p.days} ${t('daysUnit')}</div></div>
+          <div><div class="k">${t('dailyReturn')}</div><div class="v">${p.daily}%</div></div>
+          <div><div class="k">${t('minAmount')}</div><div class="v">${formatUSD(p.min)}</div></div>
+        </div>
+        <button class="btn-gold" data-plan="${p.id}">${t('btnInvest')}</button>
+      </div>`).join('');
   }
 
-  document.getElementById('filterTabs').addEventListener('click', (e) => {
-    const btn = e.target.closest('.filter-tab');
-    if (!btn) return;
-    [...document.querySelectorAll('.filter-tab')].forEach(tb => tb.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
-    renderTx();
+  let activePlan = null;
+  const overlay = document.getElementById('sheetOverlay');
+  const amountInput = document.getElementById('amountInput');
+  const errEl = document.getElementById('sheetErr');
+
+  function parseAmount() {
+    const v = parseFloat(amountInput.value.replace(',', '.'));
+    return isFinite(v) ? round2(v) : NaN;
+  }
+  function updatePreview() {
+    const a = parseAmount();
+    if (!activePlan || !(a > 0)) {
+      ['pvProfit', 'pvPayout', 'pvEnds'].forEach(id => document.getElementById(id).textContent = '—');
+      return;
+    }
+    const profit = round2(a * activePlan.daily / 100 * activePlan.days);
+    document.getElementById('pvProfit').textContent = '+' + formatUSD(profit);
+    document.getElementById('pvPayout').textContent = formatUSD(a + profit);
+    document.getElementById('pvEnds').textContent = formatDateTimeLocalized(Date.now() + activePlan.days * DAY_MS);
+  }
+  function openSheet(planId) {
+    activePlan = PLANS.find(p => p.id === planId);
+    document.getElementById('sheetTitle').textContent = activePlan.name;
+    document.getElementById('rangeHint').textContent = `${t('minLabel')} ${formatUSD(activePlan.min)} · ${t('maxLabel')} ${formatUSD(activePlan.max)}`;
+    amountInput.value = ''; errEl.textContent = '';
+    document.getElementById('sheetForm').style.display = 'block';
+    document.getElementById('sheetOk').style.display = 'none';
+    updatePreview();
+    overlay.classList.add('open');
+    setTimeout(() => amountInput.focus(), 50);
+  }
+  function closeSheet() { overlay.classList.remove('open'); activePlan = null; renderPlans(); }
+
+  document.getElementById('planList').addEventListener('click', e => {
+    const b = e.target.closest('[data-plan]'); if (b) openSheet(b.dataset.plan);
+  });
+  amountInput.addEventListener('input', updatePreview);
+  document.getElementById('cancelBtn').addEventListener('click', closeSheet);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeSheet(); });
+
+  document.getElementById('confirmBtn').addEventListener('click', () => {
+    const a = parseAmount();
+    if (!(a > 0)) { errEl.textContent = t('errInvalid'); return; }
+    if (a < activePlan.min) { errEl.textContent = t('errMin'); return; }
+    if (a > activePlan.max) { errEl.textContent = t('errMax'); return; }
+    if (a > balance()) { errEl.textContent = t('errBalance'); return; }
+
+    const now = Date.now();
+    const profit = round2(a * activePlan.daily / 100 * activePlan.days);
+    const invs = loadInvestments();
+    invs.push({
+      id: 'inv_' + Math.random().toString(36).slice(2, 10),
+      planId: activePlan.id, name: activePlan.name,
+      amount: a, profit, daily: activePlan.daily, days: activePlan.days,
+      startTs: now, endTs: now + activePlan.days * DAY_MS, settled: false,
+    });
+    saveInvestments(invs);
+    let txs; try { txs = JSON.parse(localStorage.getItem(TX_KEY) || '[]'); } catch (e) { txs = []; }
+    txs.push({ id: makeId(), description: 'Invested in ' + activePlan.name, amount: -a, date: new Date(now).toISOString() });
+    localStorage.setItem(TX_KEY, JSON.stringify(txs));
+
+    document.getElementById('sheetForm').style.display = 'none';
+    document.getElementById('sheetOk').style.display = 'block';
+    document.getElementById('balanceVal').textContent = formatUSD(balance());
   });
 
   applyLang();
-  renderTx();
+  renderPlans();
 </script>
 
 </body>

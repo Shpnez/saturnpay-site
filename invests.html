@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="pageTitleTag">Invests — Saturn-Pay</title>
+<title id="pageTitleTag">Saturn-Pay</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -99,6 +99,128 @@
   .nav-item .icon svg{ width:21px; height:21px; display:block; }
   .nav-item:hover{ color:var(--text-dim); }
   .nav-item.active{ color:var(--gold-bright); }
+
+  .balance-strip{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:14px 18px; margin-bottom:14px; }
+  .balance-strip .l{ font-size:11.5px; color:var(--text-dim); }
+  .balance-strip .v{ font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--gold-bright); margin-top:2px; }
+  .link-pill{ font-size:12.5px; color:var(--gold-bright); border:1px solid var(--gold-dim); border-radius:999px; padding:7px 14px; }
+  .note{ font-size:11.5px; color:var(--text-faint); line-height:1.5; margin:4px 2px 14px; }
+  .plan-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:18px 18px 16px; margin-bottom:12px; }
+  .plan-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .plan-name{ font-size:17px; font-weight:600; }
+  .plan-badge{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--good);
+    background:rgba(127,174,140,0.12); border:1px solid rgba(127,174,140,0.3); border-radius:999px; padding:3px 10px; }
+  .plan-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+  .plan-stats .k{ font-size:11px; color:var(--text-dim); margin-bottom:3px; }
+  .plan-stats .v{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--text); }
+  .btn-gold{ width:100%; border:none; border-radius:9px; padding:13px; font-size:14px; font-weight:600;
+    font-family:'Inter',sans-serif; cursor:pointer; color:#141008;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold)); }
+  .btn-gold:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-ghost{ width:100%; border:1px solid var(--line); border-radius:9px; padding:12px; font-size:14px;
+    font-family:'Inter',sans-serif; cursor:pointer; color:var(--text); background:transparent; margin-top:10px; display:block; text-align:center; }
+  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.62); display:none; align-items:flex-end; justify-content:center; z-index:20; }
+  .overlay.open{ display:flex; }
+  .sheet{ width:100%; max-width:520px; background:var(--card); border:1px solid var(--line-soft);
+    border-radius:18px 18px 0 0; padding:22px 20px 26px; }
+  .sheet h2{ font-size:18px; margin-bottom:14px; }
+  .sheet label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:7px; }
+  .sheet input{ width:100%; background:var(--field); border:1px solid var(--line); border-radius:9px; padding:13px 14px;
+    color:var(--text); font-size:16px; font-family:'IBM Plex Mono',monospace; }
+  .sheet input:focus{ outline:none; border-color:var(--gold-dim); }
+  .hint{ font-size:11.5px; color:var(--text-faint); margin:7px 0 14px; }
+  .preview{ border-top:1px solid var(--line-soft); padding-top:10px; margin-bottom:14px; }
+  .preview .r{ display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:var(--text-dim); }
+  .preview .r b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .err{ color:var(--bad); font-size:12.5px; min-height:18px; margin-bottom:8px; }
+  .ok-box{ text-align:center; padding:10px 0 4px; }
+  .ok-box .tick{ font-size:30px; color:var(--good); }
+  .ok-box p{ margin:8px 0 16px; font-size:15px; }
+  .inv-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:16px 18px; margin-bottom:12px; }
+  .inv-top{ display:flex; align-items:center; gap:16px; }
+  .ring{ position:relative; width:68px; height:68px; flex-shrink:0; }
+  .ring svg{ width:68px; height:68px; transform:rotate(-90deg); }
+  .ring .pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold-bright); }
+  .inv-info{ flex:1; min-width:0; }
+  .inv-name{ font-size:15.5px; font-weight:600; }
+  .inv-meta{ font-size:12px; color:var(--text-dim); margin-top:3px; }
+  .left-big{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--text); margin-top:6px; }
+  .left-big small{ font-family:'Inter',sans-serif; font-size:11px; color:var(--text-faint); margin-right:6px; }
+  .bar{ height:6px; background:var(--field); border-radius:999px; overflow:hidden; margin:14px 0 10px; }
+  .bar i{ display:block; height:100%; background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright)); border-radius:999px; }
+  .inv-foot{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); }
+  .inv-foot b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .section-title{ font-size:13px; color:var(--text-dim); margin:22px 2px 10px; }
+  .done-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line-soft); font-size:13.5px; }
+  .done-row:first-child{ border-top:none; }
+  .done-row .p{ font-family:'IBM Plex Mono',monospace; color:var(--good); font-size:13px; }
+  .done-wrap{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft); border-radius:14px; padding:4px 18px; }
+
+  .balance-strip{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+    background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:14px 18px; margin-bottom:14px; }
+  .balance-strip .l{ font-size:11.5px; color:var(--text-dim); }
+  .balance-strip .v{ font-family:'IBM Plex Mono',monospace; font-size:18px; color:var(--gold-bright); margin-top:2px; }
+  .link-pill{ font-size:12.5px; color:var(--gold-bright); border:1px solid var(--gold-dim); border-radius:999px; padding:7px 14px; }
+  .note{ font-size:11.5px; color:var(--text-faint); line-height:1.5; margin:4px 2px 14px; }
+  .plan-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:18px 18px 16px; margin-bottom:12px; }
+  .plan-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .plan-name{ font-size:17px; font-weight:600; }
+  .plan-badge{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--good);
+    background:rgba(127,174,140,0.12); border:1px solid rgba(127,174,140,0.3); border-radius:999px; padding:3px 10px; }
+  .plan-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+  .plan-stats .k{ font-size:11px; color:var(--text-dim); margin-bottom:3px; }
+  .plan-stats .v{ font-family:'IBM Plex Mono',monospace; font-size:13.5px; color:var(--text); }
+  .btn-gold{ width:100%; border:none; border-radius:9px; padding:13px; font-size:14px; font-weight:600;
+    font-family:'Inter',sans-serif; cursor:pointer; color:#141008;
+    background:linear-gradient(135deg, var(--gold-bright), var(--gold)); }
+  .btn-gold:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-ghost{ width:100%; border:1px solid var(--line); border-radius:9px; padding:12px; font-size:14px;
+    font-family:'Inter',sans-serif; cursor:pointer; color:var(--text); background:transparent; margin-top:10px; display:block; text-align:center; }
+  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.62); display:none; align-items:flex-end; justify-content:center; z-index:20; }
+  .overlay.open{ display:flex; }
+  .sheet{ width:100%; max-width:520px; background:var(--card); border:1px solid var(--line-soft);
+    border-radius:18px 18px 0 0; padding:22px 20px 26px; }
+  .sheet h2{ font-size:18px; margin-bottom:14px; }
+  .sheet label{ display:block; font-size:12px; color:var(--text-dim); margin-bottom:7px; }
+  .sheet input{ width:100%; background:var(--field); border:1px solid var(--line); border-radius:9px; padding:13px 14px;
+    color:var(--text); font-size:16px; font-family:'IBM Plex Mono',monospace; }
+  .sheet input:focus{ outline:none; border-color:var(--gold-dim); }
+  .hint{ font-size:11.5px; color:var(--text-faint); margin:7px 0 14px; }
+  .preview{ border-top:1px solid var(--line-soft); padding-top:10px; margin-bottom:14px; }
+  .preview .r{ display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:var(--text-dim); }
+  .preview .r b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .err{ color:var(--bad); font-size:12.5px; min-height:18px; margin-bottom:8px; }
+  .ok-box{ text-align:center; padding:10px 0 4px; }
+  .ok-box .tick{ font-size:30px; color:var(--good); }
+  .ok-box p{ margin:8px 0 16px; font-size:15px; }
+  .inv-card{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft);
+    border-radius:14px; padding:16px 18px; margin-bottom:12px; }
+  .inv-top{ display:flex; align-items:center; gap:16px; }
+  .ring{ position:relative; width:68px; height:68px; flex-shrink:0; }
+  .ring svg{ width:68px; height:68px; transform:rotate(-90deg); }
+  .ring .pct{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--gold-bright); }
+  .inv-info{ flex:1; min-width:0; }
+  .inv-name{ font-size:15.5px; font-weight:600; }
+  .inv-meta{ font-size:12px; color:var(--text-dim); margin-top:3px; }
+  .left-big{ font-family:'IBM Plex Mono',monospace; font-size:15px; color:var(--text); margin-top:6px; }
+  .left-big small{ font-family:'Inter',sans-serif; font-size:11px; color:var(--text-faint); margin-right:6px; }
+  .bar{ height:6px; background:var(--line); border-radius:999px; overflow:hidden; margin:14px 0 10px; }
+  .bar i{ display:block; height:100%; background:linear-gradient(90deg, var(--gold-dim), var(--gold-bright)); border-radius:999px; }
+  .inv-foot{ display:flex; justify-content:space-between; font-size:12px; color:var(--text-dim); }
+  .inv-foot b{ font-family:'IBM Plex Mono',monospace; font-weight:500; color:var(--text); }
+  .section-title{ font-size:13px; color:var(--text-dim); margin:22px 2px 10px; }
+  .done-row{ display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-top:1px solid var(--line-soft); font-size:13.5px; }
+  .done-row:first-child{ border-top:none; }
+  .done-row .p{ font-family:'IBM Plex Mono',monospace; color:var(--good); font-size:13px; }
+  .done-wrap{ background:linear-gradient(175deg, var(--card-2), var(--card)); border:1px solid var(--line-soft); border-radius:14px; padding:4px 18px; }
 </style>
 </head>
 <body>
@@ -116,23 +238,20 @@
 
 <main>
   <div class="page-head">
-    <h1 data-i18n="pageTitle">Invests</h1>
-    <p data-i18n="pageDesc">Full list of your active investments.</p>
+    <h1 data-i18n="pageTitle">Active Plans</h1>
+    <p data-i18n="pageDesc">Your running plans and the time left on each.</p>
   </div>
 
   <div class="summary-row">
-    <div class="summary-stat">
-      <div class="n" id="investCount">0</div>
-      <div class="l" data-i18n="activeInvestments">Active Investments</div>
-    </div>
-    <div class="summary-stat">
-      <div class="n" id="investTotal">$0</div>
-      <div class="l" data-i18n="totalInvested">Total Invested</div>
-    </div>
+    <div class="summary-stat"><div class="n" id="investCount">0</div><div class="l" data-i18n="activeInvestments">Active Plans</div></div>
+    <div class="summary-stat"><div class="n" id="investTotal">$0</div><div class="l" data-i18n="totalInvested">Total Invested</div></div>
   </div>
 
-  <div class="invest-card">
-    <div id="investList"></div>
+  <div id="activeList"></div>
+
+  <div id="doneSection" style="display:none;">
+    <div class="section-title" data-i18n="completedTitle">Completed</div>
+    <div class="done-wrap" id="doneList"></div>
   </div>
 </main>
 
@@ -155,107 +274,237 @@
 </nav>
 
 <script>
-  // ---------------------------------------------------------------
-  // Çeviriler — invests.html
-  // ---------------------------------------------------------------
   const LANG_KEY = 'saturnpay_lang';
   const LOCALE_MAP = { en: 'en-US', tr: 'tr-TR', ru: 'ru-RU', es: 'es-ES', fr: 'fr-FR', de: 'de-DE' };
 
   const translations = {
-    en: {
-      settingsTitle: 'Settings', notifications: 'Notifications', noNotifications: 'You have no new notifications.',
-      pageTitle: 'Invests', pageDesc: 'Full list of your active investments.',
-      activeInvestments: 'Active Investments', totalInvested: 'Total Invested',
-      noActiveInvestments: 'You have no active investments yet.', active: 'Active',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    tr: {
-      settingsTitle: 'Ayarlar', notifications: 'Bildirimler', noNotifications: 'Şu an yeni bildiriminiz yok.',
-      pageTitle: 'Invests', pageDesc: 'Aktif yatırımlarınızın tam listesi.',
-      activeInvestments: 'Aktif Yatırım', totalInvested: 'Toplam Yatırılan',
-      noActiveInvestments: 'Henüz aktif bir yatırımınız yok.', active: 'Aktif',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    ru: {
-      settingsTitle: 'Настройки', notifications: 'Уведомления', noNotifications: 'У вас нет новых уведомлений.',
-      pageTitle: 'Invests', pageDesc: 'Полный список ваших активных инвестиций.',
-      activeInvestments: 'Активные инвестиции', totalInvested: 'Всего инвестировано',
-      noActiveInvestments: 'У вас пока нет активных инвестиций.', active: 'Активна',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    es: {
-      settingsTitle: 'Ajustes', notifications: 'Notificaciones', noNotifications: 'No tienes notificaciones nuevas.',
-      pageTitle: 'Invests', pageDesc: 'Lista completa de tus inversiones activas.',
-      activeInvestments: 'Inversiones Activas', totalInvested: 'Total Invertido',
-      noActiveInvestments: 'Aún no tienes inversiones activas.', active: 'Activa',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    fr: {
-      settingsTitle: 'Paramètres', notifications: 'Notifications', noNotifications: "Vous n'avez pas de nouvelles notifications.",
-      pageTitle: 'Invests', pageDesc: 'Liste complète de vos investissements actifs.',
-      activeInvestments: 'Investissements Actifs', totalInvested: 'Total Investi',
-      noActiveInvestments: "Vous n'avez pas encore d'investissements actifs.", active: 'Actif',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-    de: {
-      settingsTitle: 'Einstellungen', notifications: 'Benachrichtigungen', noNotifications: 'Sie haben keine neuen Benachrichtigungen.',
-      pageTitle: 'Invests', pageDesc: 'Vollständige Liste Ihrer aktiven Investitionen.',
-      activeInvestments: 'Aktive Investitionen', totalInvested: 'Gesamt Investiert',
-      noActiveInvestments: 'Sie haben noch keine aktiven Investitionen.', active: 'Aktiv',
-      navHome: 'Home', navInvestments: 'Investments', navInvests: 'Invests', navReferral: 'Referral', navAssets: 'Assets',
-    },
-  };
+  "en": {
+    "settingsTitle": "Settings",
+    "notifications": "Notifications",
+    "noNotifications": "You have no new notifications.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "d",
+    "unitH": "h",
+    "unitM": "m",
+    "unitS": "s",
+    "endsOn": "Ends on",
+    "expectedProfit": "Expected profit",
+    "demoNote": "Demo only: rates are illustrative and no real funds are involved.",
+    "pageTitle": "Active Plans",
+    "pageDesc": "Your running plans and the time left on each.",
+    "activeInvestments": "Active Plans",
+    "totalInvested": "Total Invested",
+    "noActiveInvestments": "You have no active plans yet.",
+    "startInvesting": "Choose a plan",
+    "timeLeft": "Time left",
+    "invested": "Invested",
+    "payoutLbl": "Payout",
+    "completedTitle": "Completed",
+    "profitLbl": "Profit",
+    "daysUnit": "days"
+  },
+  "tr": {
+    "settingsTitle": "Ayarlar",
+    "notifications": "Bildirimler",
+    "noNotifications": "Şu an yeni bildiriminiz yok.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "g",
+    "unitH": "sa",
+    "unitM": "dk",
+    "unitS": "sn",
+    "endsOn": "Bitiş",
+    "expectedProfit": "Beklenen kâr",
+    "demoNote": "Yalnızca demo: oranlar örnektir ve gerçek para söz konusu değildir.",
+    "pageTitle": "Aktif Planlar",
+    "pageDesc": "Devam eden planlarınız ve her birinin kalan süresi.",
+    "activeInvestments": "Aktif Plan",
+    "totalInvested": "Toplam Yatırılan",
+    "noActiveInvestments": "Henüz aktif bir planınız yok.",
+    "startInvesting": "Plan seç",
+    "timeLeft": "Kalan süre",
+    "invested": "Yatırılan",
+    "payoutLbl": "Ödeme",
+    "completedTitle": "Tamamlananlar",
+    "profitLbl": "Kâr",
+    "daysUnit": "gün"
+  },
+  "ru": {
+    "settingsTitle": "Настройки",
+    "notifications": "Уведомления",
+    "noNotifications": "У вас нет новых уведомлений.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "д",
+    "unitH": "ч",
+    "unitM": "м",
+    "unitS": "с",
+    "endsOn": "Окончание",
+    "expectedProfit": "Ожидаемая прибыль",
+    "demoNote": "Только демо: ставки примерные, реальные средства не используются.",
+    "pageTitle": "Активные планы",
+    "pageDesc": "Ваши текущие планы и оставшееся время по каждому.",
+    "activeInvestments": "Активные планы",
+    "totalInvested": "Всего инвестировано",
+    "noActiveInvestments": "У вас пока нет активных планов.",
+    "startInvesting": "Выбрать план",
+    "timeLeft": "Осталось",
+    "invested": "Вложено",
+    "payoutLbl": "Выплата",
+    "completedTitle": "Завершённые",
+    "profitLbl": "Прибыль",
+    "daysUnit": "дн."
+  },
+  "es": {
+    "settingsTitle": "Ajustes",
+    "notifications": "Notificaciones",
+    "noNotifications": "No tienes notificaciones nuevas.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "d",
+    "unitH": "h",
+    "unitM": "m",
+    "unitS": "s",
+    "endsOn": "Finaliza",
+    "expectedProfit": "Beneficio esperado",
+    "demoNote": "Solo demo: las tasas son ilustrativas y no hay fondos reales.",
+    "pageTitle": "Planes activos",
+    "pageDesc": "Tus planes en curso y el tiempo restante de cada uno.",
+    "activeInvestments": "Planes activos",
+    "totalInvested": "Total invertido",
+    "noActiveInvestments": "Aún no tienes planes activos.",
+    "startInvesting": "Elegir un plan",
+    "timeLeft": "Tiempo restante",
+    "invested": "Invertido",
+    "payoutLbl": "Pago",
+    "completedTitle": "Completados",
+    "profitLbl": "Beneficio",
+    "daysUnit": "días"
+  },
+  "fr": {
+    "settingsTitle": "Paramètres",
+    "notifications": "Notifications",
+    "noNotifications": "Vous n'avez pas de nouvelles notifications.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "j",
+    "unitH": "h",
+    "unitM": "min",
+    "unitS": "s",
+    "endsOn": "Fin",
+    "expectedProfit": "Gain attendu",
+    "demoNote": "Démo uniquement : les taux sont indicatifs et aucun fonds réel n'est utilisé.",
+    "pageTitle": "Plans actifs",
+    "pageDesc": "Vos plans en cours et le temps restant pour chacun.",
+    "activeInvestments": "Plans actifs",
+    "totalInvested": "Total investi",
+    "noActiveInvestments": "Vous n'avez pas encore de plans actifs.",
+    "startInvesting": "Choisir un plan",
+    "timeLeft": "Temps restant",
+    "invested": "Investi",
+    "payoutLbl": "Paiement",
+    "completedTitle": "Terminés",
+    "profitLbl": "Gain",
+    "daysUnit": "jours"
+  },
+  "de": {
+    "settingsTitle": "Einstellungen",
+    "notifications": "Benachrichtigungen",
+    "noNotifications": "Du hast keine neuen Benachrichtigungen.",
+    "navHome": "Home",
+    "navInvestments": "Investments",
+    "navInvests": "Invests",
+    "navReferral": "Referral",
+    "navAssets": "Assets",
+    "unitD": "T",
+    "unitH": "Std",
+    "unitM": "Min",
+    "unitS": "s",
+    "endsOn": "Endet am",
+    "expectedProfit": "Erwarteter Gewinn",
+    "demoNote": "Nur Demo: Die Sätze sind beispielhaft, es sind keine echten Gelder beteiligt.",
+    "pageTitle": "Aktive Pläne",
+    "pageDesc": "Deine laufenden Pläne und die verbleibende Zeit.",
+    "activeInvestments": "Aktive Pläne",
+    "totalInvested": "Gesamt investiert",
+    "noActiveInvestments": "Du hast noch keine aktiven Pläne.",
+    "startInvesting": "Plan wählen",
+    "timeLeft": "Verbleibend",
+    "invested": "Investiert",
+    "payoutLbl": "Auszahlung",
+    "completedTitle": "Abgeschlossen",
+    "profitLbl": "Gewinn",
+    "daysUnit": "Tage"
+  }
+};
 
-  function getLang() { return localStorage.getItem(LANG_KEY) || 'en'; }
+  function getLang() { const c = localStorage.getItem(LANG_KEY) || 'en'; return translations[c] ? c : 'en'; }
   function t(key) { return (translations[getLang()] || translations.en)[key]; }
-
   function applyLang() {
     const code = getLang();
     const dict = translations[code] || translations.en;
     document.documentElement.lang = code;
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      if (dict[key]) el.textContent = dict[key];
+      if (dict[key] !== undefined) el.textContent = dict[key];
     });
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
       const key = el.getAttribute('data-i18n-title');
-      if (dict[key]) el.title = dict[key];
+      if (dict[key] !== undefined) el.title = dict[key];
     });
     document.querySelectorAll('[data-i18n-aria]').forEach(el => {
       const key = el.getAttribute('data-i18n-aria');
-      if (dict[key]) el.setAttribute('aria-label', dict[key]);
+      if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
     });
     document.getElementById('pageTitleTag').textContent = `${dict.pageTitle} — Saturn-Pay`;
   }
 
   const TX_KEY = 'saturnpay_transactions';
-
-  function daysAgoISO(n) {
-    const d = new Date();
-    d.setDate(d.getDate() - n);
-    return d.toISOString();
-  }
+  const INV_KEY = 'saturnpay_investments';
+  function daysAgoISO(n) { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString(); }
   function makeId() { return 'tx_' + Math.random().toString(36).slice(2, 10); }
+  function round2(n) { return Math.round(n * 100) / 100; }
   function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({
-      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-    }[c]));
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
-  function formatUSD(n) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n);
-  }
-  function formatDateLocalized(iso) {
+  function formatUSD(n) { return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(n); }
+  function formatDateLocalized(ms) {
     const locale = LOCALE_MAP[getLang()] || 'en-US';
-    return new Date(iso).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+    return new Date(ms).toLocaleDateString(locale, { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+  function formatDateTimeLocalized(ms) {
+    const locale = LOCALE_MAP[getLang()] || 'en-US';
+    return new Date(ms).toLocaleString(locale, { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function fmtLeft(ms) {
+    if (ms <= 0) return '0' + t('unitS');
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60;
+    if (d > 0) return `${d}${t('unitD')} ${h}${t('unitH')}`;
+    if (h > 0) return `${h}${t('unitH')} ${m}${t('unitM')}`;
+    return `${m}${t('unitM')} ${sec}${t('unitS')}`;
   }
 
   function loadTransactions(user) {
     const raw = localStorage.getItem(TX_KEY);
     if (raw) {
-      try {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed)) return parsed;
-      } catch (e) { /* yeniden oluştur */ }
+      try { const p = JSON.parse(raw); if (Array.isArray(p)) return p; } catch (e) {}
     }
     let seed;
     if (typeof user.balance === 'number' && user.balance > 0) {
@@ -270,51 +519,98 @@
     localStorage.setItem(TX_KEY, JSON.stringify(seed));
     return seed;
   }
+  function loadInvestments() {
+    try { const a = JSON.parse(localStorage.getItem(INV_KEY) || '[]'); return Array.isArray(a) ? a : []; }
+    catch (e) { return []; }
+  }
+  function saveInvestments(a) { localStorage.setItem(INV_KEY, JSON.stringify(a)); }
+  // Credits principal + profit for plans whose end time has passed. Returns true if anything changed.
+  function settleMatured() {
+    const invs = loadInvestments();
+    let txs; try { txs = JSON.parse(localStorage.getItem(TX_KEY) || '[]'); } catch (e) { txs = []; }
+    const now = Date.now();
+    let changed = false;
+    invs.forEach(inv => {
+      if (!inv.settled && now >= inv.endTs) {
+        inv.settled = true; changed = true;
+        txs.push({ id: makeId(), description: 'Payout: ' + inv.name, amount: round2(inv.amount + inv.profit), date: new Date(inv.endTs).toISOString() });
+      }
+    });
+    if (changed) { saveInvestments(invs); localStorage.setItem(TX_KEY, JSON.stringify(txs)); }
+    return changed;
+  }
 
   const token = localStorage.getItem('saturnpay_token');
   const userRaw = localStorage.getItem('saturnpay_user');
   if (!token) { window.location.href = 'login.html'; }
   let user = {};
   try { user = JSON.parse(userRaw || '{}'); } catch (e) { user = {}; }
-
-  const transactions = loadTransactions(user);
+  loadTransactions(user);
+  settleMatured();
 
   document.getElementById('avatarBtn').addEventListener('click', () => window.location.href = 'settings.html');
   document.getElementById('bellBtn').addEventListener('click', () => alert(t('noNotifications')));
 
+  const R = 26, C = 2 * Math.PI * R;
+
   function renderInvests() {
-    const invests = transactions
-      .filter(tx => tx.amount > 0)
-      .sort((a, b) => new Date(a.date) - new Date(b.date)); // eskiden yeniye
+    const all = loadInvestments();
+    const now = Date.now();
+    const active = all.filter(i => !i.settled).sort((a, b) => a.endTs - b.endTs);
+    const done = all.filter(i => i.settled).sort((a, b) => b.endTs - a.endTs);
 
-    const total = invests.reduce((s, tx) => s + tx.amount, 0);
-    document.getElementById('investCount').textContent = invests.length;
-    document.getElementById('investTotal').textContent = formatUSD(total);
+    document.getElementById('investCount').textContent = active.length;
+    document.getElementById('investTotal').textContent = formatUSD(active.reduce((s, i) => s + i.amount, 0));
 
-    const listEl = document.getElementById('investList');
-    if (invests.length === 0) {
-      listEl.innerHTML = `<div class="empty-note">${t('noActiveInvestments')}</div>`;
-      return;
-    }
-    listEl.innerHTML = invests.map(tx => `
-      <div class="invest-row">
-        <div class="invest-main">
-          <div class="invest-badge">↑</div>
-          <div>
-            <div class="invest-desc">${escapeHtml(tx.description)}</div>
-            <div class="invest-date">${formatDateLocalized(tx.date)}</div>
+    const listEl = document.getElementById('activeList');
+    if (active.length === 0) {
+      listEl.innerHTML = `<div class="inv-card" style="text-align:center;">
+        <p style="color:var(--text-dim);font-size:13.5px;margin-bottom:14px;">${t('noActiveInvestments')}</p>
+        <a href="investments.html" class="btn-gold" style="display:block;text-decoration:none;">${t('startInvesting')}</a></div>`;
+    } else {
+      listEl.innerHTML = active.map(i => {
+        const total = i.endTs - i.startTs;
+        const frac = Math.min(1, Math.max(0, (now - i.startTs) / total));
+        const pct = Math.floor(frac * 100);
+        return `
+        <div class="inv-card">
+          <div class="inv-top">
+            <div class="ring">
+              <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="${R}" fill="none" stroke="var(--line)" stroke-width="6"/>
+                <circle cx="32" cy="32" r="${R}" fill="none" stroke="var(--gold-bright)" stroke-width="6" stroke-linecap="round"
+                  stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(2)}"/></svg>
+              <div class="pct">${pct}%</div>
+            </div>
+            <div class="inv-info">
+              <div class="inv-name">${escapeHtml(i.name)}</div>
+              <div class="inv-meta">${i.days} ${t('daysUnit')} · ${i.daily}%</div>
+              <div class="left-big"><small>${t('timeLeft')}</small>${fmtLeft(i.endTs - now)}</div>
+            </div>
           </div>
-        </div>
-        <div class="invest-right">
-          <div class="invest-amount">${formatUSD(tx.amount)}</div>
-          <span class="invest-status">${t('active')}</span>
-        </div>
-      </div>
-    `).join('');
+          <div class="bar"><i style="width:${(frac * 100).toFixed(1)}%"></i></div>
+          <div class="inv-foot">
+            <span>${t('invested')} <b>${formatUSD(i.amount)}</b></span>
+            <span>${t('payoutLbl')} <b>${formatUSD(i.amount + i.profit)}</b></span>
+          </div>
+          <div class="inv-foot" style="margin-top:6px;"><span>${t('endsOn')}</span><b>${formatDateTimeLocalized(i.endTs)}</b></div>
+        </div>`;
+      }).join('');
+    }
+
+    const doneSection = document.getElementById('doneSection');
+    if (done.length) {
+      doneSection.style.display = 'block';
+      document.getElementById('doneList').innerHTML = done.map(i => `
+        <div class="done-row">
+          <div><div>${escapeHtml(i.name)}</div><div style="font-size:11.5px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;margin-top:2px;">${formatDateLocalized(i.endTs)} · ${formatUSD(i.amount)}</div></div>
+          <div class="p">+${formatUSD(i.profit)}</div>
+        </div>`).join('');
+    } else { doneSection.style.display = 'none'; }
   }
 
   applyLang();
   renderInvests();
+  setInterval(() => { settleMatured(); renderInvests(); }, 1000);
 </script>
 
 </body>
